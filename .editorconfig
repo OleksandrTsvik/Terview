@@ -1,0 +1,84 @@
+# EditorConfig: https://EditorConfig.org
+root = true
+
+# All files
+[*]
+charset = utf-8
+end_of_line = crlf
+indent_style = space
+trim_trailing_whitespace = true
+insert_final_newline = false
+
+# Markdown
+[*.md]
+indent_size = 2
+
+# Data files
+[*.{json,xml,resx}]
+indent_size = 2
+
+# Markup files
+[*.html]
+indent_size = 2
+
+# Stylesheets
+[*.{css,scss}]
+indent_size = 2
+
+# JavaScript code
+[*.{js,jsx,ts,tsx}]
+quote_type = single
+ij_typescript_use_double_quotes = false
+indent_size = 2
+insert_final_newline = true
+
+# C# code
+[*.cs]
+indent_size = 4
+insert_final_newline = true
+
+#### .NET Coding Conventions ####
+
+# Organize usings
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false
+
+# Namespace does not match folder structure
+dotnet_style_namespace_match_folder = true:error
+dotnet_diagnostic.IDE0130.severity = error
+
+# this. preferences
+dotnet_style_qualification_for_event = false:error
+dotnet_style_qualification_for_field = false:error
+dotnet_style_qualification_for_method = false:error
+dotnet_style_qualification_for_property = false:error
+
+#### C# Coding Conventions ####
+
+# Namespace preferences
+csharp_style_namespace_declarations = file_scoped:error
+
+# var preferences
+csharp_style_var_elsewhere = false:error
+csharp_style_var_for_built_in_types = false:error
+csharp_style_var_when_type_is_apparent = true:error
+
+# StyleCop.Analyzers
+
+# IDE0028: Use collection initializers or expressions
+dotnet_diagnostic.IDE0028.severity = warning
+
+# IDE0057: Substring can be simplified
+dotnet_diagnostic.IDE0057.severity = none
+
+# IDE0290: Use primary constructor
+dotnet_diagnostic.IDE0290.severity = none
+
+# IDE0305: Collection initialization can be simplified
+dotnet_diagnostic.IDE0305.severity = none
+
+# IDE1006: Naming rule violation: Missing prefix: 'I'
+dotnet_diagnostic.IDE1006.severity = warning
+
+# CS8019: Unnecessary using directive
+dotnet_diagnostic.CS8019.severity = warning
