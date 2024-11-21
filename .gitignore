@@ -1,5 +1,5 @@
 # Development configuration
-**/Api/appsettings.Development.json
+**/Api/appsettings.*.json
 
 # VS Code
 .vscode
