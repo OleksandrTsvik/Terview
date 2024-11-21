@@ -1,8 +1,5 @@
-using SharedKernel.CollectionNameAttribute;
-
 namespace Domain.Notes;
 
-[CollectionName("notes")]
 public class Note
 {
     public Guid Id { get; set; }

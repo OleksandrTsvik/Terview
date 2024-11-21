@@ -1,6 +1,6 @@
-using System.Reflection;
 using Api.Middleware;
 using Api.Options;
+using Domain.Notes;
 using FluentValidation;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
@@ -9,7 +9,6 @@ using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
 using SharedKernel;
-using SharedKernel.CollectionNameAttribute;
 
 namespace Api.Extensions;
 
@@ -85,33 +84,19 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddMongoCollections(this IServiceCollection services)
     {
-        IEnumerable<Type> classesWithCollectionNameAttribute = CollectionNameHelper
-            .GetClassesWithCollectionNameAttribute(Domain.AssemblyReference.Assembly)
-            .ToList();
-
-        MethodInfo? addMongoCollectionMethod = typeof(ServiceCollectionExtensions)
-            .GetMethod(nameof(AddMongoCollection), BindingFlags.NonPublic | BindingFlags.Static);
-
-        foreach (Type type in classesWithCollectionNameAttribute)
-        {
-            addMongoCollectionMethod
-                ?.MakeGenericMethod(type)
-                .Invoke(null, new object[] { services });
-        }
+        services.AddMongoCollection<Note>("notes");
 
         return services;
     }
 
-    private static IServiceCollection AddMongoCollection<TDocument>(this IServiceCollection services)
+    private static IServiceCollection AddMongoCollection<TDocument>(
+        this IServiceCollection services,
+        string collectionName)
     {
         services.AddSingleton<IMongoCollection<TDocument>>(serviceProvider =>
-        {
-            string collectionName = CollectionNameHelper.GetCollectionName<TDocument>();
-
-            return serviceProvider
+            serviceProvider
                 .GetRequiredService<IMongoDatabase>()
-                .GetCollection<TDocument>(collectionName);
-        });
+                .GetCollection<TDocument>(collectionName));
 
         return services;
     }
