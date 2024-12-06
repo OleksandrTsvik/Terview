@@ -1,0 +1,36 @@
+@import '../shared/variables';
+
+.social-links {
+  a {
+    color: inherit;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 0.65;
+    }
+  }
+
+  span {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: $screen-md) {
+  nz-footer {
+    padding: var(--ant-padding-xss);
+  }
+
+  .copyright {
+    display: none;
+  }
+}
+
+@media (min-width: $screen-md) {
+  nz-footer {
+    padding: var(--ant-padding-xs) var(--ant-padding-lg);
+  }
+
+  .copyright {
+    display: block;
+  }
+}
