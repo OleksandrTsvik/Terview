@@ -1,23 +1,21 @@
-@import './shared/variables';
+@import '../../variables';
 
-:host {
+.wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-nz-layout {
+.content {
+  flex-grow: 1;
   width: 100%;
   max-width: $screen-xxl;
   margin: 0 auto;
-}
-
-nz-content {
   padding: var(--ant-padding-lg) var(--ant-padding-md);
 }
 
 @media (max-width: $screen-md) {
-  nz-content {
-    padding: var(--ant-padding-xss);
+  .content {
+    padding: var(--ant-padding-xxs);
   }
 }

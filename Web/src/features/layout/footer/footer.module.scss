@@ -1,6 +1,18 @@
-@import '../shared/variables';
+@import '../../../variables';
 
-.social-links {
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ant-padding-md);
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: $screen-xxl;
+  margin: 0 auto;
+  padding: var(--ant-padding-xxs);
+}
+
+.socialLinks {
   a {
     color: inherit;
     transition: opacity 0.3s;
@@ -16,17 +28,13 @@
 }
 
 @media (max-width: $screen-md) {
-  nz-footer {
-    padding: var(--ant-padding-xss);
-  }
-
   .copyright {
     display: none;
   }
 }
 
 @media (min-width: $screen-md) {
-  nz-footer {
+  .footer {
     padding: var(--ant-padding-xs) var(--ant-padding-lg);
   }
 
