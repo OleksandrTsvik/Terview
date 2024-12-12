@@ -8,17 +8,17 @@ public class PagedList<T>
     public int CurrentPage { get; }
     public int TotalPages { get; }
     public int PageSize { get; }
-    public int TotalCount { get; }
+    public int TotalItems { get; }
 
     public bool HasPreviousPage => CurrentPage > FirstPageNumber;
     public bool HasNextPage => CurrentPage < TotalPages;
 
-    public PagedList(List<T> items, int totalCount, int pageNumber, int pageSize)
+    public PagedList(List<T> items, int totalItems, int pageNumber, int pageSize)
     {
         Items = items;
-        TotalCount = totalCount;
+        TotalItems = totalItems;
         CurrentPage = pageNumber;
         PageSize = pageSize;
-        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+        TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
     }
 }

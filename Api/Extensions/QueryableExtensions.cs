@@ -15,14 +15,20 @@ public static class QueryableExtensions
     {
         var pagingParams = new PagingParams(pageNumber, pageSize, maxPageSize);
 
-        int totalCount = await query.CountAsync(cancellationToken);
+        int totalItems = await query.CountAsync(cancellationToken);
+        int totalPages = (int)Math.Ceiling(totalItems / (double)pagingParams.PageSize);
+
+        if (pagingParams.PageNumber > totalPages)
+        {
+            pagingParams.PageNumber = totalPages;
+        }
 
         List<T> items = await query
             .Skip((pagingParams.PageNumber - 1) * pagingParams.PageSize)
             .Take(pagingParams.PageSize)
             .ToListAsync(cancellationToken);
 
-        return new PagedList<T>(items, totalCount, pagingParams.PageNumber, pagingParams.PageSize);
+        return new PagedList<T>(items, totalItems, pagingParams.PageNumber, pagingParams.PageSize);
     }
 
     public static Task<PagedList<T>> ToPagedListAsync<T>(
