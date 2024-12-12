@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { api } from '../api';
 import reducer from './reducer';
-import { IS_DEVELOPMENT } from '../constants/node-env.constants';
+import { IS_DEVELOPMENT } from '../common/node-env.constants';
 
 export const store = configureStore({
   reducer,

@@ -1,35 +1,37 @@
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Collapse, Flex, Pagination, Result, Typography } from 'antd';
-import { useState } from 'react';
+import { Collapse, Flex, Pagination, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router';
 
-import { Note } from './notes.model';
+import { NoteResponse } from './notes.models';
+import { PagedList } from '../../common/pagination.models';
+import { stringToBoolean } from '../../common/type-converters.utils';
 
 import styles from './notes.module.scss';
 
-export default function NotesList() {
-  const notes: Note[] = [
-    {
-      id: 'n1',
-      title: 'Title 1',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    },
-    {
-      id: 'n2',
-      title: 'Title 2',
-      content: 'Nam non diam rhoncus, fermentum sapien quis, luctus quam.',
-    },
-    {
-      id: 'n3',
-      title: 'Title 3',
-      content: 'Praesent eget turpis sagittis, convallis urna sit amet, ornare dolor.',
-    },
-  ];
+function initStateExpandAll() {
+  return stringToBoolean(localStorage.getItem('notes-expand-all'));
+}
 
-  const [expandAll, setExpandAll] = useState(localStorage.getItem('notes-expand-all') === 'true');
-  const [activeKeys, setActiveKeys] = useState(expandAll ? notes.map(({ id }) => id) : []);
+interface Props {
+  data: PagedList<NoteResponse>;
+}
 
-  const handleExpandAll = () => {
-    setActiveKeys(expandAll ? [] : notes.map(({ id }) => id));
+export default function NotesList({ data }: Props) {
+  const [, setSearchParams] = useSearchParams();
+
+  const [expandAll, setExpandAll] = useState(initStateExpandAll);
+  const [activeKeys, setActiveKeys] = useState(expandAll ? data.items.map(({ id }) => id) : []);
+
+  useEffect(() => {
+    const expandAll = stringToBoolean(localStorage.getItem('notes-expand-all'));
+
+    setExpandAll(expandAll);
+    setActiveKeys(expandAll ? data.items.map(({ id }) => id) : []);
+  }, [data.items]);
+
+  const handleExpandAllToggle = () => {
+    setActiveKeys(expandAll ? [] : data.items.map(({ id }) => id));
 
     localStorage.setItem('notes-expand-all', (!expandAll).toString());
     setExpandAll((prevState) => !prevState);
@@ -40,41 +42,47 @@ export default function NotesList() {
     setActiveKeys(keys);
   };
 
+  const handlePaginationChange = (page: number, pageSize: number) => {
+    setSearchParams((prevState) => {
+      prevState.set('page', page.toString());
+      prevState.set('size', pageSize.toString());
+
+      return prevState;
+    });
+  };
+
   return (
     <>
-      {notes.length ? (
-        <section className={styles.notes}>
-          <Flex className={styles.notes__total} justify="space-between" wrap>
-            <Typography.Text type="secondary" onClick={handleExpandAll}>
-              <CaretRightOutlined rotate={expandAll ? 90 : 0} /> {expandAll ? 'Згорнути все' : 'Розгорнути все'}
-            </Typography.Text>
-            <Typography.Text type="secondary">Усього записів: {notes.length}</Typography.Text>
-          </Flex>
-          <Collapse
-            className={styles.notes__list}
-            bordered={false}
-            activeKey={activeKeys}
-            items={notes.map((note) => ({
-              key: note.id,
-              label: note.title,
-              children: <p style={{ margin: 0 }}>{note.content}</p>,
-              className: styles.list__item,
-            }))}
-            onChange={handleCollapseNote}
-          />
-          <Pagination
-            className={styles.notes__pagination}
-            showSizeChanger
-            responsive
-            hideOnSinglePage
-            total={500}
-            pageSize={10}
-            pageSizeOptions={[10, 20, 30]}
-          />
-        </section>
-      ) : (
-        <Result title="Не знайдено" subTitle="Не вдалося знайти записи, які б відповідали критеріям пошуку" />
-      )}
+      <section className={styles.notes}>
+        <Flex className={styles.notes__total} justify="space-between" wrap>
+          <Typography.Text type="secondary" onClick={handleExpandAllToggle}>
+            <CaretRightOutlined rotate={expandAll ? 90 : 0} /> {expandAll ? 'Згорнути все' : 'Розгорнути все'}
+          </Typography.Text>
+          <Typography.Text type="secondary">Усього записів: {data.totalItems}</Typography.Text>
+        </Flex>
+        <Collapse
+          className={styles.notes__list}
+          bordered={false}
+          activeKey={activeKeys}
+          items={data.items.map((note) => ({
+            key: note.id,
+            label: note.title,
+            children: <p style={{ margin: 0 }}>{note.content}</p>,
+            className: styles.list__item,
+          }))}
+          onChange={handleCollapseNote}
+        />
+        <Pagination
+          className={styles.notes__pagination}
+          showSizeChanger
+          responsive
+          current={data.currentPage}
+          total={data.totalItems}
+          pageSize={data.pageSize}
+          pageSizeOptions={[5, 10, 15, 20, 30]}
+          onChange={handlePaginationChange}
+        />
+      </section>
     </>
   );
 }

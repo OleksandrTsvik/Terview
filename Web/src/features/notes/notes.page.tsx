@@ -1,6 +1,6 @@
 import { Input } from 'antd';
 
-import NotesList from './notes.list';
+import NotesFetch from './notes.fetch';
 import NotesTags from './notes.tags';
 
 export default function NotesPage() {
@@ -8,7 +8,7 @@ export default function NotesPage() {
     <>
       <Input.Search placeholder="Пошук за ключовими словами..." />
       <NotesTags />
-      <NotesList />
+      <NotesFetch />
     </>
   );
 }

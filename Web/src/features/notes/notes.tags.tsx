@@ -1,27 +1,24 @@
 import { Tag } from 'antd';
-import { useState } from 'react';
-
-import { NoteTag } from './notes.model';
+import { useSearchParams } from 'react-router';
 
 import styles from './notes.module.scss';
 
 export default function NotesTags() {
-  const [tags, setTags] = useState<NoteTag[]>([
-    { name: 'web', checked: false },
-    { name: 'js', checked: true },
-    { name: '.net', checked: false },
-    { name: 'asp.net core', checked: false },
-  ]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedTags = searchParams.getAll('tags');
+
+  const tags = ['web', 'js', '.net', 'asp.net core'];
 
   const handleTagClick = (name: string) => {
-    setTags((prevState) => prevState.map((tag) => (tag.name === name ? { ...tag, checked: !tag.checked } : tag)));
+    const tags = selectedTags.includes(name) ? selectedTags.filter((tag) => tag !== name) : [...selectedTags, name];
+    setSearchParams({ tags });
   };
 
   return (
     <div className={styles.tags}>
       {tags.map((tag) => (
-        <Tag key={tag.name} color={tag.checked ? 'green' : 'default'} onClick={() => handleTagClick(tag.name)}>
-          {tag.name}
+        <Tag key={tag} color={selectedTags.includes(tag) ? 'green' : 'default'} onClick={() => handleTagClick(tag)}>
+          {tag}
         </Tag>
       ))}
     </div>
