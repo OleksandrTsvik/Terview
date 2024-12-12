@@ -7,7 +7,8 @@ public static class OptionsExtensions
 {
     public static IServiceCollection AddOptionsWithValidation(this IServiceCollection services)
     {
-        services.AddOptionsWithFluentValidation<MongoDbOptions>("MongoDb");
+        services.AddOptionsWithFluentValidation<CorsOptions>(CorsOptions.ConfigurationSectionName);
+        services.AddOptionsWithFluentValidation<MongoDbOptions>(MongoDbOptions.ConfigurationSectionName);
 
         return services;
     }

@@ -9,12 +9,14 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .AddExceptionHandler()
     .AddOptionsWithValidation()
+    .AddApiCors(builder)
     .AddEndpoints()
     .AddFluentValidation()
     .AddMongoDb();
 
 WebApplication app = builder.Build();
 
+app.UseApiCors();
 app.MapEndpoints();
 
 if (EnvironmentHelper.IsLocal)

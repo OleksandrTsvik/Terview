@@ -29,6 +29,27 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddApiCors(this IServiceCollection services, WebApplicationBuilder builder)
+    {
+        CorsOptions? corsOptions = builder.Configuration
+            .GetSection(CorsOptions.ConfigurationSectionName)
+            .Get<CorsOptions>();
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy", policy =>
+            {
+                policy
+                    .WithOrigins(corsOptions?.Origins ?? [])
+                    .AllowCredentials()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
+
+        return services;
+    }
+
     public static IServiceCollection AddMongoDb(this IServiceCollection services)
     {
         BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
