@@ -1,5 +1,5 @@
 import { GithubOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icons';
-import { Flex, Layout } from 'antd';
+import { Avatar, Flex, Layout } from 'antd';
 import { Link } from 'react-router';
 
 import styles from './footer.module.scss';
@@ -9,8 +9,10 @@ export default function Footer() {
 
   return (
     <Layout.Footer className={styles.footer}>
-      <Flex gap="large" wrap="wrap">
-        <Link to="/">Home</Link>
+      <Flex align="center" gap="large" wrap="wrap">
+        <Link to="/">
+          <Avatar src="/favicon.svg" size={30} />
+        </Link>
         <Link to="/dashboard">Dashboard</Link>
       </Flex>
       <span className={styles.copyright}>

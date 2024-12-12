@@ -3,6 +3,7 @@ import { Collapse, Flex, Pagination, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
+import { QUERY_PARAMS } from './notes.constants';
 import { NoteResponse } from './notes.models';
 import { PagedList } from '../../common/pagination.models';
 import { stringToBoolean } from '../../common/type-converters.utils';
@@ -43,11 +44,11 @@ export default function NotesList({ data }: Props) {
   };
 
   const handlePaginationChange = (page: number, pageSize: number) => {
-    setSearchParams((prevState) => {
-      prevState.set('page', page.toString());
-      prevState.set('size', pageSize.toString());
+    setSearchParams((prev) => {
+      prev.set(QUERY_PARAMS.PAGE_NUMBER, page.toString());
+      prev.set(QUERY_PARAMS.PAGE_SIZE, pageSize.toString());
 
-      return prevState;
+      return prev;
     });
   };
 

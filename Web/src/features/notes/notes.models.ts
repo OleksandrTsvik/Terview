@@ -1,6 +1,7 @@
 import { PagingParams } from '../../common/pagination.models';
 
 export interface GetNotesRequest extends PagingParams {
+  query?: string | null;
   tags?: string[];
 }
 

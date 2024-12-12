@@ -1,4 +1,4 @@
-import { ConfigProvider, theme } from 'antd';
+import { App, ConfigProvider, theme } from 'antd';
 import ukUA from 'antd/locale/uk_UA';
 
 interface Props {
@@ -14,7 +14,7 @@ export default function AntdProvider({ children }: Props) {
         cssVar: true,
       }}
     >
-      {children}
+      <App>{children}</App>
     </ConfigProvider>
   );
 }
