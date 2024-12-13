@@ -80,5 +80,8 @@ dotnet_diagnostic.IDE0305.severity = none
 # IDE1006: Naming rule violation: Missing prefix: 'I'
 dotnet_diagnostic.IDE1006.severity = warning
 
+# CA2016: Forward the CancellationToken parameter to methods that take one
+dotnet_diagnostic.CA2016.severity = warning
+
 # CS8019: Unnecessary using directive
 dotnet_diagnostic.CS8019.severity = warning
