@@ -7,6 +7,11 @@
   span {
     cursor: pointer;
   }
+
+  &__reset {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .notes {
@@ -27,6 +32,10 @@
       background: var(--ant-color-bg-container);
       border: none !important;
       border-radius: var(--ant-border-radius-lg) !important;
+
+      .item__title + div {
+        margin-top: var(--ant-margin-xxs);
+      }
     }
   }
 

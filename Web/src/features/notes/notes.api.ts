@@ -6,13 +6,24 @@ export const notesApi = api.injectEndpoints({
   overrideExisting: false,
   endpoints: (builder) => ({
     getNotes: builder.query<PagedList<NoteResponse>, GetNotesRequest>({
-      query: (params) => ({
+      query: ({ query, tags, pageNumber, pageSize }) => ({
         url: '/notes',
-        params,
+        params: {
+          q: query,
+          t: tags,
+          p: pageNumber,
+          ps: pageSize,
+        },
+      }),
+      providesTags: ['Notes'],
+    }),
+    getNotesTags: builder.query<string[], void>({
+      query: () => ({
+        url: '/notes/tags',
       }),
       providesTags: ['Notes'],
     }),
   }),
 });
 
-export const { useGetNotesQuery } = notesApi;
+export const { useGetNotesQuery, useGetNotesTagsQuery } = notesApi;

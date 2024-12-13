@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
 import { QUERY_PARAMS } from './notes.constants';
+import NotesItemContent from './notes.item-content';
+import NotesItemLabel from './notes.item-label';
 import { NoteResponse } from './notes.models';
 import { PagedList } from '../../common/pagination.models';
 import { stringToBoolean } from '../../common/type-converters.utils';
@@ -19,7 +21,8 @@ interface Props {
 }
 
 export default function NotesList({ data }: Props) {
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedTags = searchParams.getAll(QUERY_PARAMS.TAGS);
 
   const [expandAll, setExpandAll] = useState(initStateExpandAll);
   const [activeKeys, setActiveKeys] = useState(expandAll ? data.items.map(({ id }) => id) : []);
@@ -67,9 +70,9 @@ export default function NotesList({ data }: Props) {
           activeKey={activeKeys}
           items={data.items.map((note) => ({
             key: note.id,
-            label: note.title,
-            children: <p style={{ margin: 0 }}>{note.content}</p>,
             className: styles.list__item,
+            label: <NotesItemLabel note={note} selectedTags={selectedTags} />,
+            children: <NotesItemContent note={note} />,
           }))}
           onChange={handleCollapseNote}
         />
