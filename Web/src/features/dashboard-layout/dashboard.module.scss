@@ -1,0 +1,57 @@
+@use '../../variables' as *;
+
+.sider {
+  overflow: auto;
+  height: 100vh;
+  position: fixed;
+  inset-inline-start: 0;
+  top: 0;
+  bottom: 0;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+}
+
+.logo {
+  display: block;
+  text-align: center;
+  padding: var(--ant-padding-xxs) 0;
+}
+
+.layout {
+  margin-inline-start: 80px;
+  min-height: 100vh;
+  transition: all var(--ant-motion-duration-mid);
+
+  &_sider_active {
+    margin-inline-start: 200px;
+  }
+
+  &__header {
+    padding: 0;
+    background: var(--ant-color-bg-container);
+
+    .header__collapsed_button {
+      font-size: 16px;
+      width: 64px;
+      height: 64px;
+    }
+  }
+
+  &__main {
+    overflow: initial;
+    margin: 24px 16px 8px;
+    padding: 24px;
+    background: var(--ant-color-bg-container);
+    border-radius: var(--ant-border-radius-lg);
+  }
+}
+
+@media (max-width: $screen-xs) {
+  [class*='ant-layout-sider-collapsed'] {
+    margin-inline-start: -80px;
+  }
+
+  .layout:not(.layout_sider_active) {
+    margin-inline-start: 0;
+  }
+}
