@@ -17,6 +17,10 @@ indent_size = 2
 [*.{json,xml,resx}]
 indent_size = 2
 
+# YAML
+[*.yml]
+quote_type = single
+
 # Markup files
 [*.html]
 indent_size = 2
