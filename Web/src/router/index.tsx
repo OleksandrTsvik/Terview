@@ -1,10 +1,10 @@
 import { RouteObject, createBrowserRouter } from 'react-router';
 
-import DashboardLayoutPage from '../features/dashboard-layout/dashboard-layout.page';
-import DashboardNotFoundPage from '../features/dashboard-layout/dashboard-not-found.page';
-import LayoutPage from '../features/layout/layout.page';
-import NotFoundPage from '../features/layout/not-found.page';
-import NotesPage from '../features/notes-page/notes.page';
+import DashboardLayoutPage from '@/features/dashboard-layout/dashboard-layout.page';
+import DashboardNotFoundPage from '@/features/dashboard-layout/dashboard-not-found.page';
+import LayoutPage from '@/features/layout/layout.page';
+import NotFoundPage from '@/features/layout/not-found.page';
+import NotesPage from '@/features/notes-page/notes.page';
 
 const routes: RouteObject[] = [
   {

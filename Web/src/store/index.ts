@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { api } from '../api';
+import { api } from '@/api';
+import { IS_DEVELOPMENT } from '@/common/node-env.constants';
+
 import reducer from './reducer';
-import { IS_DEVELOPMENT } from '../common/node-env.constants';
 
 export const store = configureStore({
   reducer,

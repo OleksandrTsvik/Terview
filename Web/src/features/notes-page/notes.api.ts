@@ -1,6 +1,7 @@
+import { api } from '@/api';
+import { PagedList } from '@/common/pagination.models';
+
 import { GetNotesRequest, NoteResponse } from './notes.models';
-import { api } from '../../api';
-import { PagedList } from '../../common/pagination.models';
 
 export const notesApi = api.injectEndpoints({
   overrideExisting: false,

@@ -2,10 +2,11 @@ import { Avatar, Layout } from 'antd';
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router';
 
+import { classnames } from '@/common/class-names.utils';
+import { stringToBoolean } from '@/common/type-converters.utils';
+
 import DashboardHeader from './dashboard.header';
 import DashboardSiderMenu from './dashboard.sider-menu';
-import { classnames } from '../../common/class-names.utils';
-import { stringToBoolean } from '../../common/type-converters.utils';
 
 import styles from './dashboard.module.scss';
 

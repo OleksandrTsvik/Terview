@@ -3,12 +3,13 @@ import { Collapse, Flex, Pagination, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
+import { PagedList } from '@/common/pagination.models';
+import { stringToBoolean } from '@/common/type-converters.utils';
+
 import { QUERY_PARAMS } from './notes.constants';
 import NotesItemContent from './notes.item-content';
 import NotesItemLabel from './notes.item-label';
 import { NoteResponse } from './notes.models';
-import { PagedList } from '../../common/pagination.models';
-import { stringToBoolean } from '../../common/type-converters.utils';
 
 import styles from './notes.module.scss';
 

@@ -39,6 +39,11 @@ export default tseslint.config(
           groups: ['builtin', 'external', ['internal', 'parent', 'sibling', 'index'], 'object', 'type', 'unknown'],
           pathGroups: [
             {
+              pattern: '@/**',
+              group: 'external',
+              position: 'after',
+            },
+            {
               patternOptions: {
                 dot: true,
                 nocomment: true,

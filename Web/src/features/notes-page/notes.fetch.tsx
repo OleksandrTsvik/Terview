@@ -1,11 +1,12 @@
 import { useSearchParams } from 'react-router';
 
+import { stringToNumber } from '@/common/type-converters.utils';
+
 import { useGetNotesQuery } from './notes.api';
 import { QUERY_PARAMS } from './notes.constants';
 import NotesEmpty from './notes.empty';
 import NotesList from './notes.list';
 import NotesSkeleton from './notes.skeleton';
-import { stringToNumber } from '../../common/type-converters.utils';
 
 export default function NotesFetch() {
   const [searchParams] = useSearchParams();
