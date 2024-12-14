@@ -56,37 +56,35 @@ export default function NotesList({ data }: Props) {
   };
 
   return (
-    <>
-      <section className={styles.notes}>
-        <Flex className={styles.notes__total} justify="space-between" wrap>
-          <Typography.Text type="secondary" onClick={handleExpandAllToggle}>
-            <CaretRightOutlined rotate={expandAll ? 90 : 0} /> {expandAll ? 'Згорнути все' : 'Розгорнути все'}
-          </Typography.Text>
-          <Typography.Text type="secondary">Усього записів: {data.totalItems}</Typography.Text>
-        </Flex>
-        <Collapse
-          className={styles.notes__list}
-          bordered={false}
-          activeKey={activeKeys}
-          items={data.items.map((note) => ({
-            key: note.id,
-            className: styles.list__item,
-            label: <NotesItemLabel note={note} selectedTags={selectedTags} />,
-            children: <NotesItemContent note={note} />,
-          }))}
-          onChange={handleCollapseNote}
-        />
-        <Pagination
-          className={styles.notes__pagination}
-          showSizeChanger
-          responsive
-          current={data.currentPage}
-          total={data.totalItems}
-          pageSize={data.pageSize}
-          pageSizeOptions={[5, 10, 15, 20, 30]}
-          onChange={handlePaginationChange}
-        />
-      </section>
-    </>
+    <section className={styles.notes}>
+      <Flex className={styles.notes__total} justify="space-between" wrap>
+        <Typography.Text type="secondary" onClick={handleExpandAllToggle}>
+          <CaretRightOutlined rotate={expandAll ? 90 : 0} /> {expandAll ? 'Згорнути все' : 'Розгорнути все'}
+        </Typography.Text>
+        <Typography.Text type="secondary">Усього записів: {data.totalItems}</Typography.Text>
+      </Flex>
+      <Collapse
+        className={styles.notes__list}
+        bordered={false}
+        activeKey={activeKeys}
+        items={data.items.map((note) => ({
+          key: note.id,
+          className: styles.list__item,
+          label: <NotesItemLabel note={note} selectedTags={selectedTags} />,
+          children: <NotesItemContent note={note} />,
+        }))}
+        onChange={handleCollapseNote}
+      />
+      <Pagination
+        className={styles.notes__pagination}
+        showSizeChanger
+        responsive
+        current={data.currentPage}
+        total={data.totalItems}
+        pageSize={data.pageSize}
+        pageSizeOptions={[5, 10, 15, 20, 30]}
+        onChange={handlePaginationChange}
+      />
+    </section>
   );
 }
