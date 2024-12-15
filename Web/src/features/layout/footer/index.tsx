@@ -4,6 +4,8 @@ import { Link } from 'react-router';
 
 import styles from './footer.module.scss';
 
+import logo from '@/assets/logo.svg';
+
 export default function Footer() {
   const email = 'oleksandr.zwick@gmail.com';
 
@@ -11,7 +13,7 @@ export default function Footer() {
     <Layout.Footer className={styles.footer}>
       <Flex align="center" gap="large" wrap="wrap">
         <Link to="/">
-          <Avatar src="/favicon.svg" size={30} />
+          <Avatar src={logo} size={30} />
         </Link>
         <Link to="/dashboard">Dashboard</Link>
       </Flex>

@@ -10,6 +10,8 @@ import DashboardSiderMenu from './dashboard.sider-menu';
 
 import styles from './dashboard.module.scss';
 
+import logo from '@/assets/logo.svg';
+
 function initStateCollapsed() {
   return stringToBoolean(localStorage.getItem('sider-collapsed'));
 }
@@ -26,7 +28,7 @@ export default function DashboardLayoutPage() {
     <Layout>
       <Layout.Sider className={styles.sider} collapsible collapsed={collapsed} trigger={null}>
         <Link className={styles.logo} to="/">
-          <Avatar src="/favicon.svg" size={40} />
+          <Avatar src={logo} size={40} />
         </Link>
         <DashboardSiderMenu />
       </Layout.Sider>

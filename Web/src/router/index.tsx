@@ -1,5 +1,6 @@
 import { RouteObject, createBrowserRouter } from 'react-router';
 
+import { BASE_URL } from '@/common/node-env.constants';
 import DashboardLayoutPage from '@/features/dashboard-layout/dashboard-layout.page';
 import DashboardNotFoundPage from '@/features/dashboard-layout/dashboard-not-found.page';
 import LayoutPage from '@/features/layout/layout.page';
@@ -26,5 +27,5 @@ const routes: RouteObject[] = [
 ];
 
 export const router = createBrowserRouter(routes, {
-  basename: import.meta.env.BASE_URL,
+  basename: BASE_URL,
 });

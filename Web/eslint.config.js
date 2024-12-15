@@ -39,11 +39,6 @@ export default tseslint.config(
           groups: ['builtin', 'external', ['internal', 'parent', 'sibling', 'index'], 'object', 'type', 'unknown'],
           pathGroups: [
             {
-              pattern: '@/**',
-              group: 'external',
-              position: 'after',
-            },
-            {
               patternOptions: {
                 dot: true,
                 nocomment: true,
@@ -61,6 +56,11 @@ export default tseslint.config(
               },
               pattern: '*.{svg,png,jpg}',
               group: 'type',
+              position: 'after',
+            },
+            {
+              pattern: '@/**',
+              group: 'external',
               position: 'after',
             },
           ],
