@@ -1,4 +1,4 @@
-export function classnames(classNames: string | string[] | { [key: string]: boolean }): string {
+export function classnames(classNames: string | string[] | { [className: string]: boolean }): string {
   if (typeof classNames === 'string') {
     return classNames;
   } else if (Array.isArray(classNames)) {

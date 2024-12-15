@@ -3,11 +3,14 @@ import path from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 
-export default ({ mode }: { mode: string }) => {
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+export default defineConfig(({ mode }) => {
+  // Load env file based on `mode` in the current working directory.
+  // Set the third parameter to '' to load all env regardless of the
+  // `VITE_` prefix.
+  const env = loadEnv(mode, process.cwd(), '');
 
-  return defineConfig({
-    base: process.env.VITE_BASE_URL,
+  return {
+    base: env.VITE_BASE_URL,
     server: {
       port: 3000,
     },
@@ -17,5 +20,5 @@ export default ({ mode }: { mode: string }) => {
       },
     },
     plugins: [react()],
-  });
-};
+  };
+});
