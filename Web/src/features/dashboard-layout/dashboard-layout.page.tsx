@@ -35,7 +35,9 @@ export default function DashboardLayoutPage() {
       <Layout className={classnames({ [styles.layout]: true, [styles.layout_sider_active]: !collapsed })}>
         <DashboardHeader collapsed={collapsed} onCollapse={handleCollapse} />
         <Layout.Content className={styles.layout__main}>
-          <Outlet />
+          <div className={styles.main__content}>
+            <Outlet />
+          </div>
         </Layout.Content>
       </Layout>
     </Layout>

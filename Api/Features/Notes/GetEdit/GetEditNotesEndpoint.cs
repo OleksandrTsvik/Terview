@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using SharedKernel;
 
-namespace Api.Features.Notes.Get;
+namespace Api.Features.Notes.GetEdit;
 
-public class GetNotesEndpoint : IEndpoint
+public class GetEditNotesEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("notes", Handler)
+        app.MapGet("notes/edit", Handler)
             .WithTags(EndpointTags.Notes);
     }
 
@@ -25,7 +25,6 @@ public class GetNotesEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
-            .Where(note => note.DeletedAt == null)
             .WhereIf(
                 !string.IsNullOrWhiteSpace(query),
                 note => note.Title.Contains(query!) || note.Content.Contains(query!))
@@ -39,7 +38,11 @@ public class GetNotesEndpoint : IEndpoint
                 Content = note.Content,
                 Tags = note.Tags,
                 CreatedAt = note.CreatedAt,
+                CreatedBy = note.CreatedBy,
                 UpdatedAt = note.UpdatedAt,
+                UpdatedBy = note.UpdatedBy,
+                DeletedAt = note.DeletedAt,
+                DeletedBy = note.DeletedBy
             })
             .OrderByDescending(note => note.UpdatedAt)
             .ThenByDescending(note => note.CreatedAt)

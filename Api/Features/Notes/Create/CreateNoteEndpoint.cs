@@ -20,11 +20,18 @@ public class CreateNoteEndpoint : IEndpoint
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
+        List<string> tags = request.Tags?
+            .Where(tag => !string.IsNullOrWhiteSpace(tag))
+            .Select(tag => tag.Trim())
+            .Distinct()
+            .ToList() ?? [];
+
         var note = new Note
         {
             Title = request.Title,
             Content = request.Content,
-            Tags = request.Tags ?? []
+            Tags = tags,
+            CreatedBy = Guid.Empty
         };
 
         await notesCollection.InsertOneAsync(note, null, cancellationToken);
