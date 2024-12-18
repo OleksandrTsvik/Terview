@@ -1,3 +1,5 @@
+import { TextEditorOutput } from '@/components/text-editor';
+
 import { NoteResponse } from './notes-edit.models';
 
 interface Props {
@@ -5,5 +7,5 @@ interface Props {
 }
 
 export default function NotesEditItemContent({ note }: Props) {
-  return <p style={{ margin: 0 }}>{note.content}</p>;
+  return <TextEditorOutput text={note.content} />;
 }

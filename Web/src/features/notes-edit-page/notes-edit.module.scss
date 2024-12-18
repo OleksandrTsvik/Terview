@@ -1,3 +1,11 @@
+.title {
+  margin-bottom: var(--ant-margin);
+
+  h1 {
+    margin: 0;
+  }
+}
+
 .tags {
   display: flex;
   gap: var(--ant-padding-xs);

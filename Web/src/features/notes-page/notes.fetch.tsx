@@ -1,3 +1,4 @@
+import { Spin } from 'antd';
 import { useSearchParams } from 'react-router';
 
 import { stringToNumber } from '@/common/type-converters.utils';
@@ -16,9 +17,9 @@ export default function NotesFetch() {
   const pageNumber = stringToNumber(searchParams.get(QUERY_PARAMS.PAGE_NUMBER), 1);
   const pageSize = stringToNumber(searchParams.get(QUERY_PARAMS.PAGE_SIZE), 10);
 
-  const { data, isFetching } = useGetNotesQuery({ query, tags, pageNumber, pageSize });
+  const { data, isLoading, isFetching } = useGetNotesQuery({ query, tags, pageNumber, pageSize });
 
-  if (isFetching) {
+  if (isLoading) {
     return <NotesSkeleton />;
   }
 
@@ -26,5 +27,9 @@ export default function NotesFetch() {
     return <NotesEmpty />;
   }
 
-  return <NotesList data={data} />;
+  return (
+    <Spin spinning={isFetching}>
+      <NotesList data={data} />
+    </Spin>
+  );
 }

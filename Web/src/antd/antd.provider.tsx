@@ -14,7 +14,7 @@ export default function AntdProvider({ children }: Props) {
         cssVar: true,
       }}
     >
-      <App>{children}</App>
+      <App notification={{ placement: 'bottomRight' }}>{children}</App>
     </ConfigProvider>
   );
 }
