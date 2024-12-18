@@ -1,12 +1,12 @@
 import { api } from '@/api';
 import { PagedList } from '@/common/pagination.models';
 
-import { GetEditNotesRequest, NoteResponse } from './notes-edit.models';
+import { GetNotesEditRequest, NoteResponse } from './notes-edit.models';
 
 export const notesEditApi = api.injectEndpoints({
   overrideExisting: false,
   endpoints: (builder) => ({
-    getEditNotes: builder.query<PagedList<NoteResponse>, GetEditNotesRequest>({
+    getNotesEdit: builder.query<PagedList<NoteResponse>, GetNotesEditRequest>({
       query: ({ query, tags, pageNumber, pageSize }) => ({
         url: '/notes/edit',
         params: {
@@ -48,5 +48,5 @@ export const notesEditApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetEditNotesQuery, useGetNotesTagsQuery, useDeleteNoteMutation, useRestoreNoteMutation } =
+export const { useGetNotesEditQuery, useGetNotesTagsQuery, useDeleteNoteMutation, useRestoreNoteMutation } =
   notesEditApi;

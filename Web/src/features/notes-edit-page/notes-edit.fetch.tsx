@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router';
 
 import { stringToNumber } from '@/common/type-converters.utils';
 
-import { useGetEditNotesQuery } from './notes-edit.api';
+import { useGetNotesEditQuery } from './notes-edit.api';
 import { QUERY_PARAMS } from './notes-edit.constants';
 import NotesEditEmpty from './notes-edit.empty';
 import NotesEditList from './notes-edit.list';
@@ -17,7 +17,7 @@ export default function NotesEditFetch() {
   const pageNumber = stringToNumber(searchParams.get(QUERY_PARAMS.PAGE_NUMBER), 1);
   const pageSize = stringToNumber(searchParams.get(QUERY_PARAMS.PAGE_SIZE), 10);
 
-  const { data, isLoading, isFetching } = useGetEditNotesQuery({ query, tags, pageNumber, pageSize });
+  const { data, isLoading, isFetching } = useGetNotesEditQuery({ query, tags, pageNumber, pageSize });
 
   if (isLoading) {
     return <NotesEditSkeleton />;

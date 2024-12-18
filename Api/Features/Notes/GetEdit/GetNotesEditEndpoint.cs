@@ -8,7 +8,7 @@ using SharedKernel;
 
 namespace Api.Features.Notes.GetEdit;
 
-public class GetEditNotesEndpoint : IEndpoint
+public class GetNotesEditEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
