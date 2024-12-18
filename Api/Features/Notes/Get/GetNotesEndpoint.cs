@@ -25,7 +25,7 @@ public class GetNotesEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
-            .Where(note => note.DeletedAt == null)
+            .Where(note => note.DeletedAt == null && note.DeletedBy == null)
             .WhereIf(
                 !string.IsNullOrWhiteSpace(query),
                 note => note.Title.Contains(query!) || note.Content.Contains(query!))

@@ -2,6 +2,7 @@ using Api.Endpoints;
 using Api.Features.Notes.Create;
 using Domain.Notes;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
 namespace Api.Features.Notes.Update;
@@ -15,7 +16,7 @@ public class UpdateNoteEndpoint : IEndpoint
     }
 
     public static async Task<Results<NoContent, NotFound>> Handler(
-        Guid id,
+        [FromRoute] Guid id,
         CreateNoteRequest request,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
@@ -26,7 +27,11 @@ public class UpdateNoteEndpoint : IEndpoint
             .Distinct()
             .ToList() ?? [];
 
-        FilterDefinition<Note> filter = Builders<Note>.Filter.Eq(note => note.Id, id);
+        FilterDefinitionBuilder<Note> filterBuilder = Builders<Note>.Filter;
+        FilterDefinition<Note> filter = filterBuilder.And(
+            filterBuilder.Eq(note => note.Id, id),
+            filterBuilder.Eq(note => note.DeletedAt, null),
+            filterBuilder.Eq(note => note.DeletedBy, null));
 
         UpdateDefinition<Note> update = Builders<Note>.Update
             .Set(note => note.Title, request.Title)

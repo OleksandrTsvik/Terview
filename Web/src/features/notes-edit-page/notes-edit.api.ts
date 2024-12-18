@@ -17,6 +17,13 @@ export const notesEditApi = api.injectEndpoints({
         },
       }),
       providesTags: ['Notes'],
+      transformResponse: (response: PagedList<NoteResponse>) => ({
+        ...response,
+        items: response.items.map((note) => ({
+          ...note,
+          isDeleted: !!note.deletedAt || !!note.deletedBy,
+        })),
+      }),
     }),
     getNotesTags: builder.query<string[], void>({
       query: () => ({
@@ -24,7 +31,22 @@ export const notesEditApi = api.injectEndpoints({
       }),
       providesTags: ['Notes'],
     }),
+    deleteNote: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/notes/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ['Notes']),
+    }),
+    restoreNote: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/notes/restore/${id}`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ['Notes']),
+    }),
   }),
 });
 
-export const { useGetEditNotesQuery, useGetNotesTagsQuery } = notesEditApi;
+export const { useGetEditNotesQuery, useGetNotesTagsQuery, useDeleteNoteMutation, useRestoreNoteMutation } =
+  notesEditApi;

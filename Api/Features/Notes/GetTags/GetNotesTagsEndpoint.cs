@@ -21,6 +21,7 @@ public class GetNotesTagsEndpoint : IEndpoint
         List<string> tags = await notesCollection.AsQueryable()
             .SelectMany(note => note.Tags)
             .Distinct()
+            .OrderBy(tag => tag)
             .ToListAsync(cancellationToken);
 
         return TypedResults.Ok(tags);

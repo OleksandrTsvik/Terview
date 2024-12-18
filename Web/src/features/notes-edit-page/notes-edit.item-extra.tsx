@@ -1,9 +1,11 @@
 import { MoreOutlined } from '@ant-design/icons';
-import { Button, Dropdown, MenuProps } from 'antd';
+import { App, Button, Dropdown, MenuProps } from 'antd';
+import { MenuInfo } from 'rc-menu/es/interface';
 import { useNavigate } from 'react-router';
 
-import { DeleteIcon, EditIcon } from '@/components/icons';
+import { DeleteIcon, EditIcon, RestoreIcon } from '@/components/icons';
 
+import { useDeleteNoteMutation, useRestoreNoteMutation } from './notes-edit.api';
 import { NoteResponse } from './notes-edit.models';
 
 interface Props {
@@ -12,28 +14,74 @@ interface Props {
 
 export default function NotesEditItemExtra({ note }: Props) {
   const navigate = useNavigate();
+  const { modal, notification } = App.useApp();
+
+  const [restoreNote] = useRestoreNoteMutation();
+  const [deleteNote] = useDeleteNoteMutation();
+
+  const handleRestoreClick = (info: MenuInfo) => {
+    info.domEvent.stopPropagation();
+
+    modal.confirm({
+      content: `Ви дійсно бажаєте відновити '${note.title}'?`,
+      onOk: () =>
+        restoreNote({ id: note.id })
+          .unwrap()
+          .catch(() => notification.error({ message: 'Виникла помилка' })),
+    });
+  };
+
+  const handleEditClick = (info: MenuInfo) => {
+    info.domEvent.stopPropagation();
+    navigate(`/dashboard/notes/edit/${note.id}`);
+  };
+
+  const handleDeleteClick = (info: MenuInfo) => {
+    info.domEvent.stopPropagation();
+
+    modal.confirm({
+      content: `Ви дійсно бажаєте видалити '${note.title}'?`,
+      okButtonProps: { danger: true },
+      onOk: () =>
+        deleteNote({ id: note.id })
+          .unwrap()
+          .catch(() => notification.error({ message: 'Виникла помилка' })),
+    });
+  };
 
   const items: MenuProps['items'] = [
-    {
-      key: '1',
-      icon: <EditIcon />,
-      label: 'Редагувати',
-      onClick: () => navigate(`/dashboard/notes/edit/${note.id}`),
-    },
-    {
-      key: '2',
-      icon: <DeleteIcon />,
-      label: 'Видалити',
-    },
+    ...(note.isDeleted
+      ? [
+          {
+            key: 'restore',
+            icon: <RestoreIcon />,
+            label: 'Відновити',
+            onClick: handleRestoreClick,
+          },
+        ]
+      : [
+          {
+            key: 'edit',
+            icon: <EditIcon />,
+            label: 'Редагувати',
+            onClick: handleEditClick,
+          },
+          {
+            key: 'delete',
+            icon: <DeleteIcon />,
+            label: 'Видалити',
+            onClick: handleDeleteClick,
+          },
+        ]),
   ];
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
   };
 
   return (
     <Dropdown menu={{ items }}>
-      <Button type="text" icon={<MoreOutlined />} onClick={handleClick} />
+      <Button type="text" icon={<MoreOutlined />} onClick={handleButtonClick} />
     </Dropdown>
   );
 }

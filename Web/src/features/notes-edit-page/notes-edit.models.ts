@@ -16,4 +16,6 @@ export interface NoteResponse {
   updatedBy?: string;
   deletedAt?: Date;
   deletedBy?: string;
+
+  isDeleted: boolean;
 }

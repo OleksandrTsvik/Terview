@@ -3,6 +3,7 @@ import { Collapse, Flex, Pagination, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
+import { classnames } from '@/common/class-names.utils';
 import { PagedList } from '@/common/pagination.models';
 import { stringToBoolean } from '@/common/type-converters.utils';
 
@@ -71,7 +72,7 @@ export default function NotesEditList({ data }: Props) {
         activeKey={activeKeys}
         items={data.items.map((note) => ({
           key: note.id,
-          className: styles.list__item,
+          className: classnames({ [styles.list__item]: true, [styles.list__item_deleted]: note.isDeleted }),
           label: <NotesEditItemLabel note={note} selectedTags={selectedTags} />,
           children: <NotesEditItemContent note={note} />,
           extra: <NotesEditItemExtra note={note} />,

@@ -44,7 +44,8 @@ public class GetEditNotesEndpoint : IEndpoint
                 DeletedAt = note.DeletedAt,
                 DeletedBy = note.DeletedBy
             })
-            .OrderByDescending(note => note.UpdatedAt)
+            .OrderBy(note => note.DeletedAt)
+            .ThenByDescending(note => note.UpdatedAt)
             .ThenByDescending(note => note.CreatedAt)
             .ToPagedListAsync(pageNumber, pageSize, cancellationToken);
 
