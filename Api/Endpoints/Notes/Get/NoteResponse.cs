@@ -7,6 +7,6 @@ public class NoteResponse
     public string Content { get; set; } = string.Empty;
     public List<string> Tags { get; set; } = [];
 
-    public DateTime CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
+    public DateTime CreatedOnUtc { get; set; }
+    public DateTime? UpdatedOnUtc { get; set; }
 }

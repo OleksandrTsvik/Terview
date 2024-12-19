@@ -37,16 +37,16 @@ public class GetNotesEditEndpoint : IEndpoint
                 Title = note.Title,
                 Content = note.Content,
                 Tags = note.Tags,
-                CreatedAt = note.CreatedAt,
+                CreatedOnUtc = note.CreatedOnUtc,
                 CreatedBy = note.CreatedBy,
-                UpdatedAt = note.UpdatedAt,
+                UpdatedOnUtc = note.UpdatedOnUtc,
                 UpdatedBy = note.UpdatedBy,
-                DeletedAt = note.DeletedAt,
+                DeletedOnUtc = note.DeletedOnUtc,
                 DeletedBy = note.DeletedBy
             })
-            .OrderBy(note => note.DeletedAt)
-            .ThenByDescending(note => note.UpdatedAt)
-            .ThenByDescending(note => note.CreatedAt)
+            .OrderBy(note => note.DeletedOnUtc)
+            .ThenByDescending(note => note.UpdatedOnUtc)
+            .ThenByDescending(note => note.CreatedOnUtc)
             .ToPagedListAsync(pageNumber, pageSize, cancellationToken);
 
         return TypedResults.Ok(notes);

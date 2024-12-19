@@ -34,14 +34,14 @@ public class UpdateNoteEndpoint : IEndpoint
         FilterDefinitionBuilder<Note> filterBuilder = Builders<Note>.Filter;
         FilterDefinition<Note> filter = filterBuilder.And(
             filterBuilder.Eq(note => note.Id, id),
-            filterBuilder.Eq(note => note.DeletedAt, null),
+            filterBuilder.Eq(note => note.DeletedOnUtc, null),
             filterBuilder.Eq(note => note.DeletedBy, null));
 
         UpdateDefinition<Note> update = Builders<Note>.Update
             .Set(note => note.Title, request.Title)
             .Set(note => note.Content, request.Content)
             .Set(note => note.Tags, tags)
-            .Set(note => note.UpdatedAt, DateTime.UtcNow)
+            .Set(note => note.UpdatedOnUtc, DateTime.UtcNow)
             .Set(note => note.UpdatedBy, userContext.UserId);
 
         UpdateResult updateResult = await notesCollection

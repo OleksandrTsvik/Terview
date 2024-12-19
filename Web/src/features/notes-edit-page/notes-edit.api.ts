@@ -21,7 +21,7 @@ export const notesEditApi = api.injectEndpoints({
         ...response,
         items: response.items.map((note) => ({
           ...note,
-          isDeleted: !!note.deletedAt || !!note.deletedBy,
+          isDeleted: !!note.deletedOnUtc || !!note.deletedBy,
         })),
       }),
     }),

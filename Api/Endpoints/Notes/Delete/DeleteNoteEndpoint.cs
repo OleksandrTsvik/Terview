@@ -24,7 +24,7 @@ public class DeleteNoteEndpoint : IEndpoint
         FilterDefinition<Note> filter = Builders<Note>.Filter.Eq(note => note.Id, id);
 
         UpdateDefinition<Note> update = Builders<Note>.Update
-            .Set(note => note.DeletedAt, DateTime.UtcNow)
+            .Set(note => note.DeletedOnUtc, DateTime.UtcNow)
             .Set(note => note.DeletedBy, userContext.UserId);
 
         UpdateResult updateResult = await notesCollection

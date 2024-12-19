@@ -27,11 +27,11 @@ public class GetNoteEditByIdEndpoint : IEndpoint
                 Title = note.Title,
                 Content = note.Content,
                 Tags = note.Tags,
-                CreatedAt = note.CreatedAt,
+                CreatedOnUtc = note.CreatedOnUtc,
                 CreatedBy = note.CreatedBy,
-                UpdatedAt = note.UpdatedAt,
+                UpdatedOnUtc = note.UpdatedOnUtc,
                 UpdatedBy = note.UpdatedBy,
-                DeletedAt = note.DeletedAt,
+                DeletedOnUtc = note.DeletedOnUtc,
                 DeletedBy = note.DeletedBy
             })
             .FirstOrDefaultAsync(cancellationToken);

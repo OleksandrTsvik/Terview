@@ -24,7 +24,7 @@ public class GetNotesEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
-            .Where(note => note.DeletedAt == null && note.DeletedBy == null)
+            .Where(note => note.DeletedOnUtc == null && note.DeletedBy == null)
             .WhereIf(
                 !string.IsNullOrWhiteSpace(query),
                 note => note.Title.Contains(query!) || note.Content.Contains(query!))
@@ -37,11 +37,11 @@ public class GetNotesEndpoint : IEndpoint
                 Title = note.Title,
                 Content = note.Content,
                 Tags = note.Tags,
-                CreatedAt = note.CreatedAt,
-                UpdatedAt = note.UpdatedAt,
+                CreatedOnUtc = note.CreatedOnUtc,
+                UpdatedOnUtc = note.UpdatedOnUtc,
             })
-            .OrderByDescending(note => note.UpdatedAt)
-            .ThenByDescending(note => note.CreatedAt)
+            .OrderByDescending(note => note.UpdatedOnUtc)
+            .ThenByDescending(note => note.CreatedOnUtc)
             .ToPagedListAsync(pageNumber, pageSize, cancellationToken);
 
         return TypedResults.Ok(notes);

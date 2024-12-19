@@ -18,7 +18,7 @@ public class GetNotesTagsEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         List<string> tags = await notesCollection.AsQueryable()
-            .Where(note => note.DeletedAt == null && note.DeletedBy == null)
+            .Where(note => note.DeletedOnUtc == null && note.DeletedBy == null)
             .SelectMany(note => note.Tags)
             .Distinct()
             .OrderBy(tag => tag)

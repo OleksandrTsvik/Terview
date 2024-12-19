@@ -22,7 +22,7 @@ public class RestoreNoteByIdEndpoint : IEndpoint
         FilterDefinition<Note> filter = Builders<Note>.Filter.Eq(note => note.Id, id);
 
         UpdateDefinition<Note> update = Builders<Note>.Update
-            .Set(note => note.DeletedAt, null)
+            .Set(note => note.DeletedOnUtc, null)
             .Set(note => note.DeletedBy, null);
 
         UpdateResult updateResult = await notesCollection
