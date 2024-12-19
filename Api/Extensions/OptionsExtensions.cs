@@ -1,4 +1,5 @@
 using Api.Options;
+using Api.Options.Validators;
 using Microsoft.Extensions.Options;
 
 namespace Api.Extensions;
@@ -9,6 +10,8 @@ public static class OptionsExtensions
     {
         services.AddOptionsWithFluentValidation<CorsOptions>(CorsOptions.ConfigurationSectionName);
         services.AddOptionsWithFluentValidation<MongoDbOptions>(MongoDbOptions.ConfigurationSectionName);
+        services.AddOptionsWithFluentValidation<JwtOptions>(JwtOptions.ConfigurationSectionName);
+        services.AddOptionsWithFluentValidation<SeedOptions>(SeedOptions.ConfigurationSectionName);
 
         return services;
     }

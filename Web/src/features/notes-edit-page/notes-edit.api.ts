@@ -16,7 +16,7 @@ export const notesEditApi = api.injectEndpoints({
           ps: pageSize,
         },
       }),
-      providesTags: ['Notes'],
+      providesTags: ['UserSession', 'Notes'],
       transformResponse: (response: PagedList<NoteResponse>) => ({
         ...response,
         items: response.items.map((note) => ({
@@ -29,7 +29,7 @@ export const notesEditApi = api.injectEndpoints({
       query: () => ({
         url: '/notes/tags',
       }),
-      providesTags: ['Notes'],
+      providesTags: ['UserSession', 'Notes'],
     }),
     deleteNote: builder.mutation<void, { id: string }>({
       query: ({ id }) => ({

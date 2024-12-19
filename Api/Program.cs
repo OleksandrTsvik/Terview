@@ -9,12 +9,15 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .AddExceptionHandler()
     .AddOptionsWithValidation()
+    .AddAuth()
     .AddApiCors(builder)
     .AddEndpoints()
     .AddFluentValidation()
     .AddMongoDb();
 
 WebApplication app = builder.Build();
+
+await app.ConfigureDatabaseAsync();
 
 app.UseApiCors();
 app.MapEndpoints();
@@ -26,5 +29,8 @@ if (EnvironmentHelper.IsLocal)
 }
 
 app.UseExceptionHandler();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

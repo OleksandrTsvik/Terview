@@ -29,7 +29,7 @@ export default function DashboardLayoutPage() {
       <ScrollRestoration />
       <Layout>
         <Layout.Sider className={styles.sider} collapsible collapsed={collapsed} trigger={null}>
-          <Link className={styles.logo} to="/">
+          <Link to="/" className={styles.logo}>
             <Avatar src={logo} size={40} />
           </Link>
           <DashboardSiderMenu />
