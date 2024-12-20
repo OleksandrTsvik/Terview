@@ -60,12 +60,8 @@
   }
 }
 
-@media (max-width: $screen-xs) {
-  [class*='ant-layout-sider-collapsed'] {
-    margin-inline-start: -80px;
-  }
-
-  .layout:not(.layout_sider_active) {
+@media (max-width: $screen-sm) {
+  .layout {
     margin-inline-start: 0;
   }
 }

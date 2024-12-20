@@ -1,6 +1,8 @@
 import { App, ConfigProvider, theme } from 'antd';
 import ukUA from 'antd/locale/uk_UA';
 
+import styles from './antd.module.scss';
+
 interface Props {
   children: React.ReactNode;
 }
@@ -14,7 +16,9 @@ export default function AntdProvider({ children }: Props) {
         cssVar: true,
       }}
     >
-      <App notification={{ placement: 'bottomRight' }}>{children}</App>
+      <App className={styles.app} notification={{ placement: 'bottomRight' }}>
+        {children}
+      </App>
     </ConfigProvider>
   );
 }

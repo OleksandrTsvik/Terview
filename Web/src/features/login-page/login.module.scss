@@ -14,7 +14,8 @@
   }
 
   .form {
-    width: 360px;
+    width: 100%;
+    max-width: 360px;
 
     [class*='ant-form-item']:last-of-type {
       margin-bottom: 0;
