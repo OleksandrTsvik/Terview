@@ -6,6 +6,7 @@ import AuthMiddleware from './auth/auth.middleware';
 import { router } from './router';
 import { store } from './store';
 
+import './components/ckeditor/ckeditor.scss';
 import './index.scss';
 
 export default function App() {

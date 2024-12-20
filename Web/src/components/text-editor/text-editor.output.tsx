@@ -3,5 +3,5 @@ interface Props {
 }
 
 export default function TextEditorOutput({ text }: Props) {
-  return <p style={{ margin: 0 }}>{text}</p>;
+  return <div className="ck-content" dangerouslySetInnerHTML={{ __html: text }} />;
 }

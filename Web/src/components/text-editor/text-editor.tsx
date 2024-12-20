@@ -1,4 +1,4 @@
-import { Input } from 'antd';
+import Ckeditor from '../ckeditor';
 
 interface Props {
   value?: string;
@@ -7,11 +7,19 @@ interface Props {
 
 export default function TextEditor({ value, onChange, ...props }: Props) {
   return (
-    <Input.TextArea
+    <Ckeditor
       {...props}
-      autoSize={{ minRows: 3, maxRows: 16 }}
-      value={value}
-      onChange={(event) => onChange && onChange(event.target.value)}
+      config={{
+        simpleUpload: {
+          uploadUrl: '/images',
+          withCredentials: false,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access-token')}`,
+          },
+        },
+      }}
+      data={value}
+      onChange={(_, editor) => onChange && onChange(editor.getData())}
     />
   );
 }

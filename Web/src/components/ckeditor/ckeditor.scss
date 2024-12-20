@@ -1,0 +1,11 @@
+@import 'ckeditor5/ckeditor5.css';
+
+.ck {
+  .ck-editor__main {
+    color: #1a1a1a;
+
+    .ck-content.ck-editor__editable.ck-editor__editable_inline {
+      min-height: 200px;
+    }
+  }
+}
