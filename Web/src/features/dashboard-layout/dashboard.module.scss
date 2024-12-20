@@ -27,8 +27,16 @@
   }
 
   &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ant-padding-xs);
     padding: 0;
     background: var(--ant-color-bg-container);
+
+    & > nav {
+      margin-right: var(--ant-margin);
+    }
 
     .header__collapsed_button {
       font-size: 16px;
@@ -43,6 +51,12 @@
     padding: 24px;
     background: var(--ant-color-bg-container);
     border-radius: var(--ant-border-radius-lg);
+
+    .main__content {
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
   }
 }
 
@@ -53,5 +67,17 @@
 
   .layout:not(.layout_sider_active) {
     margin-inline-start: 0;
+  }
+}
+
+@media (max-width: $screen-md) {
+  .layout__header {
+    background: var(--ant-color-bg-elevated);
+  }
+
+  .layout__main {
+    margin: 0;
+    padding: 12px;
+    border-radius: 0;
   }
 }

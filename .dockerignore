@@ -1,0 +1,21 @@
+**/bin
+**/obj
+**/node_modules
+
+**/.dockerignore
+**/Dockerfile*
+
+**/.git
+**/.gitignore
+**/.editorconfig
+**/README.md
+
+**/Web
+
+# Development configuration
+**/Api/appsettings.*.json
+
+# IDEs
+**/.vs
+**/.vscode
+**/.idea

@@ -6,4 +6,9 @@ public static class WebApplicationExtensions
     {
         app.UseCors("CorsPolicy");
     }
+
+    public static async Task ConfigureDatabaseAsync(this WebApplication app)
+    {
+        await app.Services.GetRequiredService<DatabaseInitializer>().Execute();
+    }
 }

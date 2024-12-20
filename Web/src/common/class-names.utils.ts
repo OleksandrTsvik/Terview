@@ -1,5 +1,7 @@
-export function classnames(classNames: string | string[] | { [key: string]: boolean }): string {
-  if (typeof classNames === 'string') {
+import { isString } from './type-guards.utils';
+
+export function classnames(classNames: string | string[] | { [className: string]: boolean }): string {
+  if (isString(classNames)) {
     return classNames;
   } else if (Array.isArray(classNames)) {
     return classNames.join(' ');

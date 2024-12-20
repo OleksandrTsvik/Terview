@@ -1,7 +1,10 @@
+using Api.Authentication;
 using Api.Middleware;
 using Api.Options;
 using Domain.Notes;
+using Domain.Users;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -50,6 +53,24 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddAuth(this IServiceCollection services)
+    {
+        services.AddHttpContextAccessor();
+
+        services.AddSingleton<PasswordHasher>();
+        services.AddSingleton<TokenProvider>();
+        services.AddScoped<UserContext>();
+
+        services.ConfigureOptions<JwtBearerOptionsConfiguration>();
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer();
+
+        services.AddAuthorization();
+
+        return services;
+    }
+
     public static IServiceCollection AddMongoDb(this IServiceCollection services)
     {
         BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
@@ -57,7 +78,8 @@ public static class ServiceCollectionExtensions
         services
             .AddMongoClient()
             .AddMongoDatabase()
-            .AddMongoCollections();
+            .AddMongoCollections()
+            .AddSingleton<DatabaseInitializer>();
 
         return services;
     }
@@ -106,6 +128,9 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddMongoCollections(this IServiceCollection services)
     {
         services.AddMongoCollection<Note>("notes");
+
+        services.AddMongoCollection<User>("users");
+        services.AddMongoCollection<RefreshToken>("refresh_tokens");
 
         return services;
     }
