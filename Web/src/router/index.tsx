@@ -3,6 +3,7 @@ import { RouteObject, createBrowserRouter } from 'react-router';
 import { BASE_URL } from '@/common/node-env.constants';
 import DashboardLayoutPage from '@/features/dashboard-layout/dashboard-layout.page';
 import DashboardNotFoundPage from '@/features/dashboard-layout/dashboard-not-found.page';
+import DashboardPage from '@/features/dashboard-page/dashboard.page';
 import LayoutPage from '@/features/layout/layout.page';
 import NotFoundPage from '@/features/layout/not-found.page';
 import LoginPage from '@/features/login-page/login.page';
@@ -26,7 +27,7 @@ const routes: RouteObject[] = [
         path: '/dashboard',
         element: <DashboardLayoutPage />,
         children: [
-          { index: true, element: 'Dashboard' },
+          { index: true, element: <DashboardPage /> },
           { path: 'notes', element: <NotesEditPage /> },
           { path: 'notes/add', element: <NoteAddPage /> },
           { path: 'notes/edit/:noteId', element: <NoteEditPage /> },

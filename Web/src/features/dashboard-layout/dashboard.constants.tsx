@@ -1,4 +1,11 @@
-import { BookOutlined, DashboardOutlined, PictureOutlined, TagsOutlined } from '@ant-design/icons';
+import {
+  BookOutlined,
+  ContainerOutlined,
+  DashboardOutlined,
+  PictureOutlined,
+  TagsOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { MenuProps } from 'antd';
 
 export const SIDER_ITEMS: MenuProps['items'] = [
@@ -18,8 +25,18 @@ export const SIDER_ITEMS: MenuProps['items'] = [
     label: 'Теги',
   },
   {
-    key: '/dashboard/gallery',
+    key: '/dashboard/images',
     icon: <PictureOutlined />,
-    label: 'Галерея',
+    label: 'Зображення',
+  },
+  {
+    key: '/dashboard/users',
+    icon: <UserOutlined />,
+    label: 'Користувачі',
+  },
+  {
+    key: '/dashboard/logs',
+    icon: <ContainerOutlined />,
+    label: 'Логи',
   },
 ];
