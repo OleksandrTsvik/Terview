@@ -1,19 +1,22 @@
+/* eslint-disable react-refresh/only-export-components */
+import { lazy } from 'react';
 import { RouteObject, createBrowserRouter } from 'react-router';
 
 import { BASE_URL } from '@/common/node-env.constants';
-import DashboardLayoutPage from '@/features/dashboard-layout/dashboard-layout.page';
-import DashboardNotFoundPage from '@/features/dashboard-layout/dashboard-not-found.page';
-import DashboardPage from '@/features/dashboard-page/dashboard.page';
-import LayoutPage from '@/features/layout/layout.page';
-import NotFoundPage from '@/features/layout/not-found.page';
-import LoginPage from '@/features/login-page/login.page';
-import NoteAddPage from '@/features/note-add-page/note-add.page';
-import NoteEditPage from '@/features/note-edit-page/note-edit.page';
-import NotesEditPage from '@/features/notes-edit-page/notes-edit.page';
-import NotesPage from '@/features/notes-page/notes.page';
 
 import AnonymousOutlet from './anonymous.outlet';
 import PrivateOutlet from './private.outlet';
+
+const DashboardLayoutPage = lazy(() => import('@/features/dashboard-layout/dashboard-layout.page'));
+const DashboardNotFoundPage = lazy(() => import('@/features/dashboard-layout/dashboard-not-found.page'));
+const DashboardPage = lazy(() => import('@/features/dashboard-page/dashboard.page'));
+const LayoutPage = lazy(() => import('@/features/layout/layout.page'));
+const NotFoundPage = lazy(() => import('@/features/layout/not-found.page'));
+const LoginPage = lazy(() => import('@/features/login-page/login.page'));
+const NoteAddPage = lazy(() => import('@/features/note-add-page/note-add.page'));
+const NoteEditPage = lazy(() => import('@/features/note-edit-page/note-edit.page'));
+const NotesEditPage = lazy(() => import('@/features/notes-edit-page/notes-edit.page'));
+const NotesPage = lazy(() => import('@/features/notes-page/notes.page'));
 
 const routes: RouteObject[] = [
   {
