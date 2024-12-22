@@ -3,6 +3,12 @@
 ## .env.production
 
 ```
+Serilog__MinimumLevel__Default=Warning
+Serilog__WriteTo__0__Name=Console
+Serilog__WriteTo__1__Name=MongoDBBson
+Serilog__WriteTo__1__Args__databaseUrl=
+Serilog__WriteTo__1__Args__collectionName=logs
+
 Cors__Origins__0=
 
 MongoDb__ConnectionString=

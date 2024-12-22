@@ -1,6 +1,4 @@
-using Api.Options;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -16,11 +14,9 @@ public class GetMongoDbDashboardEndpoint : IEndpoint
     }
 
     public static async Task<Ok<MongoDbResponse>> Handler(
-        IOptions<MongoDbOptions> mongoDbOptions,
-        IMongoClient mongoClient,
+        IMongoDatabase mongoDatabase,
         CancellationToken cancellationToken)
     {
-        IMongoDatabase mongoDatabase = mongoClient.GetDatabase(mongoDbOptions.Value.DatabaseName);
         IAsyncCursor<BsonDocument> collections = await mongoDatabase
             .ListCollectionsAsync(null, cancellationToken);
 

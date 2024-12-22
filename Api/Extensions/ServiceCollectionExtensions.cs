@@ -99,7 +99,8 @@ public static class ServiceCollectionExtensions
                 {
                     clusterBuilder.Subscribe<CommandStartedEvent>(@event =>
                     {
-                        Console.WriteLine($"{@event.CommandName} - {@event.Command.ToJson()}");
+                        string timestamp = @event.Timestamp.ToString("HH:mm:ss");
+                        Console.WriteLine($"[{timestamp}] {@event.CommandName} - {@event.Command.ToJson()}");
                     });
                 };
             }
