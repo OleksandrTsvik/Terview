@@ -1,3 +1,5 @@
+import { TokenProvider } from '@/auth/token.provider';
+
 import Ckeditor from '../ckeditor';
 
 interface Props {
@@ -14,7 +16,7 @@ export default function TextEditor({ value, onChange, ...props }: Props) {
           uploadUrl: '/images',
           withCredentials: false,
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('access-token')}`,
+            Authorization: `Bearer ${TokenProvider.getAccessToken()}`,
           },
         },
       }}

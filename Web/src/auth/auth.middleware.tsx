@@ -5,6 +5,7 @@ import { useAppDispatch } from '@/hooks/redux-hooks';
 
 import { useRefreshTokenMutation } from './auth.api';
 import { setCredentials } from './auth.slice';
+import { TokenProvider } from './token.provider';
 import useAuth from './use-auth';
 
 interface Props {
@@ -20,7 +21,7 @@ export default function AuthMiddleware({ children }: Props) {
   const [refreshTokenMutation] = useRefreshTokenMutation();
 
   useLayoutEffect(() => {
-    const refreshToken = localStorage.getItem('refresh-token');
+    const refreshToken = TokenProvider.getRefreshToken();
 
     if (isAuth || !refreshToken) {
       setIsLoading(false);
@@ -30,13 +31,13 @@ export default function AuthMiddleware({ children }: Props) {
     refreshTokenMutation({ refreshToken })
       .unwrap()
       .then((response) => {
-        localStorage.setItem('access-token', response.accessToken);
-        localStorage.setItem('refresh-token', response.refreshToken);
+        TokenProvider.setAccessToken(response.accessToken);
+        TokenProvider.setRefreshToken(response.refreshToken);
         appDispatch(setCredentials({ email: response.email }));
       })
       .catch(() => {
-        localStorage.removeItem('access-token');
-        localStorage.removeItem('refresh-token');
+        TokenProvider.deleteAccessToken();
+        TokenProvider.deleteRefreshToken();
       })
       .finally(() => setIsLoading(false));
 
