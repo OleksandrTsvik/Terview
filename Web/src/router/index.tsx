@@ -13,6 +13,7 @@ const DashboardPage = lazy(() => import('@/features/dashboard-page/dashboard.pag
 const LayoutPage = lazy(() => import('@/features/layout/layout.page'));
 const NotFoundPage = lazy(() => import('@/features/layout/not-found.page'));
 const LoginPage = lazy(() => import('@/features/login-page/login.page'));
+const LogsPage = lazy(() => import('@/features/logs-page/logs.page'));
 const NoteAddPage = lazy(() => import('@/features/note-add-page/note-add.page'));
 const NoteEditPage = lazy(() => import('@/features/note-edit-page/note-edit.page'));
 const NotesEditPage = lazy(() => import('@/features/notes-edit-page/notes-edit.page'));
@@ -34,6 +35,7 @@ const routes: RouteObject[] = [
           { path: 'notes', element: <NotesEditPage /> },
           { path: 'notes/add', element: <NoteAddPage /> },
           { path: 'notes/edit/:noteId', element: <NoteEditPage /> },
+          { path: 'logs', element: <LogsPage /> },
           { path: '*', element: <DashboardNotFoundPage /> },
         ],
       },

@@ -3,6 +3,7 @@ import { RouterProvider } from 'react-router';
 
 import AntdProvider from './antd/antd.provider';
 import AuthMiddleware from './auth/auth.middleware';
+import AppSuspense from './common/app.suspense';
 import { router } from './router';
 import { store } from './store';
 
@@ -13,9 +14,11 @@ export default function App() {
   return (
     <Provider store={store}>
       <AntdProvider>
-        <AuthMiddleware>
-          <RouterProvider router={router} />
-        </AuthMiddleware>
+        <AppSuspense>
+          <AuthMiddleware>
+            <RouterProvider router={router} />
+          </AuthMiddleware>
+        </AppSuspense>
       </AntdProvider>
     </Provider>
   );
