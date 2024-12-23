@@ -20,6 +20,9 @@ Jwt__SecretKey=
 Jwt__Issuer=
 Jwt__Audience=
 
+Outbox__PeriodInSeconds=
+Outbox__BatchSize=
+
 Seed__Users__0__Email=
 Seed__Users__0__Password=
 ```

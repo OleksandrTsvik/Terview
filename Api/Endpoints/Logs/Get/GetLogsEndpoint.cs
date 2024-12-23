@@ -21,11 +21,9 @@ public class GetLogsEndpoint : IEndpoint
         [FromQuery(Name = "l")] string[]? levels,
         [FromQuery(Name = "p")] int? pageNumber,
         [FromQuery(Name = "ps")] int? pageSize,
-        IMongoDatabase mongoDatabase,
+        IMongoCollection<Log> logsCollection,
         CancellationToken cancellationToken)
     {
-        IMongoCollection<Log> logsCollection = mongoDatabase.GetCollection<Log>("logs");
-
         PagedList<Log> logs = await logsCollection.AsQueryable()
             .WhereIf(
                 levels?.Length > 0,

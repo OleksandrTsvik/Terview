@@ -1,6 +1,10 @@
 using Api.Authentication;
+using Api.Endpoints.Logs;
+using Api.Endpoints.Notes.Create;
+using Api.Events;
 using Api.Middleware;
 using Api.Options;
+using Api.Outbox;
 using Domain.Notes;
 using Domain.Users;
 using FluentValidation;
@@ -71,6 +75,19 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddEvents(this IServiceCollection services)
+    {
+        services.AddScoped<IEventBus, EventBus>();
+        services.AddScoped<IEventPublisher, EventPublisher>();
+
+        services.AddScoped<IEventHandler<CreateNoteEvent>, CreateNoteEventHandler>();
+
+        services.AddScoped<OutboxProcessor>();
+        services.AddHostedService<OutboxBackgroundService>();
+
+        return services;
+    }
+
     public static IServiceCollection AddMongoDb(this IServiceCollection services)
     {
         BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
@@ -99,8 +116,8 @@ public static class ServiceCollectionExtensions
                 {
                     clusterBuilder.Subscribe<CommandStartedEvent>(@event =>
                     {
-                        string timestamp = @event.Timestamp.ToString("HH:mm:ss");
-                        Console.WriteLine($"[{timestamp}] {@event.CommandName} - {@event.Command.ToJson()}");
+                        string timestamp = @event.Timestamp.ToLocalTime().ToString("HH:mm:ss");
+                        Console.WriteLine($"[{timestamp} MONGO] {@event.CommandName} - {@event.Command.ToJson()}");
                     });
                 };
             }
@@ -128,6 +145,9 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddMongoCollections(this IServiceCollection services)
     {
+        services.AddMongoCollection<Log>("logs");
+        services.AddMongoCollection<OutboxMessage>("outbox_messages");
+
         services.AddMongoCollection<Note>("notes");
 
         services.AddMongoCollection<User>("users");

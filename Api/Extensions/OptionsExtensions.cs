@@ -11,6 +11,7 @@ public static class OptionsExtensions
         services.AddOptionsWithFluentValidation<CorsOptions>(CorsOptions.ConfigurationSectionName);
         services.AddOptionsWithFluentValidation<MongoDbOptions>(MongoDbOptions.ConfigurationSectionName);
         services.AddOptionsWithFluentValidation<JwtOptions>(JwtOptions.ConfigurationSectionName);
+        services.AddOptionsWithFluentValidation<OutboxOptions>(OutboxOptions.ConfigurationSectionName);
         services.AddOptionsWithFluentValidation<SeedOptions>(SeedOptions.ConfigurationSectionName);
 
         return services;

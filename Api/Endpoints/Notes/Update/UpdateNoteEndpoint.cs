@@ -13,7 +13,7 @@ public class UpdateNoteEndpoint : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPut("notes/{id:guid}", Handler)
-            .WithRequestValidation<UpdateNoteValidator>()
+            .WithRequestValidation<UpdateNoteRequest>()
             .WithTags(Tags.Notes)
             .RequireAuthorization();
     }
