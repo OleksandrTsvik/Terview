@@ -23,6 +23,13 @@ Jwt__Audience=
 Outbox__PeriodInSeconds=
 Outbox__BatchSize=
 
+Scheduler__PeriodInSeconds=
+Scheduler__BatchSize=
+
+Jobs__DeleteLogsSkipCount=
+Jobs__DeleteNotesAfterDays=
+Jobs__DeleteProcessedOutboxMessagesAfterDays=
+
 Seed__Users__0__Email=
 Seed__Users__0__Password=
 ```

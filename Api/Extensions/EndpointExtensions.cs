@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Api.Endpoints;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -16,6 +17,9 @@ public static class EndpointExtensions
             .ToArray();
 
         services.TryAddEnumerable(serviceDescriptors);
+
+        services.ConfigureHttpJsonOptions(options =>
+            options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
         return services;
     }

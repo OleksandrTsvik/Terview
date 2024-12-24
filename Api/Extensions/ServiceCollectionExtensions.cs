@@ -1,10 +1,13 @@
+using System.Reflection;
 using Api.Authentication;
 using Api.Endpoints.Logs;
 using Api.Endpoints.Notes.Create;
 using Api.Events;
+using Api.Jobs;
 using Api.Middleware;
 using Api.Options;
 using Api.Outbox;
+using Api.Scheduler;
 using Domain.Notes;
 using Domain.Users;
 using FluentValidation;
@@ -12,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
@@ -88,9 +92,36 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddJobs(this IServiceCollection services)
+    {
+        TypeInfo[] jopTypes = AssemblyReference.Assembly
+            .DefinedTypes
+            .Where(type =>
+                type is { IsAbstract: false, IsInterface: false } &&
+                type.IsAssignableTo(typeof(IJob)))
+            .ToArray();
+
+        foreach (TypeInfo jobType in jopTypes)
+        {
+            services.AddScoped(jobType);
+        }
+
+        services.AddScoped<SchedulerProcessor>();
+        services.AddHostedService<SchedulerBackgroundService>();
+
+        return services;
+    }
+
     public static IServiceCollection AddMongoDb(this IServiceCollection services)
     {
         BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+
+        var pack = new ConventionPack
+        {
+            new EnumRepresentationConvention(BsonType.String)
+        };
+
+        ConventionRegistry.Register("StringEnumConvention", pack, _ => true);
 
         services
             .AddMongoClient()
@@ -147,6 +178,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddMongoCollection<Log>("logs");
         services.AddMongoCollection<OutboxMessage>("outbox_messages");
+        services.AddMongoCollection<Job>("jobs");
 
         services.AddMongoCollection<Note>("notes");
 

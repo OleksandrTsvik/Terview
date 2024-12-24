@@ -17,6 +17,7 @@ builder.Services
     .AddApiCors(builder)
     .AddEndpoints()
     .AddEvents()
+    .AddJobs()
     .AddFluentValidation()
     .AddMongoDb();
 
