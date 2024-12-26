@@ -28,7 +28,7 @@ public class GetJobsEndpoint : IEndpoint
         PagedList<Job> jobs = await jobsCollection.AsQueryable()
             .WhereIf(
                 !string.IsNullOrWhiteSpace(query),
-                job => job.Name.Contains(query!, StringComparison.InvariantCultureIgnoreCase))
+                job => job.Name.ToLower().Contains(query!.ToLower()))
             .WhereIf(
                 lastRunStatus.HasValue,
                 job => job.LastRunStatus == lastRunStatus)

@@ -28,8 +28,8 @@ public class GetNotesEndpoint : IEndpoint
             .WhereIf(
                 !string.IsNullOrWhiteSpace(query),
                 note =>
-                    note.Title.Contains(query!, StringComparison.InvariantCultureIgnoreCase) ||
-                    note.Content.Contains(query!, StringComparison.InvariantCultureIgnoreCase))
+                    note.Title.ToLower().Contains(query!.ToLower()) ||
+                    note.Content.ToLower().Contains(query!.ToLower()))
             .WhereIf(
                 tags?.Length > 0,
                 note => tags!.All(tag => note.Tags.Contains(tag)))
