@@ -1,4 +1,4 @@
-import { PagedList } from '@/common/pagination.models';
+import { PagedList, PagingParams } from '@/common/pagination.models';
 
 export interface SchedulerState {
   selectedUpdateJobPeriod?: JobResponse;
@@ -18,10 +18,8 @@ export interface JobResponse {
   error?: string;
 }
 
-export interface GetJobsRequest {
+export interface GetJobsRequest extends PagingParams {
   lastRunStatus?: string | null;
-  pageNumber: number;
-  pageSize: number;
 }
 
 export interface UpdateJobPeriodRequest {

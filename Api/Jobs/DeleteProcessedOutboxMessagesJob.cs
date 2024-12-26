@@ -22,6 +22,7 @@ public class DeleteProcessedOutboxMessagesJob : IJob
     {
         await _outboxMessagesCollection.DeleteManyAsync(
             outboxMessage =>
+                outboxMessage.Error == null &&
                 outboxMessage.ProcessedOnUtc.HasValue &&
                 outboxMessage.ProcessedOnUtc.Value.AddDays(_afterDays) < DateTime.UtcNow,
             cancellationToken);

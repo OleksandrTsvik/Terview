@@ -1,4 +1,4 @@
-import { PagedList } from '@/common/pagination.models';
+import { PagedList, PagingParams } from '@/common/pagination.models';
 
 export interface GetLogsResponse extends PagedList<LogResponse> {
   logLevels: string[];
@@ -12,8 +12,6 @@ export interface LogResponse {
   metadata?: string;
 }
 
-export interface GetLogsRequest {
+export interface GetLogsRequest extends PagingParams {
   levels: string[];
-  pageNumber: number;
-  pageSize: number;
 }

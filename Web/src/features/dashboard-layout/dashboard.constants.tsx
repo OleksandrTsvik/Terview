@@ -2,6 +2,7 @@ import {
   BookOutlined,
   ContainerOutlined,
   DashboardOutlined,
+  DropboxOutlined,
   HistoryOutlined,
   PictureOutlined,
   TagsOutlined,
@@ -34,6 +35,11 @@ export const SIDER_ITEMS: MenuProps['items'] = [
     key: '/dashboard/users',
     icon: <UserOutlined />,
     label: 'Користувачі',
+  },
+  {
+    key: '/dashboard/outbox',
+    icon: <DropboxOutlined />,
+    label: 'Outbox',
   },
   {
     key: '/dashboard/scheduler',
