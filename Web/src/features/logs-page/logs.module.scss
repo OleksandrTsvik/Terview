@@ -1,5 +1,9 @@
 .total {
-  text-align: end;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--ant-padding-xs);
+  flex-wrap: wrap;
   margin: 0 0 var(--ant-margin-md);
 }
 

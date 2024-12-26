@@ -46,8 +46,7 @@ public class GetMongoDbDashboardEndpoint : IEndpoint
         }, cancellationToken);
 
         response.Collections = response.Collections
-            .OrderByDescending(collection => collection.TotalDocuments)
-            .ThenByDescending(collection => collection.StorageSizeInMegabytes)
+            .OrderBy(collection => collection.Name)
             .ToList();
 
         return TypedResults.Ok(response);

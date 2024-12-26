@@ -34,7 +34,7 @@ public class GetLogsEndpoint : IEndpoint
         List<string> logLevels = await logsCollection.AsQueryable()
             .Select(log => log.Level)
             .Distinct()
-            .OrderBy(log => log)
+            .OrderBy(level => level)
             .ToListAsync(cancellationToken);
 
         var responseItems = logs.Items

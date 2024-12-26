@@ -53,6 +53,8 @@ Then open [http://localhost:3000/](http://localhost:3000/) to see web app.
 - [Migrate to ESLint 9.x](https://medium.com/ekino-france/migrate-to-eslint-9-x-29727f790249)
 - [[Vite] Deploying a Static Site](https://vite.dev/guide/static-deploy)
 - [[Vite] Using Environment Variables in Config](https://vite.dev/config/#using-environment-variables-in-config)
+- [How to create a type guard for string union types in TypeScript](https://www.qualdesk.com/blog/2021/type-guard-for-string-union-types-typescript/)
+- [Day.js](https://day.js.org/docs/en/installation/installation)
 - [[CKEditor 5] React rich text editor component (npm)](https://ckeditor.com/docs/ckeditor5/latest/getting-started/installation/self-hosted/react/react-default-npm.html)
 - [[CKEditor 5] Simple upload adapter](https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/simple-upload-adapter.html)
 - [[YouTube] Request Validation in .NET / C# Minimal APIs](https://www.youtube.com/watch?v=1qJTVcR1VN8)

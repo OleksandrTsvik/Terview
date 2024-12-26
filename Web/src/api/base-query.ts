@@ -17,7 +17,7 @@ export const baseQuery = fetchBaseQuery({
 
     return headers;
   },
-  paramsSerializer: queryString.stringify,
+  paramsSerializer: (params) => queryString.stringify(params, { skipNull: true }),
 });
 
 // Preventing multiple unauthorized errors

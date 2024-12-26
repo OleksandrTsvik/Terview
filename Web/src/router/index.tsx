@@ -18,6 +18,7 @@ const NoteAddPage = lazy(() => import('@/features/note-add-page/note-add.page'))
 const NoteEditPage = lazy(() => import('@/features/note-edit-page/note-edit.page'));
 const NotesEditPage = lazy(() => import('@/features/notes-edit-page/notes-edit.page'));
 const NotesPage = lazy(() => import('@/features/notes-page/notes.page'));
+const SchedulerPage = lazy(() => import('@/features/scheduler-page/scheduler.page'));
 
 const routes: RouteObject[] = [
   {
@@ -35,6 +36,7 @@ const routes: RouteObject[] = [
           { path: 'notes', element: <NotesEditPage /> },
           { path: 'notes/add', element: <NoteAddPage /> },
           { path: 'notes/edit/:noteId', element: <NoteEditPage /> },
+          { path: 'scheduler', element: <SchedulerPage /> },
           { path: 'logs', element: <LogsPage /> },
           { path: '*', element: <DashboardNotFoundPage /> },
         ],

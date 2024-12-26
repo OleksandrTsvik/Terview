@@ -2,6 +2,7 @@ import { Empty, Skeleton, Spin, Typography } from 'antd';
 import { useSearchParams } from 'react-router';
 
 import { stringToNumber } from '@/common/type-converters.utils';
+import RefetchButton from '@/components/refetch-button';
 
 import { useGetLogsQuery } from './logs.api';
 import { QUERY_PARAMS } from './logs.constants';
@@ -18,7 +19,13 @@ export default function LogsPage() {
   const pageNumber = stringToNumber(searchParams.get(QUERY_PARAMS.PAGE_NUMBER), 1);
   const pageSize = stringToNumber(searchParams.get(QUERY_PARAMS.PAGE_SIZE), 20);
 
-  const { data, isLoading, isFetching } = useGetLogsQuery({ levels, pageNumber, pageSize });
+  const { data, isLoading, isFetching, refetch } = useGetLogsQuery(
+    { levels, pageNumber, pageSize },
+    {
+      pollingInterval: 15000,
+      refetchOnMountOrArgChange: true,
+    },
+  );
 
   if (isLoading) {
     return <Skeleton active />;
@@ -29,13 +36,16 @@ export default function LogsPage() {
   }
 
   return (
-    <Spin spinning={isFetching}>
+    <>
       <Typography.Paragraph className={styles.total} type="secondary">
-        Усього логів: {data.totalItems}
+        <span>Усього логів: {data.totalItems}</span>
+        <RefetchButton loading={isFetching} onClick={refetch} />
       </Typography.Paragraph>
-      <LogsLevels levels={data.logLevels} />
-      <LogsList logs={data.items} />
-      <LogsPagination current={data.currentPage} total={data.totalItems} pageSize={data.pageSize} />
-    </Spin>
+      <Spin spinning={isFetching}>
+        <LogsLevels levels={data.logLevels} />
+        <LogsList logs={data.items} />
+        <LogsPagination current={data.currentPage} total={data.totalItems} pageSize={data.pageSize} />
+      </Spin>
+    </>
   );
 }

@@ -1,8 +1,8 @@
-import { MoreOutlined } from '@ant-design/icons';
-import { App, Button, Dropdown, MenuProps } from 'antd';
+import { App, MenuProps } from 'antd';
 import { MenuInfo } from 'rc-menu/es/interface';
 import { useNavigate } from 'react-router';
 
+import ActionsDropdown from '@/components/actions-dropdown';
 import { DeleteIcon, EditIcon, RestoreIcon } from '@/components/icons';
 
 import { useDeleteNoteMutation, useRestoreNoteMutation } from './notes-edit.api';
@@ -79,9 +79,5 @@ export default function NotesEditItemExtra({ note }: Props) {
     event.stopPropagation();
   };
 
-  return (
-    <Dropdown menu={{ items }}>
-      <Button type="text" icon={<MoreOutlined />} onClick={handleButtonClick} />
-    </Dropdown>
-  );
+  return <ActionsDropdown items={items} onClick={handleButtonClick} />;
 }
