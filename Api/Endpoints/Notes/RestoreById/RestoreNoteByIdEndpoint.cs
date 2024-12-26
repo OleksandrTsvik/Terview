@@ -32,6 +32,6 @@ public class RestoreNoteByIdEndpoint : IEndpoint
                 null,
                 cancellationToken);
 
-        return updateResult.ModifiedCount > 0 ? TypedResults.NoContent() : TypedResults.NotFound();
+        return updateResult.MatchedCount > 0 ? TypedResults.NoContent() : TypedResults.NotFound();
     }
 }

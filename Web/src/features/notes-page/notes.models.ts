@@ -10,6 +10,6 @@ export interface NoteResponse {
   title: string;
   content: string;
   tags: string[];
-  createdOnUtc: Date;
-  updatedOnUtc?: Date;
+  createdOnUtc: string;
+  updatedOnUtc?: string;
 }

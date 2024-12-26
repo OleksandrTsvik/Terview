@@ -5,6 +5,7 @@ import { useAppDispatch } from '@/hooks/redux-hooks';
 import { useLoginMutation } from './auth.api';
 import { LoginRequest } from './auth.models';
 import { setCredentials } from './auth.slice';
+import { TokenProvider } from './token.provider';
 
 export default function useLogin() {
   const appDispatch = useAppDispatch();
@@ -16,14 +17,14 @@ export default function useLogin() {
     try {
       const response = await loginMutation(data).unwrap();
 
-      localStorage.setItem('access-token', response.accessToken);
-      localStorage.setItem('refresh-token', response.refreshToken);
+      TokenProvider.setAccessToken(response.accessToken);
+      TokenProvider.setRefreshToken(response.refreshToken);
       appDispatch(setCredentials({ email: response.email }));
     } catch {
       notification.error({ message: 'Неправильна адреса електронної пошти або пароль' });
 
-      localStorage.removeItem('access-token');
-      localStorage.removeItem('refresh-token');
+      TokenProvider.deleteAccessToken();
+      TokenProvider.deleteRefreshToken();
     }
   };
 

@@ -27,7 +27,9 @@ public class GetNotesEditEndpoint : IEndpoint
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
             .WhereIf(
                 !string.IsNullOrWhiteSpace(query),
-                note => note.Title.Contains(query!) || note.Content.Contains(query!))
+                note =>
+                    note.Title.Contains(query!, StringComparison.InvariantCultureIgnoreCase) ||
+                    note.Content.Contains(query!, StringComparison.InvariantCultureIgnoreCase))
             .WhereIf(
                 tags?.Length > 0,
                 note => tags!.All(tag => note.Tags.Contains(tag)))

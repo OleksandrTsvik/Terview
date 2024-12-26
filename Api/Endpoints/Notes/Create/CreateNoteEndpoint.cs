@@ -1,4 +1,5 @@
 using Api.Authentication;
+using Api.Events;
 using Api.Extensions;
 using Domain.Notes;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -20,6 +21,7 @@ public class CreateNoteEndpoint : IEndpoint
         CreateNoteRequest request,
         UserContext userContext,
         IMongoCollection<Note> notesCollection,
+        IEventBus eventBus,
         CancellationToken cancellationToken)
     {
         List<string> tags = request.Tags?
@@ -37,6 +39,8 @@ public class CreateNoteEndpoint : IEndpoint
         };
 
         await notesCollection.InsertOneAsync(note, null, cancellationToken);
+
+        await eventBus.Send(new CreateNoteEvent(note.Id), cancellationToken);
 
         return TypedResults.NoContent();
     }

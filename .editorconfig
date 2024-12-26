@@ -75,6 +75,9 @@ dotnet_diagnostic.IDE0028.severity = warning
 # IDE0057: Substring can be simplified
 dotnet_diagnostic.IDE0057.severity = none
 
+# IDE0200: Lambda expression can be removed
+dotnet_diagnostic.IDE0200.severity = none
+
 # IDE0290: Use primary constructor
 dotnet_diagnostic.IDE0290.severity = none
 

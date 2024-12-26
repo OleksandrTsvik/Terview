@@ -3,6 +3,12 @@
 ## .env.production
 
 ```
+Serilog__MinimumLevel__Default=Warning
+Serilog__WriteTo__0__Name=Console
+Serilog__WriteTo__1__Name=MongoDBBson
+Serilog__WriteTo__1__Args__databaseUrl=
+Serilog__WriteTo__1__Args__collectionName=logs
+
 Cors__Origins__0=
 
 MongoDb__ConnectionString=
@@ -13,6 +19,16 @@ Jwt__RefreshTokenExpirationInDays=
 Jwt__SecretKey=
 Jwt__Issuer=
 Jwt__Audience=
+
+Outbox__PeriodInSeconds=
+Outbox__BatchSize=
+
+Scheduler__PeriodInSeconds=
+Scheduler__BatchSize=
+
+Jobs__DeleteLogsSkipCount=
+Jobs__DeleteNotesAfterDays=
+Jobs__DeleteProcessedOutboxMessagesAfterDays=
 
 Seed__Users__0__Email=
 Seed__Users__0__Password=

@@ -3,12 +3,13 @@ import { Mutex } from 'async-mutex';
 import queryString from 'query-string';
 
 import { resetAuthState } from '@/auth/auth.slice';
+import { TokenProvider } from '@/auth/token.provider';
 import { API_URL } from '@/common/node-env.constants';
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
   prepareHeaders: (headers) => {
-    const accessToken = localStorage.getItem('access-token');
+    const accessToken = TokenProvider.getAccessToken();
 
     if (accessToken) {
       headers.set('Authorization', `Bearer ${accessToken}`);
@@ -16,7 +17,7 @@ export const baseQuery = fetchBaseQuery({
 
     return headers;
   },
-  paramsSerializer: queryString.stringify,
+  paramsSerializer: (params) => queryString.stringify(params, { skipNull: true }),
 });
 
 // Preventing multiple unauthorized errors
@@ -46,14 +47,14 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
         if (refreshResult.data) {
           const { accessToken, refreshToken } = refreshResult.data as RefreshResponse;
-          localStorage.setItem('access-token', accessToken);
-          localStorage.setItem('refresh-token', refreshToken);
+          TokenProvider.setAccessToken(accessToken);
+          TokenProvider.setRefreshToken(refreshToken);
 
           // retry the initial query
           result = await baseQuery(args, api, extraOptions);
         } else {
-          localStorage.removeItem('access-token');
-          localStorage.removeItem('refresh-token');
+          TokenProvider.deleteAccessToken();
+          TokenProvider.deleteRefreshToken();
           api.dispatch(resetAuthState());
         }
       } finally {

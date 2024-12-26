@@ -2,6 +2,7 @@ import { useAppDispatch } from '@/hooks/redux-hooks';
 
 import { useLogoutMutation } from './auth.api';
 import { resetAuthState } from './auth.slice';
+import { TokenProvider } from './token.provider';
 
 export default function useLogout() {
   const appDispatch = useAppDispatch();
@@ -9,14 +10,14 @@ export default function useLogout() {
 
   const logout = async () => {
     try {
-      const refreshToken = localStorage.getItem('refresh-token');
+      const refreshToken = TokenProvider.getRefreshToken();
 
       if (refreshToken) {
         await logoutMutation({ refreshToken }).unwrap();
       }
     } finally {
-      localStorage.removeItem('access-token');
-      localStorage.removeItem('refresh-token');
+      TokenProvider.deleteAccessToken();
+      TokenProvider.deleteRefreshToken();
       appDispatch(resetAuthState());
     }
   };

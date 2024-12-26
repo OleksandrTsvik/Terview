@@ -1,0 +1,40 @@
+.total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--ant-padding-xs);
+  flex-wrap: wrap;
+  margin: 0 0 var(--ant-margin-md);
+}
+
+.outbox {
+  &__status {
+    padding: 0 4px;
+
+    &_new {
+      color: var(--ant-blue-7);
+      background: var(--ant-blue-1);
+    }
+
+    &_failed {
+      color: var(--ant-red-7);
+      background: var(--ant-red-1);
+    }
+
+    &_success {
+      color: var(--ant-green-7);
+      background: var(--ant-green-1);
+    }
+  }
+
+  &__metadata {
+    overflow: auto;
+    white-space: pre-wrap;
+    margin: 0;
+  }
+}
+
+.outbox__pagination {
+  justify-content: center;
+  margin-top: var(--ant-margin-md);
+}

@@ -20,7 +20,7 @@ public class ValidationFilter<TRequest> : IEndpointFilter
 
         if (request is not null)
         {
-            ValidationResult validationResult = await _validator.ValidateAsync(request!);
+            ValidationResult validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {

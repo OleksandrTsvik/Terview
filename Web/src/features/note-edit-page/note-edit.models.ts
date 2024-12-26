@@ -3,11 +3,11 @@ export interface NoteResponse {
   title: string;
   content: string;
   tags: string[];
-  createdOnUtc: Date;
+  createdOnUtc: string;
   createdBy: string;
-  updatedOnUtc?: Date;
+  updatedOnUtc?: string;
   updatedBy?: string;
-  deletedOnUtc?: Date;
+  deletedOnUtc?: string;
   deletedBy?: string;
 }
 
