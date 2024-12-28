@@ -22,7 +22,7 @@ export const SIDER_ITEMS: MenuProps['items'] = [
     label: 'Нотатки',
   },
   {
-    key: '/dashboard/tags',
+    key: '/dashboard/notes/tags',
     icon: <TagsOutlined />,
     label: 'Теги',
   },

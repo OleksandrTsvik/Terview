@@ -11,7 +11,9 @@ import DashboardSider from './dashboard.sider';
 import styles from './dashboard.module.scss';
 
 function initStateCollapsed() {
-  return stringToBoolean(localStorage.getItem('sider-collapsed'));
+  const siderCollapsed = localStorage.getItem('sider-collapsed');
+
+  return siderCollapsed ? stringToBoolean(siderCollapsed) : true;
 }
 
 export default function DashboardLayoutPage() {

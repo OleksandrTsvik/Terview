@@ -20,6 +20,7 @@ const NotesEditPage = lazy(() => import('@/features/notes-edit-page/notes-edit.p
 const NotesPage = lazy(() => import('@/features/notes-page/notes.page'));
 const OutboxPage = lazy(() => import('@/features/outbox-page/outbox.page'));
 const SchedulerPage = lazy(() => import('@/features/scheduler-page/scheduler.page'));
+const TagsPage = lazy(() => import('@/features/tags-page/tags.page'));
 
 const routes: RouteObject[] = [
   {
@@ -37,6 +38,7 @@ const routes: RouteObject[] = [
           { path: 'notes', element: <NotesEditPage /> },
           { path: 'notes/add', element: <NoteAddPage /> },
           { path: 'notes/edit/:noteId', element: <NoteEditPage /> },
+          { path: 'notes/tags', element: <TagsPage /> },
           { path: 'outbox', element: <OutboxPage /> },
           { path: 'scheduler', element: <SchedulerPage /> },
           { path: 'logs', element: <LogsPage /> },

@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
-namespace Api.Endpoints.Notes.GetTags;
+namespace Api.Endpoints.NotesTags.Get;
 
 public class GetNotesTagsEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("notes/tags", Handler)
-            .WithTags(Tags.Notes);
+            .WithTags(Tags.NotesTags);
     }
 
     public static async Task<Ok<List<string>>> Handler(

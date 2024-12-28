@@ -38,7 +38,7 @@ public class GetNotesEndpoint : IEndpoint
                 Id = note.Id,
                 Title = note.Title,
                 Content = note.Content,
-                Tags = note.Tags,
+                Tags = note.Tags.OrderBy(tag => tag).ToList(),
                 CreatedOnUtc = note.CreatedOnUtc,
                 UpdatedOnUtc = note.UpdatedOnUtc,
             })

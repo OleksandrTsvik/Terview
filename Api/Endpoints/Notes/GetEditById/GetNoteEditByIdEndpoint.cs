@@ -26,7 +26,7 @@ public class GetNoteEditByIdEndpoint : IEndpoint
                 Id = note.Id,
                 Title = note.Title,
                 Content = note.Content,
-                Tags = note.Tags,
+                Tags = note.Tags.OrderBy(tag => tag).ToList(),
                 CreatedOnUtc = note.CreatedOnUtc,
                 CreatedBy = note.CreatedBy,
                 UpdatedOnUtc = note.UpdatedOnUtc,
