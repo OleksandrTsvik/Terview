@@ -1,11 +1,11 @@
 import { Table, TableColumnsType } from 'antd';
 import dayjs from 'dayjs';
 
-import { classnames } from '@/common/class-names.utils';
 import ActionsDropdown from '@/components/actions-dropdown';
 import TableContainer from '@/components/table-container';
 
 import { OutboxResponse } from './outbox.models';
+import OutboxStatus from './outbox.status';
 import useOutboxActions from './use-outbox-actions';
 
 import styles from './outbox.module.scss';
@@ -22,20 +22,7 @@ export default function OutboxList({ outboxMessages }: Props) {
     {
       key: 'status',
       title: 'Статус',
-      render: (_, { processedOnUtc, error }) => (
-        <span
-          className={classnames({
-            [styles.outbox__status]: true,
-            [styles.outbox__status_new]: !processedOnUtc,
-            [styles.outbox__status_failed]: !!error,
-            [styles.outbox__status_success]: !!processedOnUtc && !error,
-          })}
-        >
-          {!processedOnUtc && 'new'}
-          {!!error && 'failed'}
-          {!!processedOnUtc && !error && 'success'}
-        </span>
-      ),
+      render: (_, { processedOnUtc, error }) => <OutboxStatus processedOnUtc={processedOnUtc} error={error} />,
     },
     {
       key: 'occurred',

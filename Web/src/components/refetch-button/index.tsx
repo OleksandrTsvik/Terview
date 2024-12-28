@@ -2,7 +2,7 @@ import { ReloadOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
 interface Props {
-  loading: boolean;
+  loading?: boolean;
   onClick: () => void;
 }
 

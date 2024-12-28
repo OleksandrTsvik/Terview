@@ -20,7 +20,8 @@ public class RunEventEndpoint : IEndpoint
     {
         UpdateDefinition<OutboxMessage> update = Builders<OutboxMessage>.Update
             .Set(outboxMessage => outboxMessage.OccurredOnUtc, DateTime.UtcNow)
-            .Set(outboxMessage => outboxMessage.ProcessedOnUtc, null);
+            .Set(outboxMessage => outboxMessage.ProcessedOnUtc, null)
+            .Set(outboxMessage => outboxMessage.Error, null);
 
         UpdateResult updateResult = await outboxMessagesCollection.UpdateOneAsync(
             outboxMessage => outboxMessage.Id == id,

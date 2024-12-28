@@ -48,6 +48,7 @@ Then open [http://localhost:3000/](http://localhost:3000/) to see web app.
 - [Options Pattern in ASP.NET Core – Bind & Validate Configurations from appsettings.json](https://codewithmukesh.com/blog/options-pattern-in-aspnet-core/)
 - [[Microsoft] Background tasks with hosted services in ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-8.0&tabs=visual-studio)
 - [[Microsoft] Naming of environment variables](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0#naming-of-environment-variables)
+- [[Microsoft] Routing in ASP.NET Core. Route constraints](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-8.0#route-constraints)
 - [[RTK Query] createApi](https://redux-toolkit.js.org/rtk-query/api/createApi)
 - [[RTK Query] Code Splitting](https://redux-toolkit.js.org/rtk-query/usage/code-splitting)
 - [Migrate to ESLint 9.x](https://medium.com/ekino-france/migrate-to-eslint-9-x-29727f790249)
