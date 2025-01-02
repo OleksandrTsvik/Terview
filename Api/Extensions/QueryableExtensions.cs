@@ -6,6 +6,43 @@ namespace Api.Extensions;
 
 public static class QueryableExtensions
 {
+    public static IQueryable<T> QueryIf<T>(
+        this IQueryable<T> query,
+        bool condition,
+        Func<IQueryable<T>, IQueryable<T>> request)
+    {
+        return condition ? request(query) : query;
+    }
+
+    public static IOrderedQueryable<T> QueryIf<T>(
+        this IOrderedQueryable<T> orderedQuery,
+        bool condition,
+        Func<IOrderedQueryable<T>, IOrderedQueryable<T>> request)
+    {
+        return condition ? request(orderedQuery) : orderedQuery;
+    }
+
+    public static IQueryable<T> WhereIf<T>(
+        this IQueryable<T> query,
+        bool condition,
+        Expression<Func<T, bool>> predicate)
+    {
+        return condition ? query.Where(predicate) : query;
+    }
+
+    public static Task<PagedList<T>> ToPagedListAsync<T>(
+        this IQueryable<T> query,
+        int? pageNumber,
+        int? pageSize,
+        CancellationToken cancellationToken = default)
+    {
+        return query.ToPagedListAsync(
+            pageNumber,
+            pageSize,
+            null,
+            cancellationToken);
+    }
+
     public static async Task<PagedList<T>> ToPagedListAsync<T>(
         this IQueryable<T> query,
         int? pageNumber,
@@ -31,19 +68,6 @@ public static class QueryableExtensions
         return new PagedList<T>(items, totalItems, pagingParams.PageNumber, pagingParams.PageSize);
     }
 
-    public static Task<PagedList<T>> ToPagedListAsync<T>(
-        this IQueryable<T> query,
-        int? pageNumber,
-        int? pageSize,
-        CancellationToken cancellationToken = default)
-    {
-        return query.ToPagedListAsync(
-            pageNumber,
-            pageSize,
-            null,
-            cancellationToken);
-    }
-
     public static IQueryable<TSource> SortBy<TSource, TKey>(
         this IQueryable<TSource> query,
         SortOrder? sortOrder,
@@ -53,12 +77,4 @@ public static class QueryableExtensions
             SortOrder.Desc or SortOrder.Descend => query.OrderByDescending(keySelector),
             _ => query.OrderBy(keySelector),
         };
-
-    public static IQueryable<T> WhereIf<T>(
-        this IQueryable<T> query,
-        bool condition,
-        Expression<Func<T, bool>> predicate)
-    {
-        return condition ? query.Where(predicate) : query;
-    }
 }
