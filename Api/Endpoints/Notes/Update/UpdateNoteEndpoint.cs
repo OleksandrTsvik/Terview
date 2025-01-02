@@ -1,5 +1,6 @@
 using Api.Authentication;
 using Api.Endpoints.Notes.Create;
+using Api.Events;
 using Api.Extensions;
 using Domain.Notes;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -23,6 +24,7 @@ public class UpdateNoteEndpoint : IEndpoint
         CreateNoteRequest request,
         UserContext userContext,
         IMongoCollection<Note> notesCollection,
+        IEventBus eventBus,
         CancellationToken cancellationToken)
     {
         List<string> tags = request.Tags?
@@ -51,6 +53,13 @@ public class UpdateNoteEndpoint : IEndpoint
                 null,
                 cancellationToken);
 
-        return updateResult.MatchedCount > 0 ? TypedResults.NoContent() : TypedResults.NotFound();
+        if (updateResult.MatchedCount == 0)
+        {
+            return TypedResults.NotFound();
+        }
+
+        await eventBus.Send(new UpdateNoteEvent(id), cancellationToken);
+
+        return TypedResults.NoContent();
     }
 }

@@ -3,14 +3,14 @@ using Domain.Notes;
 using HtmlAgilityPack;
 using MongoDB.Driver;
 
-namespace Api.Endpoints.Notes.Create;
+namespace Api.Endpoints.Notes.Update;
 
-public class CreateNoteEventHandler : IEventHandler<CreateNoteEvent>
+public class UpdateNoteEventHandler : IEventHandler<UpdateNoteEvent>
 {
     private readonly IMongoCollection<Note> _notesCollection;
     private readonly IMongoCollection<NoteImage> _noteImagesCollection;
 
-    public CreateNoteEventHandler(
+    public UpdateNoteEventHandler(
         IMongoCollection<Note> notesCollection,
         IMongoCollection<NoteImage> noteImagesCollection)
     {
@@ -18,7 +18,7 @@ public class CreateNoteEventHandler : IEventHandler<CreateNoteEvent>
         _noteImagesCollection = noteImagesCollection;
     }
 
-    public async Task Handle(CreateNoteEvent message, CancellationToken cancellationToken = default)
+    public async Task Handle(UpdateNoteEvent message, CancellationToken cancellationToken = default)
     {
         Note? note = await _notesCollection
             .Find(note => note.Id == message.NoteId)
@@ -40,7 +40,13 @@ public class CreateNoteEventHandler : IEventHandler<CreateNoteEvent>
             .Select(url => new UpdateOneModel<NoteImage>(
                 Builders<NoteImage>.Filter.Eq(noteImage => noteImage.Url, url),
                 Builders<NoteImage>.Update.AddToSet(noteImage => noteImage.NoteIds, note.Id)))
-            .ToList();
+            .ToList<WriteModel<NoteImage>>();
+
+        requests.Add(new UpdateManyModel<NoteImage>(
+            Builders<NoteImage>.Filter.And(
+                Builders<NoteImage>.Filter.Nin(noteImage => noteImage.Url, imageUrls),
+                Builders<NoteImage>.Filter.AnyEq(noteImage => noteImage.NoteIds, note.Id)),
+            Builders<NoteImage>.Update.Pull(noteImage => noteImage.NoteIds, note.Id)));
 
         await _noteImagesCollection.BulkWriteAsync(requests, null, cancellationToken);
     }

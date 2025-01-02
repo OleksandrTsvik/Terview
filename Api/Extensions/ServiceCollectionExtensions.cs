@@ -2,7 +2,9 @@ using System.Reflection;
 using Api.Authentication;
 using Api.Endpoints.Logs;
 using Api.Endpoints.Notes.Create;
+using Api.Endpoints.Notes.Update;
 using Api.Events;
+using Api.Infrastructure;
 using Api.Jobs;
 using Api.Middleware;
 using Api.Options;
@@ -79,12 +81,20 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    {
+        services.AddScoped<IImageProvider, CloudinaryImageProvider>();
+
+        return services;
+    }
+
     public static IServiceCollection AddEvents(this IServiceCollection services)
     {
         services.AddScoped<IEventBus, EventBus>();
         services.AddScoped<IEventPublisher, EventPublisher>();
 
         services.AddScoped<IEventHandler<CreateNoteEvent>, CreateNoteEventHandler>();
+        services.AddScoped<IEventHandler<UpdateNoteEvent>, UpdateNoteEventHandler>();
 
         services.AddScoped<OutboxProcessor>();
         services.AddHostedService<OutboxBackgroundService>();
@@ -181,6 +191,7 @@ public static class ServiceCollectionExtensions
         services.AddMongoCollection<Job>("jobs");
 
         services.AddMongoCollection<Note>("notes");
+        services.AddMongoCollection<NoteImage>("note_images");
 
         services.AddMongoCollection<User>("users");
         services.AddMongoCollection<RefreshToken>("refresh_tokens");

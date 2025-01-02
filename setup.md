@@ -14,6 +14,12 @@ Cors__Origins__0=
 MongoDb__ConnectionString=
 MongoDb__DatabaseName=
 
+Cloudinary__CloudName=
+Cloudinary__ApiKey=
+Cloudinary__ApiSecret=
+
+Files__MaxImageSizeInBytes=10485760
+
 Jwt__AccessTokenExpirationInMinutes=
 Jwt__RefreshTokenExpirationInDays=
 Jwt__SecretKey=

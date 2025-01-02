@@ -16,6 +16,7 @@ builder.Services
     .AddAuth()
     .AddApiCors(builder)
     .AddEndpoints()
+    .AddInfrastructure()
     .AddEvents()
     .AddJobs()
     .AddFluentValidation()
