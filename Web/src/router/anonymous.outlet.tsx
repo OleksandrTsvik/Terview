@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router';
+import { Navigate, Outlet, useLocation } from 'react-router';
 
 import useAuth from '@/auth/use-auth';
 
@@ -7,10 +7,11 @@ interface Props {
 }
 
 export default function AnonymousOutlet({ redirectTo = '/' }: Props) {
+  const location = useLocation();
   const { isAuth } = useAuth();
 
   if (isAuth) {
-    return <Navigate to={redirectTo} replace />;
+    return <Navigate to={location.state?.from ?? redirectTo} replace />;
   }
 
   return <Outlet />;
