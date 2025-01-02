@@ -1,6 +1,7 @@
 import { App, Button, Form, Input, Select } from 'antd';
 import { useNavigate } from 'react-router';
 
+import { CKEDITOR_UPLOAD_NOTE_IMAGE_URL } from '@/common/app.constants';
 import { NOTE_RULES } from '@/common/rules.constants';
 import { TextEditor } from '@/components/text-editor';
 
@@ -35,7 +36,7 @@ export default function NoteAddForm() {
       </Form.Item>
 
       <Form.Item hasFeedback name="content" label="Контент" rules={NOTE_ADD_RULES.content}>
-        <TextEditor />
+        <TextEditor imageUploadUrl={CKEDITOR_UPLOAD_NOTE_IMAGE_URL} />
       </Form.Item>
 
       <Form.Item hasFeedback name="tags" label="Теги" rules={NOTE_ADD_RULES.tags}>
