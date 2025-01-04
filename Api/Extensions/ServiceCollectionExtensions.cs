@@ -130,10 +130,11 @@ public static class ServiceCollectionExtensions
 
         var pack = new ConventionPack
         {
-            new EnumRepresentationConvention(BsonType.String)
+            new IgnoreExtraElementsConvention(true),
+            new EnumRepresentationConvention(BsonType.String),
         };
 
-        ConventionRegistry.Register("StringEnumConvention", pack, _ => true);
+        ConventionRegistry.Register("Global Conventions", pack, _ => true);
 
         services
             .AddMongoClient()

@@ -3,7 +3,9 @@ import { PagingParams } from '@/common/pagination.models';
 export interface UserResponse {
   id: string;
   email: string;
+  emailVerified: boolean;
   createdOnUtc: string;
+  deletedOnUtc?: string;
 }
 
 export interface GetUsersRequest extends PagingParams {

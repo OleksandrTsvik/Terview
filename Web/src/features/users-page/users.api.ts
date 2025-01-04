@@ -17,7 +17,7 @@ export const usersApi = api.injectEndpoints({
           ps: pageSize,
         },
       }),
-      providesTags: ['Users'],
+      providesTags: ['UserSession', 'Users'],
     }),
     createUser: builder.mutation<void, CreateUserRequest>({
       query: (data) => ({
@@ -27,7 +27,21 @@ export const usersApi = api.injectEndpoints({
       }),
       invalidatesTags: (_, error) => (error ? [] : ['Users']),
     }),
+    deleteUser: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/users/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ['Users']),
+    }),
+    restoreUser: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/users/restore/${id}`,
+        method: 'POST',
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ['Users']),
+    }),
   }),
 });
 
-export const { useGetUsersQuery, useCreateUserMutation } = usersApi;
+export const { useGetUsersQuery, useCreateUserMutation, useDeleteUserMutation, useRestoreUserMutation } = usersApi;

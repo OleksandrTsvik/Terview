@@ -77,4 +77,14 @@ public static class QueryableExtensions
             SortOrder.Desc or SortOrder.Descend => query.OrderByDescending(keySelector),
             _ => query.OrderBy(keySelector),
         };
+
+    public static IOrderedQueryable<TSource> ThenSortBy<TSource, TKey>(
+        this IOrderedQueryable<TSource> orderedQuery,
+        SortOrder? sortOrder,
+        Expression<Func<TSource, TKey>> keySelector) =>
+        sortOrder switch
+        {
+            SortOrder.Desc or SortOrder.Descend => orderedQuery.ThenByDescending(keySelector),
+            _ => orderedQuery.ThenBy(keySelector),
+        };
 }

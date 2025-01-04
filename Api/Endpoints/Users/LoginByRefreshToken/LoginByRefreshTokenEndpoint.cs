@@ -33,7 +33,11 @@ public class LoginByRefreshTokenEndpoint : IEndpoint
         }
 
         User? user = await usersCollection
-            .Find(user => user.Id == refreshToken.UserId)
+            .Find(user =>
+                user.Id == refreshToken.UserId &&
+                user.EmailVerified &&
+                user.DeletedOnUtc == null &&
+                user.DeletedBy == null)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (user is null)

@@ -32,17 +32,20 @@ public class GetUsersEndpoint : IEndpoint
             .WhereIf(
                 !string.IsNullOrWhiteSpace(email),
                 user => user.Email.ToLower().Contains(email!.ToLower()))
+            .OrderBy(note => note.DeletedOnUtc)
             .QueryIf(
                 sortType == UserSortType.Email,
-                query => query.SortBy(sortOrder, user => user.Email))
+                query => query.ThenSortBy(sortOrder, user => user.Email))
             .QueryIf(
                 sortType == UserSortType.CreatedOnUtc,
-                query => query.SortBy(sortOrder, user => user.CreatedOnUtc))
+                query => query.ThenSortBy(sortOrder, user => user.CreatedOnUtc))
             .Select(user => new UserResponse
             {
                 Id = user.Id,
                 Email = user.Email,
-                CreatedOnUtc = user.CreatedOnUtc
+                EmailVerified = user.EmailVerified,
+                CreatedOnUtc = user.CreatedOnUtc,
+                DeletedOnUtc = user.DeletedOnUtc,
             })
             .ToPagedListAsync(pageNumber, pageSize, cancellationToken);
 

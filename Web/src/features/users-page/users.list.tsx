@@ -1,7 +1,10 @@
+import { green, red } from '@ant-design/colors';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Table, TableColumnsType, TableProps } from 'antd';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'react-router';
 
+import { classnames } from '@/common/class-names.utils';
 import { isArrayOfStrings, isString } from '@/common/type-guards.utils';
 import ActionsDropdown from '@/components/actions-dropdown';
 import TableContainer from '@/components/table-container';
@@ -12,6 +15,8 @@ import useUserActions from './use-user-actions';
 import { QUERY_PARAMS } from './users.constants';
 import { UserResponse } from './users.models';
 import { getColumnSortOrder } from './users.utils';
+
+import styles from './users.module.scss';
 
 interface Props {
   loading?: boolean;
@@ -39,6 +44,16 @@ export default function UsersList({
       title: '#',
       width: 1,
       render: (_, __, index) => pageSize * (pageNumber - 1) + index + 1,
+    },
+    {
+      dataIndex: 'email-verified',
+      width: 1,
+      render: (_, { emailVerified }) =>
+        emailVerified ? (
+          <CheckOutlined style={{ color: green.primary }} />
+        ) : (
+          <CloseOutlined style={{ color: red.primary }} />
+        ),
     },
     {
       key: 'email',
@@ -87,6 +102,7 @@ export default function UsersList({
   return (
     <TableContainer>
       <Table
+        rowClassName={({ deletedOnUtc }) => classnames({ [styles.user_deleted]: !!deletedOnUtc })}
         rowHoverable
         loading={loading}
         columns={columns}
