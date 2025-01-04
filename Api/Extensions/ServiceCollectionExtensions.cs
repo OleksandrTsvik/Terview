@@ -3,6 +3,7 @@ using Api.Authentication;
 using Api.Endpoints.Logs;
 using Api.Endpoints.Notes.Create;
 using Api.Endpoints.Notes.Update;
+using Api.Endpoints.Users.Create;
 using Api.Events;
 using Api.Infrastructure;
 using Api.Jobs;
@@ -95,6 +96,7 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IEventHandler<CreateNoteEvent>, CreateNoteEventHandler>();
         services.AddScoped<IEventHandler<UpdateNoteEvent>, UpdateNoteEventHandler>();
+        services.AddScoped<IEventHandler<CreateUserEvent>, CreateUserEventHandler>();
 
         services.AddScoped<OutboxProcessor>();
         services.AddHostedService<OutboxBackgroundService>();
