@@ -58,7 +58,6 @@ export default function NotesEditList({ data }: Props) {
           <CaretRightOutlined rotate={expandAll ? 90 : 0} /> {expandAll ? 'Згорнути все' : 'Розгорнути все'}
         </Typography.Text>
         <NotesEditSort />
-        <Typography.Text type="secondary">Усього записів: {data.totalItems}</Typography.Text>
       </Flex>
       <Collapse
         className={styles.notes__list}
