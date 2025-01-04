@@ -77,7 +77,11 @@ export default function UsersList({
     },
   ];
 
-  const handleChangeTableFilters: TableProps<UserResponse>['onChange'] = (_, filters, sorter) => {
+  const handleChangeTableFilters: TableProps<UserResponse>['onChange'] = (_, filters, sorter, { action }) => {
+    if (action === 'paginate') {
+      return;
+    }
+
     setSearchParams((prev) => {
       prev.delete(QUERY_PARAMS.PAGE_NUMBER);
 
