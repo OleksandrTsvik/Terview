@@ -43,9 +43,11 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddApiCors(this IServiceCollection services, WebApplicationBuilder builder)
+    public static IServiceCollection AddApiCors(
+        this IServiceCollection services,
+        ConfigurationManager configuration)
     {
-        CorsOptions? corsOptions = builder.Configuration
+        CorsOptions? corsOptions = configuration
             .GetSection(CorsOptions.ConfigurationSectionName)
             .Get<CorsOptions>();
 
@@ -82,8 +84,23 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        ConfigurationManager configuration)
     {
+        EmailOptions emailOptions = configuration
+            .GetSection(EmailOptions.ConfigurationSectionName)
+            .Get<EmailOptions>()!;
+
+        services.AddFluentEmail(emailOptions.SenderEmail, emailOptions.SenderName)
+            .AddSmtpSender(
+                emailOptions.Host,
+                emailOptions.Port,
+                emailOptions.Username,
+                emailOptions.Password);
+
+        services.AddScoped<EmailVerificationTokenFactory>();
+        services.AddScoped<IEmailSender, FluentEmailSender>();
         services.AddScoped<IImageProvider, CloudinaryImageProvider>();
 
         return services;
@@ -197,6 +214,7 @@ public static class ServiceCollectionExtensions
         services.AddMongoCollection<NoteImage>("note_images");
 
         services.AddMongoCollection<User>("users");
+        services.AddMongoCollection<EmailVerificationToken>("email_verification_tokens");
         services.AddMongoCollection<RefreshToken>("refresh_tokens");
 
         return services;

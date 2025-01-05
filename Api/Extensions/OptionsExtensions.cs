@@ -11,6 +11,8 @@ public static class OptionsExtensions
         services.AddOptionsWithFluentValidation<CloudinaryOptions>(CloudinaryOptions.ConfigurationSectionName);
         services.AddOptionsWithFluentValidation<CorsOptions>(CorsOptions.ConfigurationSectionName);
 
+        services.AddOptionsWithFluentValidation<EmailOptions>(EmailOptions.ConfigurationSectionName);
+
         services.AddOptionsWithFluentValidation<FilesOptions>(FilesOptions.ConfigurationSectionName);
 
         services.AddOptionsWithFluentValidation<JobsOptions>(JobsOptions.ConfigurationSectionName);

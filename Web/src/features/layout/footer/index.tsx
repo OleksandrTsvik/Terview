@@ -18,7 +18,7 @@ export default function Footer() {
         <Link to="/dashboard">Dashboard</Link>
       </Flex>
       <span className={styles.copyright}>
-        © 2024. Copyright: <Link to={`mailto:${email}`}>{email}</Link>
+        © 2024-{new Date().getFullYear()}. Copyright: <Link to={`mailto:${email}`}>{email}</Link>
       </span>
       <Flex className={styles.socialLinks} component="nav" gap="large" wrap="wrap">
         <Link to="https://linkedin.com/in/oleksandr-tsvik" target="_blank">

@@ -10,6 +10,7 @@ import PrivateOutlet from './private.outlet';
 const DashboardLayoutPage = lazy(() => import('@/features/dashboard-layout/dashboard-layout.page'));
 const DashboardNotFoundPage = lazy(() => import('@/features/dashboard-layout/dashboard-not-found.page'));
 const DashboardPage = lazy(() => import('@/features/dashboard-page/dashboard.page'));
+const EmailVerificationPage = lazy(() => import('@/features/email-verification-page/email-verification.page'));
 const ImagesPage = lazy(() => import('@/features/images-page/images.page'));
 const LayoutPage = lazy(() => import('@/features/layout/layout.page'));
 const NotFoundPage = lazy(() => import('@/features/layout/not-found.page'));
@@ -56,6 +57,7 @@ const routes: RouteObject[] = [
     element: <LayoutPage />,
     children: [
       { index: true, element: <NotesPage /> },
+      { path: 'email-verification', element: <EmailVerificationPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

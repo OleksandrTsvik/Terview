@@ -41,7 +41,20 @@ export const usersApi = api.injectEndpoints({
       }),
       invalidatesTags: (_, error) => (error ? [] : ['Users']),
     }),
+    resendVerificationEmail: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/users/resend-verification-email/${id}`,
+        method: 'POST',
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ['Users']),
+    }),
   }),
 });
 
-export const { useGetUsersQuery, useCreateUserMutation, useDeleteUserMutation, useRestoreUserMutation } = usersApi;
+export const {
+  useGetUsersQuery,
+  useCreateUserMutation,
+  useDeleteUserMutation,
+  useRestoreUserMutation,
+  useResendVerificationEmailMutation,
+} = usersApi;

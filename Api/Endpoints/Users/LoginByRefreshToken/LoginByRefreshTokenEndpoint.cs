@@ -17,7 +17,6 @@ public class LoginByRefreshTokenEndpoint : IEndpoint
 
     public static async Task<Results<Ok<LoginByRefreshTokenResponse>, BadRequest>> Handler(
         LoginByRefreshTokenRequest request,
-        PasswordHasher passwordHasher,
         TokenProvider tokenProvider,
         IMongoCollection<User> usersCollection,
         IMongoCollection<RefreshToken> refreshTokensCollection,
