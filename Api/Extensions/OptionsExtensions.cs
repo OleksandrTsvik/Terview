@@ -8,12 +8,21 @@ public static class OptionsExtensions
 {
     public static IServiceCollection AddOptionsWithValidation(this IServiceCollection services)
     {
+        services.AddOptionsWithFluentValidation<CloudinaryOptions>(CloudinaryOptions.ConfigurationSectionName);
         services.AddOptionsWithFluentValidation<CorsOptions>(CorsOptions.ConfigurationSectionName);
-        services.AddOptionsWithFluentValidation<MongoDbOptions>(MongoDbOptions.ConfigurationSectionName);
-        services.AddOptionsWithFluentValidation<JwtOptions>(JwtOptions.ConfigurationSectionName);
-        services.AddOptionsWithFluentValidation<OutboxOptions>(OutboxOptions.ConfigurationSectionName);
-        services.AddOptionsWithFluentValidation<SchedulerOptions>(SchedulerOptions.ConfigurationSectionName);
+
+        services.AddOptionsWithFluentValidation<EmailOptions>(EmailOptions.ConfigurationSectionName);
+
+        services.AddOptionsWithFluentValidation<FilesOptions>(FilesOptions.ConfigurationSectionName);
+
         services.AddOptionsWithFluentValidation<JobsOptions>(JobsOptions.ConfigurationSectionName);
+        services.AddOptionsWithFluentValidation<JwtOptions>(JwtOptions.ConfigurationSectionName);
+
+        services.AddOptionsWithFluentValidation<MongoDbOptions>(MongoDbOptions.ConfigurationSectionName);
+
+        services.AddOptionsWithFluentValidation<OutboxOptions>(OutboxOptions.ConfigurationSectionName);
+
+        services.AddOptionsWithFluentValidation<SchedulerOptions>(SchedulerOptions.ConfigurationSectionName);
         services.AddOptionsWithFluentValidation<SeedOptions>(SeedOptions.ConfigurationSectionName);
 
         return services;

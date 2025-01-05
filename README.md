@@ -1,5 +1,13 @@
 # Terview
 
+## Infrastructure Services
+
+1. [GitHub Pages](https://vite.dev/guide/static-deploy#github-pages) for deploying `web` application.
+2. [Render](https://render.com/) for deploying `api` application.
+3. [MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database) for MongoDB database.
+4. [Cloudinary](https://cloudinary.com/) for storing images.
+5. **smtp.gmail.com** for sending emails.
+
 ## Running Locally
 
 ### Api
@@ -46,6 +54,7 @@ Then open [http://localhost:3000/](http://localhost:3000/) to see web app.
 - [Implementing the Outbox Pattern](https://www.milanjovanovic.tech/blog/implementing-the-outbox-pattern)
 - [Lightweight In-Memory Message Bus Using .NET Channels](https://www.milanjovanovic.tech/blog/lightweight-in-memory-message-bus-using-dotnet-channels)
 - [Options Pattern in ASP.NET Core – Bind & Validate Configurations from appsettings.json](https://codewithmukesh.com/blog/options-pattern-in-aspnet-core/)
+- [Form binding in minimal APIs](https://andrewlock.net/exploring-the-dotnet-8-preview-form-binding-in-minimal-apis/)
 - [[Microsoft] Background tasks with hosted services in ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-8.0&tabs=visual-studio)
 - [[Microsoft] Naming of environment variables](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0#naming-of-environment-variables)
 - [[Microsoft] Routing in ASP.NET Core. Route constraints](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-8.0#route-constraints)
@@ -61,3 +70,4 @@ Then open [http://localhost:3000/](http://localhost:3000/) to see web app.
 - [[YouTube] Request Validation in .NET / C# Minimal APIs](https://www.youtube.com/watch?v=1qJTVcR1VN8)
 - [[YouTube] Transactional Outbox Pattern | Clean Architecture, .NET 6](https://www.youtube.com/watch?v=XALvnX7MPeo)
 - [[YouTube] ASP.NET Core MediatR Notifications Alternative](https://www.youtube.com/watch?v=G8lnnaGhmFI)
+- [[YouTube] Easy Email Verification in .NET: FluentEmail + Papercut](https://www.youtube.com/watch?v=KtCjH-1iCIk)

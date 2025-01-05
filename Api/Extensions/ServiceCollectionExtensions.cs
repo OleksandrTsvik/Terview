@@ -2,7 +2,10 @@ using System.Reflection;
 using Api.Authentication;
 using Api.Endpoints.Logs;
 using Api.Endpoints.Notes.Create;
+using Api.Endpoints.Notes.Update;
+using Api.Endpoints.Users.Create;
 using Api.Events;
+using Api.Infrastructure;
 using Api.Jobs;
 using Api.Middleware;
 using Api.Options;
@@ -40,9 +43,11 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddApiCors(this IServiceCollection services, WebApplicationBuilder builder)
+    public static IServiceCollection AddApiCors(
+        this IServiceCollection services,
+        ConfigurationManager configuration)
     {
-        CorsOptions? corsOptions = builder.Configuration
+        CorsOptions? corsOptions = configuration
             .GetSection(CorsOptions.ConfigurationSectionName)
             .Get<CorsOptions>();
 
@@ -79,12 +84,36 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        ConfigurationManager configuration)
+    {
+        EmailOptions emailOptions = configuration
+            .GetSection(EmailOptions.ConfigurationSectionName)
+            .Get<EmailOptions>()!;
+
+        services.AddFluentEmail(emailOptions.SenderEmail, emailOptions.SenderName)
+            .AddSmtpSender(
+                emailOptions.Host,
+                emailOptions.Port,
+                emailOptions.Username,
+                emailOptions.Password);
+
+        services.AddScoped<EmailVerificationTokenFactory>();
+        services.AddScoped<IEmailSender, FluentEmailSender>();
+        services.AddScoped<IImageProvider, CloudinaryImageProvider>();
+
+        return services;
+    }
+
     public static IServiceCollection AddEvents(this IServiceCollection services)
     {
         services.AddScoped<IEventBus, EventBus>();
         services.AddScoped<IEventPublisher, EventPublisher>();
 
         services.AddScoped<IEventHandler<CreateNoteEvent>, CreateNoteEventHandler>();
+        services.AddScoped<IEventHandler<UpdateNoteEvent>, UpdateNoteEventHandler>();
+        services.AddScoped<IEventHandler<CreateUserEvent>, CreateUserEventHandler>();
 
         services.AddScoped<OutboxProcessor>();
         services.AddHostedService<OutboxBackgroundService>();
@@ -118,10 +147,11 @@ public static class ServiceCollectionExtensions
 
         var pack = new ConventionPack
         {
-            new EnumRepresentationConvention(BsonType.String)
+            new IgnoreExtraElementsConvention(true),
+            new EnumRepresentationConvention(BsonType.String),
         };
 
-        ConventionRegistry.Register("StringEnumConvention", pack, _ => true);
+        ConventionRegistry.Register("Global Conventions", pack, _ => true);
 
         services
             .AddMongoClient()
@@ -181,8 +211,10 @@ public static class ServiceCollectionExtensions
         services.AddMongoCollection<Job>("jobs");
 
         services.AddMongoCollection<Note>("notes");
+        services.AddMongoCollection<NoteImage>("note_images");
 
         services.AddMongoCollection<User>("users");
+        services.AddMongoCollection<EmailVerificationToken>("email_verification_tokens");
         services.AddMongoCollection<RefreshToken>("refresh_tokens");
 
         return services;

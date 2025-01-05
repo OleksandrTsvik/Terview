@@ -8,7 +8,7 @@ import MongoDbSkeleton from './mongodb.skeleton';
 import styles from './mongodb.module.scss';
 
 export default function DashboardMongoDb() {
-  const { data, isFetching } = useGetMongoDbDashboardQuery();
+  const { data, isFetching } = useGetMongoDbDashboardQuery(undefined, { refetchOnMountOrArgChange: true });
 
   if (isFetching) {
     return <MongoDbSkeleton />;

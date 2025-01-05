@@ -22,7 +22,14 @@ export const outboxApi = api.injectEndpoints({
       }),
       invalidatesTags: (_, error) => (error ? [] : ['OutboxMessages']),
     }),
+    deleteOutboxMessage: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: `/outbox/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ['OutboxMessages']),
+    }),
   }),
 });
 
-export const { useGetOutboxMessagesQuery, useRunEventMutation } = outboxApi;
+export const { useGetOutboxMessagesQuery, useRunEventMutation, useDeleteOutboxMessageMutation } = outboxApi;

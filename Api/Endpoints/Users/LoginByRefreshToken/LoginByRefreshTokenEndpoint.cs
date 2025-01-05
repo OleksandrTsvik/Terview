@@ -17,7 +17,6 @@ public class LoginByRefreshTokenEndpoint : IEndpoint
 
     public static async Task<Results<Ok<LoginByRefreshTokenResponse>, BadRequest>> Handler(
         LoginByRefreshTokenRequest request,
-        PasswordHasher passwordHasher,
         TokenProvider tokenProvider,
         IMongoCollection<User> usersCollection,
         IMongoCollection<RefreshToken> refreshTokensCollection,
@@ -33,7 +32,11 @@ public class LoginByRefreshTokenEndpoint : IEndpoint
         }
 
         User? user = await usersCollection
-            .Find(user => user.Id == refreshToken.UserId)
+            .Find(user =>
+                user.Id == refreshToken.UserId &&
+                user.EmailVerified &&
+                user.DeletedOnUtc == null &&
+                user.DeletedBy == null)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (user is null)

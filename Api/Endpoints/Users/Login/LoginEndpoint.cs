@@ -24,7 +24,12 @@ public class LoginEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         User? user = await usersCollection
-            .Find(user => user.Email == request.Email)
+            .Find(user =>
+                user.Email == request.Email &&
+                user.EmailVerified &&
+                user.PasswordHash != null &&
+                user.DeletedOnUtc == null &&
+                user.DeletedBy == null)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (user is null)
@@ -32,7 +37,7 @@ public class LoginEndpoint : IEndpoint
             return TypedResults.BadRequest();
         }
 
-        bool verified = passwordHasher.Verify(request.Password, user.PasswordHash);
+        bool verified = passwordHasher.Verify(request.Password, user.PasswordHash!);
 
         if (!verified)
         {

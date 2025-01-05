@@ -4,6 +4,6 @@ import { baseQueryWithReauth } from './base-query';
 
 export const api = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['UserSession', 'Notes', 'OutboxMessages', 'SchedulerJobs'],
+  tagTypes: ['UserSession', 'Notes', 'Users', 'OutboxMessages', 'SchedulerJobs'],
   endpoints: () => ({}),
 });

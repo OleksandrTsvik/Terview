@@ -18,11 +18,14 @@ public class GetNotesEndpoint : IEndpoint
     public static async Task<Ok<PagedList<NoteResponse>>> Handler(
         [FromQuery(Name = "q")] string? query,
         [FromQuery(Name = "t")] string[]? tags,
+        [FromQuery(Name = "s")] string? sort,
         [FromQuery(Name = "p")] int? pageNumber,
         [FromQuery(Name = "ps")] int? pageSize,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
+        NoteSortType sortType = sort.GetNoteSortType();
+
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
             .Where(note => note.DeletedOnUtc == null && note.DeletedBy == null)
             .WhereIf(
@@ -42,8 +45,14 @@ public class GetNotesEndpoint : IEndpoint
                 CreatedOnUtc = note.CreatedOnUtc,
                 UpdatedOnUtc = note.UpdatedOnUtc,
             })
-            .OrderByDescending(note => note.UpdatedOnUtc)
-            .ThenByDescending(note => note.CreatedOnUtc)
+            .QueryIf(
+                sortType == NoteSortType.Alphabet,
+                query => query.OrderBy(note => note.Title))
+            .QueryIf(
+                sortType == NoteSortType.Date,
+                query => query
+                    .OrderByDescending(note => note.UpdatedOnUtc)
+                    .ThenByDescending(note => note.CreatedOnUtc))
             .ToPagedListAsync(pageNumber, pageSize, cancellationToken);
 
         return TypedResults.Ok(notes);

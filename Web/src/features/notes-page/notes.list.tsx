@@ -1,5 +1,5 @@
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Collapse, Flex, Pagination, Typography } from 'antd';
+import { Collapse, Flex, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
@@ -10,6 +10,8 @@ import { QUERY_PARAMS } from './notes.constants';
 import NotesItemContent from './notes.item-content';
 import NotesItemLabel from './notes.item-label';
 import { NoteResponse } from './notes.models';
+import NotesPagination from './notes.pagination';
+import NotesSort from './notes.sort';
 
 import styles from './notes.module.scss';
 
@@ -22,7 +24,7 @@ interface Props {
 }
 
 export default function NotesList({ data }: Props) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const selectedTags = searchParams.getAll(QUERY_PARAMS.TAGS);
 
   const [expandAll, setExpandAll] = useState(initStateExpandAll);
@@ -47,22 +49,13 @@ export default function NotesList({ data }: Props) {
     setActiveKeys(keys);
   };
 
-  const handlePaginationChange = (page: number, pageSize: number) => {
-    setSearchParams((prev) => {
-      prev.set(QUERY_PARAMS.PAGE_NUMBER, page.toString());
-      prev.set(QUERY_PARAMS.PAGE_SIZE, pageSize.toString());
-
-      return prev;
-    });
-  };
-
   return (
     <section className={styles.notes}>
-      <Flex className={styles.notes__total} justify="space-between" wrap>
+      <Flex className={styles.notes__total} align="center" justify="space-between" gap="small" wrap>
         <Typography.Text type="secondary" onClick={handleExpandAllToggle}>
           <CaretRightOutlined rotate={expandAll ? 90 : 0} /> {expandAll ? 'Згорнути все' : 'Розгорнути все'}
         </Typography.Text>
-        <Typography.Text type="secondary">Усього записів: {data.totalItems}</Typography.Text>
+        <NotesSort />
       </Flex>
       <Collapse
         className={styles.notes__list}
@@ -76,16 +69,7 @@ export default function NotesList({ data }: Props) {
         }))}
         onChange={handleCollapseNote}
       />
-      <Pagination
-        className={styles.notes__pagination}
-        showSizeChanger
-        responsive
-        current={data.currentPage}
-        total={data.totalItems}
-        pageSize={data.pageSize}
-        pageSizeOptions={[5, 10, 15, 20, 30]}
-        onChange={handlePaginationChange}
-      />
+      <NotesPagination current={data.currentPage} total={data.totalItems} pageSize={data.pageSize} />
     </section>
   );
 }

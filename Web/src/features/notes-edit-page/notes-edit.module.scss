@@ -26,6 +26,8 @@
   margin-top: var(--ant-margin-md);
 
   &__total {
+    margin-bottom: var(--ant-margin-sm);
+
     &:first-child {
       cursor: pointer;
     }

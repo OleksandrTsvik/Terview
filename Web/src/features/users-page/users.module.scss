@@ -1,0 +1,25 @@
+.title {
+  margin-bottom: var(--ant-margin);
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--ant-padding-xs);
+  margin: 0 0 var(--ant-margin-md);
+}
+
+.user_deleted {
+  $background: var(--ant-red-2);
+
+  background: $background;
+
+  [class*='ant-table-column-sort'] {
+    background: $background !important;
+  }
+}

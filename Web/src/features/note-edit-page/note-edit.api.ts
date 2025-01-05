@@ -9,7 +9,7 @@ export const noteEditApi = api.injectEndpoints({
       query: ({ noteId }) => ({
         url: `/notes/edit/${noteId}`,
       }),
-      providesTags: ['Notes'],
+      providesTags: ['UserSession', 'Notes'],
     }),
     getNotesTags: builder.query<string[], void>({
       query: () => ({

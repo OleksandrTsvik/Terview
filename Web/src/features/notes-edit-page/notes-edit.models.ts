@@ -3,6 +3,7 @@ import { PagingParams } from '@/common/pagination.models';
 export interface GetNotesEditRequest extends PagingParams {
   query?: string | null;
   tags?: string[];
+  sort?: string | null;
 }
 
 export interface NoteResponse {
