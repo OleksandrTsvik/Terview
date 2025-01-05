@@ -29,6 +29,12 @@ public static class SeedJobs
                 Type = typeof(DeleteProcessedOutboxMessagesJob).FullName!,
                 Name = "Delete processed outbox messages",
                 PeriodInSeconds = (long)new TimeSpan(1, 0, 0, 0).TotalSeconds
+            },
+            new()
+            {
+                Type = typeof(DeleteUsersJob).FullName!,
+                Name = "Delete users",
+                PeriodInSeconds = (long)new TimeSpan(7, 0, 0, 0).TotalSeconds
             }
         ];
 }

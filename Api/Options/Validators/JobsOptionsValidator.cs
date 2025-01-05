@@ -11,5 +11,7 @@ public class JobsOptionsValidator : AbstractValidator<JobsOptions>
         RuleFor(x => x.DeleteNotesAfterDays).GreaterThan(0);
 
         RuleFor(x => x.DeleteProcessedOutboxMessagesAfterDays).GreaterThan(0);
+
+        RuleFor(x => x.DeleteUsersAfterDays).GreaterThan(0);
     }
 }
