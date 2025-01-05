@@ -8,6 +8,12 @@ public static class SeedJobs
         [
             new()
             {
+                Type = typeof(DeleteExpiredEmailVerificationTokensJob).FullName!,
+                Name = "Delete expired email verification tokens",
+                PeriodInSeconds = (long)new TimeSpan(1, 0, 0, 0).TotalSeconds
+            },
+            new()
+            {
                 Type = typeof(DeleteExpiredRefreshTokensJob).FullName!,
                 Name = "Delete expired refresh tokens",
                 PeriodInSeconds = (long)new TimeSpan(1, 0, 0, 0).TotalSeconds
