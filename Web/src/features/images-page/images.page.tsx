@@ -26,7 +26,7 @@ export default function ImagesPage() {
     return <Skeleton active />;
   }
 
-  if (!data) {
+  if (!data || !data.items.length) {
     return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Зображення відсутні" />;
   }
 
