@@ -9,3 +9,9 @@
     }
   }
 }
+
+.ck-content.output {
+  pre code {
+    color: var(--ant-color-text);
+  }
+}

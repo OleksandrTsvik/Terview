@@ -38,6 +38,11 @@
       .item__title + div {
         margin-top: var(--ant-margin-xxs);
       }
+
+      .item__date {
+        text-align: end;
+        margin: 0;
+      }
     }
   }
 
