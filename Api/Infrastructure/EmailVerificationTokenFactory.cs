@@ -1,27 +1,28 @@
 using Api.Options;
 using Domain.Users;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 
 namespace Api.Infrastructure;
 
 public class EmailVerificationTokenFactory
 {
-    private readonly EmailOptions _emailOptions;
+    private readonly SecurityOptions _securityOptions;
 
-    public EmailVerificationTokenFactory(IOptions<EmailOptions> emailOptions)
+    public EmailVerificationTokenFactory(IOptions<SecurityOptions> securityOptions)
     {
-        _emailOptions = emailOptions.Value;
+        _securityOptions = securityOptions.Value;
     }
 
     public EmailVerificationToken Create(Guid userId)
     {
-        string verificationToken = Guid.NewGuid().ToString();
+        string token = Guid.NewGuid().ToString();
 
         var emailVerificationToken = new EmailVerificationToken
         {
             UserId = userId,
-            Token = verificationToken,
-            ExpiresOnUtc = DateTime.UtcNow.AddHours(_emailOptions.VerificationTokenExpirationInHours)
+            Token = token,
+            ExpiresOnUtc = DateTime.UtcNow.AddHours(_securityOptions.EmailVerificationTokenExpirationInHours)
         };
 
         return emailVerificationToken;
@@ -29,6 +30,6 @@ public class EmailVerificationTokenFactory
 
     public string CreateLink(string token)
     {
-        return $"{_emailOptions.VerificationRedirectUrl}?token={token}";
+        return QueryHelpers.AddQueryString(_securityOptions.EmailVerificationRedirectUrl, "token", token);
     }
 }

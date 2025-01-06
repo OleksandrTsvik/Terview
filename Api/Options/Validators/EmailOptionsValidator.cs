@@ -17,9 +17,5 @@ public class EmailOptionsValidator : AbstractValidator<EmailOptions>
         RuleFor(x => x.Username).NotEmpty();
 
         RuleFor(x => x.Password).NotEmpty();
-
-        RuleFor(x => x.VerificationTokenExpirationInHours).GreaterThan(0);
-
-        RuleFor(x => x.VerificationRedirectUrl).NotEmpty();
     }
 }
