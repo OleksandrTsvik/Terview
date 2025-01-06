@@ -23,6 +23,7 @@ public static class OptionsExtensions
         services.AddOptionsWithFluentValidation<OutboxOptions>(OutboxOptions.ConfigurationSectionName);
 
         services.AddOptionsWithFluentValidation<SchedulerOptions>(SchedulerOptions.ConfigurationSectionName);
+        services.AddOptionsWithFluentValidation<SecurityOptions>(SecurityOptions.ConfigurationSectionName);
         services.AddOptionsWithFluentValidation<SeedOptions>(SeedOptions.ConfigurationSectionName);
 
         return services;

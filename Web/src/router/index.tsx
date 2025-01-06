@@ -11,6 +11,7 @@ const DashboardLayoutPage = lazy(() => import('@/features/dashboard-layout/dashb
 const DashboardNotFoundPage = lazy(() => import('@/features/dashboard-layout/dashboard-not-found.page'));
 const DashboardPage = lazy(() => import('@/features/dashboard-page/dashboard.page'));
 const EmailVerificationPage = lazy(() => import('@/features/email-verification-page/email-verification.page'));
+const ForgotPasswordPage = lazy(() => import('@/features/forgot-password-page/forgot-password.page'));
 const ImagesPage = lazy(() => import('@/features/images-page/images.page'));
 const LayoutPage = lazy(() => import('@/features/layout/layout.page'));
 const NotFoundPage = lazy(() => import('@/features/layout/not-found.page'));
@@ -21,6 +22,7 @@ const NoteEditPage = lazy(() => import('@/features/note-edit-page/note-edit.page
 const NotesEditPage = lazy(() => import('@/features/notes-edit-page/notes-edit.page'));
 const NotesPage = lazy(() => import('@/features/notes-page/notes.page'));
 const OutboxPage = lazy(() => import('@/features/outbox-page/outbox.page'));
+const ResetPasswordPage = lazy(() => import('@/features/reset-password-page/reset-password.page'));
 const SchedulerPage = lazy(() => import('@/features/scheduler-page/scheduler.page'));
 const TagsPage = lazy(() => import('@/features/tags-page/tags.page'));
 const UsersPage = lazy(() => import('@/features/users-page/users.page'));
@@ -57,7 +59,14 @@ const routes: RouteObject[] = [
     element: <LayoutPage />,
     children: [
       { index: true, element: <NotesPage /> },
-      { path: 'email-verification', element: <EmailVerificationPage /> },
+      {
+        element: <AnonymousOutlet />,
+        children: [
+          { path: 'email-verification', element: <EmailVerificationPage /> },
+          { path: 'forgot-password', element: <ForgotPasswordPage /> },
+          { path: 'reset-password', element: <ResetPasswordPage /> },
+        ],
+      },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

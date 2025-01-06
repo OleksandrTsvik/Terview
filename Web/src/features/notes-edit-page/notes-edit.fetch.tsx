@@ -24,7 +24,7 @@ export default function NotesEditFetch() {
     return <NotesEditSkeleton />;
   }
 
-  if (!data?.totalItems) {
+  if (!data || !data.items.length) {
     return <NotesEditEmpty />;
   }
 

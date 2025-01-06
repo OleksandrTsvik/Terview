@@ -38,7 +38,7 @@ export default function TagsPage() {
           <span>Усього тегів: {data.totalItems}</span>
           <RefetchButton onClick={refetch} />
         </Typography.Paragraph>
-        {data.totalItems ? (
+        {data.items.length ? (
           <>
             <TagsList tags={data.items} />
             <TagsPagination current={data.currentPage} total={data.totalItems} pageSize={data.pageSize} />

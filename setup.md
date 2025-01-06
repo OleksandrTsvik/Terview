@@ -80,8 +80,6 @@ Email__SenderName=Terview
 Email__SenderEmail=oleksandr.zwick@gmail.com
 Email__Username=
 Email__Password=
-Email__VerificationTokenExpirationInHours=
-Email__VerificationRedirectUrl=
 
 Files__MaxImageSizeInBytes=10485760
 
@@ -90,6 +88,12 @@ Jwt__RefreshTokenExpirationInDays=
 Jwt__SecretKey=
 Jwt__Issuer=
 Jwt__Audience=
+
+Security__EmailVerificationTokenExpirationInHours=
+Security__EmailVerificationRedirectUrl=
+Security__MaxUserPasswordResetTokens=
+Security__PasswordResetTokenExpirationInMinutes=
+Security__PasswordResetRedirectUrl=
 
 Outbox__PeriodInSeconds=
 Outbox__BatchSize=

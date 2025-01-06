@@ -102,6 +102,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<EmailVerificationTokenFactory>();
         services.AddScoped<IEmailSender, FluentEmailSender>();
         services.AddScoped<IImageProvider, CloudinaryImageProvider>();
+        services.AddScoped<PasswordResetTokenFactory>();
 
         return services;
     }
@@ -215,6 +216,7 @@ public static class ServiceCollectionExtensions
 
         services.AddMongoCollection<User>("users");
         services.AddMongoCollection<EmailVerificationToken>("email_verification_tokens");
+        services.AddMongoCollection<PasswordResetToken>("password_reset_tokens");
         services.AddMongoCollection<RefreshToken>("refresh_tokens");
 
         return services;

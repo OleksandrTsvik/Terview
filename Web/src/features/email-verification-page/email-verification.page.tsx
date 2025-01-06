@@ -1,4 +1,3 @@
-import { LockOutlined } from '@ant-design/icons';
 import { App, Button, Form, Input, Typography } from 'antd';
 import { useEffect } from 'react';
 import { Navigate, useNavigate, useSearchParams } from 'react-router';
@@ -32,7 +31,7 @@ export default function EmailVerificationPage() {
       .unwrap()
       .then(() => {
         notification.success({ message: 'Пошту підтверджено' });
-        navigate('/login');
+        navigate('/login', { replace: true });
       })
       .catch(() => notification.error({ message: 'Виникла помилка' }));
   };
@@ -57,7 +56,7 @@ export default function EmailVerificationPage() {
 
       <Form className={styles.form} layout="vertical" onFinish={handleSubmit}>
         <Form.Item hasFeedback label="Пароль" name="password" rules={EMAIL_VERIFICATION_RULES.password}>
-          <Input.Password prefix={<LockOutlined />} />
+          <Input.Password />
         </Form.Item>
 
         <Form.Item
@@ -66,7 +65,7 @@ export default function EmailVerificationPage() {
           name="confirmPassword"
           rules={EMAIL_VERIFICATION_RULES.confirmPassword}
         >
-          <Input.Password prefix={<LockOutlined />} />
+          <Input.Password />
         </Form.Item>
 
         <Form.Item>
