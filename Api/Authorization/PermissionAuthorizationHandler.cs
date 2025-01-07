@@ -1,5 +1,5 @@
 using Api.Authentication;
-using Domain.Users;
+using Api.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Authorization;
@@ -22,10 +22,9 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionReq
         using IServiceScope scope = _serviceScopeFactory.CreateScope();
         PermissionProvider permissionProvider = scope.ServiceProvider.GetRequiredService<PermissionProvider>();
 
-        HashSet<string> userPermissions = await permissionProvider.GetPermissionsAsync(userId);
+        HashSet<string> userPermissions = await permissionProvider.GetPermissionNamesAsync(userId);
 
-        if (userPermissions.Contains(PermissionType.FullAccess.ToString()) ||
-            userPermissions.Any(userPermission => requirement.Permissions.Contains(userPermission)))
+        if (userPermissions.ContainsPermission(requirement.Permissions))
         {
             context.Succeed(requirement);
         }

@@ -13,7 +13,7 @@ public class CreateUserEndpoint : IEndpoint
         app.MapPost("users", Handler)
             .WithRequestValidation<CreateUserRequest>()
             .WithTags(Tags.Users)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.CreateUser);
     }
 
     public static async Task<NoContent> Handler(

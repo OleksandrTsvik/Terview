@@ -1,5 +1,6 @@
 using Api.Extensions;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -13,7 +14,7 @@ public class GetNotesImagesEndpoint : IEndpoint
     {
         app.MapGet("notes/images", Handler)
             .WithTags(Tags.NotesImages)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.ReadNoteImage);
     }
 
     public static async Task<Ok<PagedList<NoteImageResponse>>> Handler(

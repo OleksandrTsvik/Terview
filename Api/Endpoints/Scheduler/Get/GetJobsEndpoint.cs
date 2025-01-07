@@ -1,5 +1,6 @@
 using Api.Extensions;
 using Api.Scheduler;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -14,7 +15,7 @@ public class GetJobsEndpoint : IEndpoint
     {
         app.MapGet("scheduler", Handler)
             .WithTags(Tags.Scheduler)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.ReadJob);
     }
 
     public static async Task<Ok<GetJobsResponse>> Handler(

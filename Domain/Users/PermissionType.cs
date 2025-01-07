@@ -8,10 +8,13 @@ public enum PermissionType
 
     CreateNote,
     ReadNote,
+    ReadOwnNote,
     UpdateNote,
     UpdateOwnNote,
     DeleteNote,
+    DeleteOwnNote,
     RestoreNote,
+    RestoreOwnNote,
 
     ReadNoteImage,
     DeleteNoteImage,
@@ -31,9 +34,10 @@ public enum PermissionType
 
     CreateUser,
     ReadUser,
-    UpdateUser,
     DeleteUser,
     RestoreUser,
     ResendVerificationEmail,
-    ReadPermission,
+
+    ReadUserPermission,
+    UpdateUserPermission,
 }

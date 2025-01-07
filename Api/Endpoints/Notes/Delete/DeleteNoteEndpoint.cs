@@ -1,5 +1,8 @@
 using Api.Authentication;
+using Api.Authorization;
+using Api.Extensions;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -12,16 +15,23 @@ public class DeleteNoteEndpoint : IEndpoint
     {
         app.MapDelete("notes/{id:guid}", Handler)
             .WithTags(Tags.Notes)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.DeleteNote, PermissionType.DeleteOwnNote);
     }
 
     public static async Task<Results<NoContent, NotFound>> Handler(
         [FromRoute] Guid id,
         UserContext userContext,
+        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
-        FilterDefinition<Note> filter = Builders<Note>.Filter.Eq(note => note.Id, id);
+        List<PermissionType> userPermissions = await permissionProvider.GetPermissionsAsync(userContext.UserId);
+        List<FilterDefinition<Note>> filters = [Builders<Note>.Filter.Eq(note => note.Id, id)];
+
+        if (!userPermissions.ContainsPermission(PermissionType.DeleteNote))
+        {
+            filters.Add(Builders<Note>.Filter.Eq(note => note.CreatedBy, userContext.UserId));
+        }
 
         UpdateDefinition<Note> update = Builders<Note>.Update
             .Set(note => note.DeletedOnUtc, DateTime.UtcNow)
@@ -29,7 +39,7 @@ public class DeleteNoteEndpoint : IEndpoint
 
         UpdateResult updateResult = await notesCollection
             .UpdateOneAsync(
-                filter,
+                Builders<Note>.Filter.And(filters),
                 update,
                 null,
                 cancellationToken);

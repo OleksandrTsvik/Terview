@@ -1,6 +1,7 @@
 using Api.Extensions;
 using Api.Infrastructure;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -16,7 +17,7 @@ public class UploadNoteImageEndpoint : IEndpoint
             .WithRequestValidation<UploadNoteImageRequest>()
             .WithTags(Tags.NotesImages)
             .DisableAntiforgery()
-            .RequireAuthorization();
+            .HasPermission(PermissionType.UploadNoteImage);
     }
 
     public static async Task<Ok<UploadNoteImageResponse>> Handler(

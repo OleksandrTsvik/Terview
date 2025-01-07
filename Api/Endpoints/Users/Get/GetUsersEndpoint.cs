@@ -13,7 +13,7 @@ public class GetUsersEndpoint : IEndpoint
     {
         app.MapGet("users", Handler)
             .WithTags(Tags.Users)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.ReadUser);
     }
 
     public static async Task<Ok<PagedList<UserResponse>>> Handler(

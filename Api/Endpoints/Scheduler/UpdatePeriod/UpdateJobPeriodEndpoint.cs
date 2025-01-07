@@ -1,5 +1,6 @@
 using Api.Extensions;
 using Api.Scheduler;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -13,7 +14,7 @@ public class UpdateJobPeriodEndpoint : IEndpoint
         app.MapPatch("scheduler/period/{id}", Handler)
             .WithTags(Tags.Scheduler)
             .WithRequestValidation<UpdateJobPeriodRequest>()
-            .RequireAuthorization();
+            .HasPermission(PermissionType.UpdateJobPeriod);
     }
 
     public static async Task<Results<NoContent, BadRequest, NotFound>> Handler(

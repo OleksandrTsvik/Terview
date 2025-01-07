@@ -1,3 +1,4 @@
+using Api.Extensions;
 using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ public class RestoreUserEndpoint : IEndpoint
     {
         app.MapPost("users/restore/{id:guid}", Handler)
             .WithTags(Tags.Users)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.RestoreUser);
     }
 
     public static async Task<Results<NoContent, NotFound>> Handler(

@@ -1,3 +1,4 @@
+using Api.Extensions;
 using Api.Infrastructure;
 using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -11,7 +12,7 @@ public class ResendVerificationEmailEndpoint : IEndpoint
     {
         app.MapPost("users/resend-verification-email/{userId:guid}", Handler)
             .WithTags(Tags.Users)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.ResendVerificationEmail);
     }
 
     public static async Task<Results<NoContent, BadRequest>> Handler(

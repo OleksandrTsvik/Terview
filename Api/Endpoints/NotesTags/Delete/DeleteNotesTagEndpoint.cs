@@ -1,4 +1,6 @@
+using Api.Extensions;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Driver;
 
@@ -10,7 +12,7 @@ public class DeleteNotesTagEndpoint : IEndpoint
     {
         app.MapDelete("notes/tags/{tag}", Handler)
             .WithTags(Tags.NotesTags)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.DeleteNoteTag);
     }
 
     public static async Task<Results<NoContent, NotFound>> Handler(

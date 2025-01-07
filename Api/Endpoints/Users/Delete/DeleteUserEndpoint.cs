@@ -1,4 +1,5 @@
 using Api.Authentication;
+using Api.Extensions;
 using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ public class DeleteUserEndpoint : IEndpoint
     {
         app.MapDelete("users/{id:guid}", Handler)
             .WithTags(Tags.Users)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.DeleteUser);
     }
 
     public static async Task<Results<NoContent, NotFound>> Handler(
