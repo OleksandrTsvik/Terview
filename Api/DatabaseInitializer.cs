@@ -67,7 +67,8 @@ public class DatabaseInitializer
             {
                 Email = user.Email,
                 EmailVerified = true,
-                PasswordHash = _passwordHasher.Hash(user.Password)
+                PasswordHash = _passwordHasher.Hash(user.Password),
+                Permissions = user.Permissions ?? []
             })
             .ToList();
 

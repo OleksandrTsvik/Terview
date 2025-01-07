@@ -16,6 +16,8 @@ public class SeedOptionsValidator : AbstractValidator<SeedOptions>
             user.RuleFor(x => x.Password)
                 .MinimumLength(UserRules.MinPasswordLength)
                 .MaximumLength(UserRules.MaxPasswordLength);
+
+            user.RuleFor(x => x.Permissions).ForEach(permission => permission.IsInEnum());
         });
     }
 }

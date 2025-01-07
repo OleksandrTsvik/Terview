@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
+using Api.Authorization;
 using Api.Endpoints;
+using Domain.Users;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Api.Extensions;
@@ -42,5 +44,12 @@ public static class EndpointExtensions
         return builder
             .AddEndpointFilter<ValidationFilter<TRequest>>()
             .ProducesValidationProblem();
+    }
+
+    public static RouteHandlerBuilder HasPermission(
+        this RouteHandlerBuilder builder,
+        params PermissionType[] permissions)
+    {
+        return builder.RequireAuthorization(new HasPermissionAttribute(permissions));
     }
 }

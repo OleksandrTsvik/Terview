@@ -1,5 +1,6 @@
 using System.Reflection;
 using Api.Authentication;
+using Api.Authorization;
 using Api.Endpoints.Logs;
 using Api.Endpoints.Notes.Create;
 using Api.Endpoints.Notes.Update;
@@ -15,6 +16,7 @@ using Domain.Notes;
 using Domain.Users;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -80,6 +82,10 @@ public static class ServiceCollectionExtensions
             .AddJwtBearer();
 
         services.AddAuthorization();
+
+        services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+        services.AddScoped<PermissionProvider>();
 
         return services;
     }

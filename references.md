@@ -16,6 +16,7 @@
 - [[YouTube] Transactional Outbox Pattern | Clean Architecture, .NET 6](https://www.youtube.com/watch?v=XALvnX7MPeo)
 - [[YouTube] ASP.NET Core MediatR Notifications Alternative](https://www.youtube.com/watch?v=G8lnnaGhmFI)
 - [[YouTube] Easy Email Verification in .NET: FluentEmail + Papercut](https://www.youtube.com/watch?v=KtCjH-1iCIk)
+- [[YouTube] Authentication & Authorization](https://www.youtube.com/playlist?list=PLYpjLpq5ZDGtJOHUbv7KHuxtYLk1nJPw5)
 
 ## Web
 

@@ -6,6 +6,7 @@ public class User
     public string Email { get; set; } = string.Empty;
     public bool EmailVerified { get; set; } = false;
     public string? PasswordHash { get; set; }
+    public List<PermissionType> Permissions { get; set; } = [];
 
     public DateTime CreatedOnUtc { get; set; } = DateTime.UtcNow;
 
