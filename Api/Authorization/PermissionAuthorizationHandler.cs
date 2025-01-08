@@ -1,4 +1,4 @@
-using Api.Authentication;
+using System.Security.Claims;
 using Api.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
@@ -17,12 +17,17 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionReq
         AuthorizationHandlerContext context,
         PermissionRequirement requirement)
     {
-        Guid userId = context.User.GetUserId();
+        string? userId = context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (!Guid.TryParse(userId, out Guid parsedUserId))
+        {
+            return;
+        }
 
         using IServiceScope scope = _serviceScopeFactory.CreateScope();
         PermissionProvider permissionProvider = scope.ServiceProvider.GetRequiredService<PermissionProvider>();
 
-        HashSet<string> userPermissions = await permissionProvider.GetPermissionNamesAsync(userId);
+        HashSet<string> userPermissions = await permissionProvider.GetPermissionNamesAsync(parsedUserId);
 
         if (userPermissions.ContainsPermission(requirement.Permissions))
         {
