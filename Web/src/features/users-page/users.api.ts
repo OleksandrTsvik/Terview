@@ -1,16 +1,17 @@
 import { api } from '@/api';
 import { PagedList } from '@/common/pagination.models';
 
-import { CreateUserRequest, GetUsersRequest, UserResponse } from './users.models';
+import { CreateUserRequest, GetUsersRequest, UpdateUserPermissionsRequest, UserResponse } from './users.models';
 
 export const usersApi = api.injectEndpoints({
   overrideExisting: false,
   endpoints: (builder) => ({
     getUsers: builder.query<PagedList<UserResponse>, GetUsersRequest>({
-      query: ({ email, sort, sortDirection, pageNumber, pageSize }) => ({
+      query: ({ email, permissions, sort, sortDirection, pageNumber, pageSize }) => ({
         url: '/users',
         params: {
           e: email,
+          pe: permissions,
           s: sort,
           sd: sortDirection,
           p: pageNumber,
@@ -19,10 +20,23 @@ export const usersApi = api.injectEndpoints({
       }),
       providesTags: ['UserSession', 'Users'],
     }),
+    getPermissions: builder.query<string[], void>({
+      query: () => ({
+        url: '/users/permissions',
+      }),
+    }),
     createUser: builder.mutation<void, CreateUserRequest>({
       query: (data) => ({
         url: '/users',
         method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: (_, error) => (error ? [] : ['Users']),
+    }),
+    updateUserPermissions: builder.mutation<void, UpdateUserPermissionsRequest>({
+      query: ({ userId, ...data }) => ({
+        url: `/users/permissions/${userId}`,
+        method: 'PATCH',
         body: data,
       }),
       invalidatesTags: (_, error) => (error ? [] : ['Users']),
@@ -53,7 +67,9 @@ export const usersApi = api.injectEndpoints({
 
 export const {
   useGetUsersQuery,
+  useGetPermissionsQuery,
   useCreateUserMutation,
+  useUpdateUserPermissionsMutation,
   useDeleteUserMutation,
   useRestoreUserMutation,
   useResendVerificationEmailMutation,

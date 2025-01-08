@@ -1,4 +1,6 @@
+using Api.Extensions;
 using Api.Outbox;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Driver;
 
@@ -10,7 +12,7 @@ public class DeleteOutboxMessageEndpoint : IEndpoint
     {
         app.MapDelete("outbox/{id:guid}", Handler)
             .WithTags(Tags.Outbox)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.DeleteOutboxMessage);
     }
 
     public static async Task<Results<NoContent, NotFound>> Handler(

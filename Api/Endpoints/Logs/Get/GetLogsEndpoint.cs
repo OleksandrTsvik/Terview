@@ -1,4 +1,5 @@
 using Api.Extensions;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -14,7 +15,7 @@ public class GetLogsEndpoint : IEndpoint
     {
         app.MapGet("logs", Handler)
             .WithTags(Tags.Logs)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.ReadLog);
     }
 
     public static async Task<Ok<GetLogsResponse>> Handler(

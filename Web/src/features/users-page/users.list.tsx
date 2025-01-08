@@ -1,6 +1,6 @@
 import { green, red } from '@ant-design/colors';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { Table, TableColumnsType, TableProps } from 'antd';
+import { Flex, Table, TableColumnsType, TableProps, Tag } from 'antd';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'react-router';
 
@@ -12,6 +12,7 @@ import useTableSearchProps from '@/hooks/use-table-search-props';
 
 import usePagination from './use-pagination';
 import useUserActions from './use-user-actions';
+import { useGetPermissionsQuery } from './users.api';
 import { QUERY_PARAMS } from './users.constants';
 import { UserResponse } from './users.models';
 import { getColumnSortOrder } from './users.utils';
@@ -21,14 +22,23 @@ import styles from './users.module.scss';
 interface Props {
   loading?: boolean;
   users?: UserResponse[];
-  filters: { email?: string | null; sort?: string | null; sortDirection?: string | null };
-  pagination: { total: number; pageNumber: number; pageSize: number };
+  filters: {
+    email?: string | null;
+    permissions: string[];
+    sort?: string | null;
+    sortDirection?: string | null;
+  };
+  pagination: {
+    total: number;
+    pageNumber: number;
+    pageSize: number;
+  };
 }
 
 export default function UsersList({
   loading,
   users,
-  filters: { email, sort, sortDirection },
+  filters: { email, permissions, sort, sortDirection },
   pagination: { total, pageNumber, pageSize },
 }: Props) {
   const [, setSearchParams] = useSearchParams();
@@ -37,6 +47,7 @@ export default function UsersList({
   const { getColumnSearchProps } = useTableSearchProps<UserResponse>({ email });
 
   const { getUserActions } = useUserActions();
+  const { data: allPermissions } = useGetPermissionsQuery();
 
   const columns: TableColumnsType<UserResponse> = [
     {
@@ -64,6 +75,21 @@ export default function UsersList({
       ...getColumnSearchProps('email', 'Email'),
     },
     {
+      key: 'permissions',
+      title: 'Дозволи',
+      filteredValue: permissions,
+      filters: allPermissions?.map((permission) => ({ text: permission, value: permission })),
+      render: (_, user) => (
+        <Flex wrap gap="small">
+          {user.permissions.map((permission) => (
+            <Tag key={permission} color={permissions.includes(permission) ? 'gold' : 'default'}>
+              {permission}
+            </Tag>
+          ))}
+        </Flex>
+      ),
+    },
+    {
       key: 'date',
       title: 'Дата реєстрації',
       sorter: true,
@@ -89,6 +115,13 @@ export default function UsersList({
         prev.set(QUERY_PARAMS.EMAIL, filters['email'][0]);
       } else {
         prev.delete(QUERY_PARAMS.EMAIL);
+      }
+
+      if (isArrayOfStrings(filters['permissions']) && filters['permissions'].length) {
+        prev.delete(QUERY_PARAMS.PERMISSIONS);
+        filters['permissions'].forEach((permission) => prev.append(QUERY_PARAMS.PERMISSIONS, permission));
+      } else {
+        prev.delete(QUERY_PARAMS.PERMISSIONS);
       }
 
       if (!Array.isArray(sorter) && isString(sorter.columnKey) && isString(sorter.order)) {

@@ -1,5 +1,6 @@
 using Api.Extensions;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -13,7 +14,7 @@ public class GetNotesTagsEditEndpoint : IEndpoint
     {
         app.MapGet("notes/tags/edit", Handler)
             .WithTags(Tags.NotesTags)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.ReadNoteTag);
     }
 
     public static async Task<Ok<PagedList<string>>> Handler(

@@ -1,5 +1,8 @@
+using Api.Authentication;
+using Api.Authorization;
 using Api.Extensions;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -13,7 +16,7 @@ public class GetNotesEditEndpoint : IEndpoint
     {
         app.MapGet("notes/edit", Handler)
             .WithTags(Tags.Notes)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.ReadNote, PermissionType.ReadOwnNote);
     }
 
     public static async Task<Ok<PagedList<NoteResponse>>> Handler(
@@ -22,12 +25,18 @@ public class GetNotesEditEndpoint : IEndpoint
         [FromQuery(Name = "s")] string? sort,
         [FromQuery(Name = "p")] int? pageNumber,
         [FromQuery(Name = "ps")] int? pageSize,
+        UserContext userContext,
+        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
         NoteSortType sortType = sort.GetNoteSortType();
+        List<PermissionType> userPermissions = await permissionProvider.GetPermissionsAsync(userContext.UserId);
 
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
+            .WhereIf(
+                !userPermissions.ContainsPermission(PermissionType.ReadNote),
+                note => note.CreatedBy == userContext.UserId)
             .WhereIf(
                 !string.IsNullOrWhiteSpace(query),
                 note =>

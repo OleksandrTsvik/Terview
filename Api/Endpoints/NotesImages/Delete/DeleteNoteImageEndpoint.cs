@@ -1,5 +1,7 @@
+using Api.Extensions;
 using Api.Infrastructure;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Driver;
 
@@ -11,7 +13,7 @@ public class DeleteNoteImageEndpoint : IEndpoint
     {
         app.MapDelete("notes/images/{name}", Handler)
             .WithTags(Tags.NotesImages)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.DeleteNoteImage);
     }
 
     public static async Task<Results<NoContent, NotFound>> Handler(

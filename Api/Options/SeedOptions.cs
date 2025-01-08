@@ -1,3 +1,5 @@
+using Domain.Users;
+
 namespace Api.Options;
 
 public class SeedOptions
@@ -11,4 +13,5 @@ public class UserSeed
 {
     public required string Email { get; init; }
     public required string Password { get; init; }
+    public required List<PermissionType>? Permissions { get; init; }
 }

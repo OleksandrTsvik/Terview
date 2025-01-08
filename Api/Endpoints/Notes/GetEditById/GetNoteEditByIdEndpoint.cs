@@ -1,7 +1,12 @@
+using Api.Authentication;
+using Api.Authorization;
+using Api.Extensions;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace Api.Endpoints.Notes.GetEditById;
 
@@ -11,17 +16,24 @@ public class GetNoteEditByIdEndpoint : IEndpoint
     {
         app.MapGet("notes/edit/{id:guid}", Handler)
             .WithTags(Tags.Notes)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.ReadNote, PermissionType.ReadOwnNote);
     }
 
     public static async Task<Results<Ok<NoteResponse>, NotFound>> Handler(
         [FromRoute] Guid id,
+        UserContext userContext,
+        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
-        NoteResponse? note = await notesCollection
-            .Find(note => note.Id == id)
-            .Project(note => new NoteResponse
+        List<PermissionType> userPermissions = await permissionProvider.GetPermissionsAsync(userContext.UserId);
+
+        NoteResponse? note = await notesCollection.AsQueryable()
+            .Where(note => note.Id == id)
+            .WhereIf(
+                !userPermissions.ContainsPermission(PermissionType.ReadNote),
+                note => note.CreatedBy == userContext.UserId)
+            .Select(note => new NoteResponse
             {
                 Id = note.Id,
                 Title = note.Title,

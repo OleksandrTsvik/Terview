@@ -13,11 +13,12 @@ public class GetUsersEndpoint : IEndpoint
     {
         app.MapGet("users", Handler)
             .WithTags(Tags.Users)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.ReadUser);
     }
 
     public static async Task<Ok<PagedList<UserResponse>>> Handler(
         [FromQuery(Name = "e")] string? email,
+        [FromQuery(Name = "pe")] PermissionType[]? permissions,
         [FromQuery(Name = "s")] string? sort,
         [FromQuery(Name = "sd")] string? sortDirection,
         [FromQuery(Name = "p")] int? pageNumber,
@@ -32,6 +33,9 @@ public class GetUsersEndpoint : IEndpoint
             .WhereIf(
                 !string.IsNullOrWhiteSpace(email),
                 user => user.Email.ToLower().Contains(email!.ToLower()))
+            .WhereIf(
+                permissions?.Length > 0,
+                user => permissions!.All(permission => user.Permissions.Contains(permission)))
             .OrderBy(note => note.DeletedOnUtc)
             .QueryIf(
                 sortType == UserSortType.Email,
@@ -44,6 +48,7 @@ public class GetUsersEndpoint : IEndpoint
                 Id = user.Id,
                 Email = user.Email,
                 EmailVerified = user.EmailVerified,
+                Permissions = user.Permissions,
                 CreatedOnUtc = user.CreatedOnUtc,
                 DeletedOnUtc = user.DeletedOnUtc,
             })

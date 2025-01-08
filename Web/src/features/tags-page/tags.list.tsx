@@ -1,5 +1,7 @@
 import { App, Flex, MenuProps } from 'antd';
 
+import { PermissionType } from '@/auth/permission-type.enum';
+import useAuth from '@/auth/use-auth';
 import ActionsDropdown from '@/components/actions-dropdown';
 import { DeleteIcon, EditIcon } from '@/components/icons';
 import { useAppDispatch } from '@/hooks/redux-hooks';
@@ -17,6 +19,7 @@ export default function TagsList({ tags }: Props) {
   const { modal, notification } = App.useApp();
   const appDispatch = useAppDispatch();
 
+  const { filterAuthItems } = useAuth();
   const [deleteTag] = useDeleteNotesTagMutation();
 
   const handleEditClick = (tag: string) => {
@@ -34,20 +37,27 @@ export default function TagsList({ tags }: Props) {
     });
   };
 
-  const getTagActions = (tag: string): MenuProps['items'] => [
-    {
-      key: 'edit',
-      icon: <EditIcon />,
-      label: 'Редагувати',
-      onClick: () => handleEditClick(tag),
-    },
-    {
-      key: 'delete',
-      icon: <DeleteIcon />,
-      label: 'Видалити',
-      onClick: () => handleDeleteClick(tag),
-    },
-  ];
+  const getTagActions = (tag: string): MenuProps['items'] =>
+    filterAuthItems([
+      {
+        permissions: [PermissionType.UpdateNoteTag],
+        value: {
+          key: 'edit',
+          icon: <EditIcon />,
+          label: 'Редагувати',
+          onClick: () => handleEditClick(tag),
+        },
+      },
+      {
+        permissions: [PermissionType.DeleteNoteTag],
+        value: {
+          key: 'delete',
+          icon: <DeleteIcon />,
+          label: 'Видалити',
+          onClick: () => handleDeleteClick(tag),
+        },
+      },
+    ]);
 
   return (
     <Flex gap="large" wrap="wrap">

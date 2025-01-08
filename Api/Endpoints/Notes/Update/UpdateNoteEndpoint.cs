@@ -1,8 +1,10 @@
 using Api.Authentication;
+using Api.Authorization;
 using Api.Endpoints.Notes.Create;
 using Api.Events;
 using Api.Extensions;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -16,13 +18,14 @@ public class UpdateNoteEndpoint : IEndpoint
         app.MapPut("notes/{id:guid}", Handler)
             .WithRequestValidation<UpdateNoteRequest>()
             .WithTags(Tags.Notes)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.UpdateNote, PermissionType.UpdateOwnNote);
     }
 
     public static async Task<Results<NoContent, NotFound>> Handler(
         [FromRoute] Guid id,
         CreateNoteRequest request,
         UserContext userContext,
+        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         IEventBus eventBus,
         CancellationToken cancellationToken)
@@ -33,11 +36,20 @@ public class UpdateNoteEndpoint : IEndpoint
             .Distinct()
             .ToList() ?? [];
 
+        List<PermissionType> userPermissions = await permissionProvider.GetPermissionsAsync(userContext.UserId);
+
         FilterDefinitionBuilder<Note> filterBuilder = Builders<Note>.Filter;
-        FilterDefinition<Note> filter = filterBuilder.And(
+        List<FilterDefinition<Note>> filters =
+        [
             filterBuilder.Eq(note => note.Id, id),
             filterBuilder.Eq(note => note.DeletedOnUtc, null),
-            filterBuilder.Eq(note => note.DeletedBy, null));
+            filterBuilder.Eq(note => note.DeletedBy, null)
+        ];
+
+        if (!userPermissions.ContainsPermission(PermissionType.UpdateNote))
+        {
+            filters.Add(filterBuilder.Eq(note => note.CreatedBy, userContext.UserId));
+        }
 
         UpdateDefinition<Note> update = Builders<Note>.Update
             .Set(note => note.Title, request.Title)
@@ -48,7 +60,7 @@ public class UpdateNoteEndpoint : IEndpoint
 
         UpdateResult updateResult = await notesCollection
             .UpdateOneAsync(
-                filter,
+                filterBuilder.And(filters),
                 update,
                 null,
                 cancellationToken);

@@ -27,7 +27,10 @@ public class CreateUserEventHandler : IEventHandler<CreateUserEvent>
     public async Task Handle(CreateUserEvent message, CancellationToken cancellationToken = default)
     {
         User? user = await _usersCollection
-            .Find(user => user.Id == message.UserId)
+            .Find(user =>
+                user.Id == message.UserId &&
+                user.DeletedOnUtc == null &&
+                user.DeletedBy == null)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (user is null || user.EmailVerified)

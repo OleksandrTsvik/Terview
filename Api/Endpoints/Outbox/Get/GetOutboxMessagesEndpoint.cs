@@ -1,5 +1,6 @@
 using Api.Extensions;
 using Api.Outbox;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -13,7 +14,7 @@ public class GetOutboxMessagesEndpoint : IEndpoint
     {
         app.MapGet("outbox", Handler)
             .WithTags(Tags.Outbox)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.ReadOutboxMessage);
     }
 
     public static async Task<Ok<PagedList<OutboxResponse>>> Handler(

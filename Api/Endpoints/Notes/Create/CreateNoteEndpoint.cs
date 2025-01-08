@@ -2,6 +2,7 @@ using Api.Authentication;
 using Api.Events;
 using Api.Extensions;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Driver;
 
@@ -14,7 +15,7 @@ public class CreateNoteEndpoint : IEndpoint
         app.MapPost("notes", Handler)
             .WithRequestValidation<CreateNoteRequest>()
             .WithTags(Tags.Notes)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.CreateNote);
     }
 
     public static async Task<NoContent> Handler(

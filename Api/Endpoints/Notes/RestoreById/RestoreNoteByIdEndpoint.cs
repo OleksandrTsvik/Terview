@@ -1,4 +1,8 @@
+using Api.Authentication;
+using Api.Authorization;
+using Api.Extensions;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -11,15 +15,23 @@ public class RestoreNoteByIdEndpoint : IEndpoint
     {
         app.MapPatch("notes/restore/{id:guid}", Handler)
             .WithTags(Tags.Notes)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.RestoreNote, PermissionType.RestoreOwnNote);
     }
 
     public static async Task<Results<NoContent, NotFound>> Handler(
         [FromRoute] Guid id,
+        UserContext userContext,
+        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
-        FilterDefinition<Note> filter = Builders<Note>.Filter.Eq(note => note.Id, id);
+        List<PermissionType> userPermissions = await permissionProvider.GetPermissionsAsync(userContext.UserId);
+        List<FilterDefinition<Note>> filters = [Builders<Note>.Filter.Eq(note => note.Id, id)];
+
+        if (!userPermissions.ContainsPermission(PermissionType.RestoreNote))
+        {
+            filters.Add(Builders<Note>.Filter.Eq(note => note.CreatedBy, userContext.UserId));
+        }
 
         UpdateDefinition<Note> update = Builders<Note>.Update
             .Set(note => note.DeletedOnUtc, null)
@@ -27,7 +39,7 @@ public class RestoreNoteByIdEndpoint : IEndpoint
 
         UpdateResult updateResult = await notesCollection
             .UpdateOneAsync(
-                filter,
+                Builders<Note>.Filter.And(filters),
                 update,
                 null,
                 cancellationToken);

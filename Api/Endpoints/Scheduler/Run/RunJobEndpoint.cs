@@ -1,4 +1,6 @@
+using Api.Extensions;
 using Api.Scheduler;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -11,7 +13,7 @@ public class RunJobEndpoint : IEndpoint
     {
         app.MapPost("scheduler/{id}", Handler)
             .WithTags(Tags.Scheduler)
-            .RequireAuthorization();
+            .HasPermission(PermissionType.RunJob);
     }
 
     public static async Task<Results<NoContent, BadRequest, NotFound>> Handler(

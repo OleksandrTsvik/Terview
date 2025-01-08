@@ -1,5 +1,6 @@
 using Api.Extensions;
 using Domain.Notes;
+using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Driver;
 
@@ -12,7 +13,7 @@ public class UpdateNotesTagEndpoint : IEndpoint
         app.MapPatch("notes/tags", Handler)
             .WithTags(Tags.NotesTags)
             .WithRequestValidation<UpdateNotesTagRequest>()
-            .RequireAuthorization();
+            .HasPermission(PermissionType.UpdateNoteTag);
     }
 
     public static async Task<Results<NoContent, NotFound>> Handler(

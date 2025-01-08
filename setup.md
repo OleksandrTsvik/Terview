@@ -108,4 +108,5 @@ Jobs__DeleteUsersAfterDays=
 
 Seed__Users__0__Email=
 Seed__Users__0__Password=
+Seed__Users__0__Permissions__0=
 ```
