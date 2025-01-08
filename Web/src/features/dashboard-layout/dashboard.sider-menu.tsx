@@ -2,13 +2,15 @@ import { GetProps, Menu } from 'antd';
 import { SelectInfo } from 'rc-menu/lib/interface';
 import { useLocation, useNavigate } from 'react-router';
 
-import { SIDER_ITEMS } from './dashboard.constants';
+import useSiderItems from './use-sider.items';
 
 type Props = GetProps<typeof Menu>;
 
 export default function DashboardSiderMenu({ theme = 'dark', onSelect, ...props }: Props) {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const items = useSiderItems();
 
   const handleSelect = (info: SelectInfo) => {
     navigate(info.key);
@@ -20,7 +22,7 @@ export default function DashboardSiderMenu({ theme = 'dark', onSelect, ...props 
       {...props}
       mode="inline"
       theme={theme}
-      items={SIDER_ITEMS}
+      items={items}
       defaultSelectedKeys={[location.pathname]}
       selectedKeys={[location.pathname]}
       onSelect={handleSelect}

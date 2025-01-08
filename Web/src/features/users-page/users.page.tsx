@@ -1,5 +1,7 @@
 import { useSearchParams } from 'react-router';
 
+import { PermissionType } from '@/auth/permission-type.enum';
+import PermissionsGuard from '@/auth/permissions.guard';
 import { stringToNumber } from '@/common/type-converters.utils';
 
 import UpdatePermissionsModal from './update-permissions.modal';
@@ -38,7 +40,9 @@ export default function UsersPage() {
         filters={{ email, permissions, sort, sortDirection }}
         pagination={{ total: data?.totalItems ?? 0, pageNumber, pageSize }}
       />
-      <UpdatePermissionsModal />
+      <PermissionsGuard permissions={[PermissionType.UpdateUserPermission]}>
+        <UpdatePermissionsModal />
+      </PermissionsGuard>
     </>
   );
 }

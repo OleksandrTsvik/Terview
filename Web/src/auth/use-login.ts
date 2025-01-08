@@ -19,7 +19,7 @@ export default function useLogin() {
 
       TokenProvider.setAccessToken(response.accessToken);
       TokenProvider.setRefreshToken(response.refreshToken);
-      appDispatch(setCredentials({ email: response.email }));
+      appDispatch(setCredentials({ email: response.email, permissions: response.permissions }));
     } catch {
       notification.error({ message: 'Неправильна адреса електронної пошти або пароль' });
 

@@ -1,6 +1,8 @@
 import { CopyOutlined } from '@ant-design/icons';
 import { App, Badge, Card, Col, Image, Row } from 'antd';
 
+import { PermissionType } from '@/auth/permission-type.enum';
+import useAuth from '@/auth/use-auth';
 import { DeleteIcon } from '@/components/icons';
 
 import { useDeleteNoteImageMutation } from './images.api';
@@ -15,7 +17,19 @@ interface Props {
 export default function ImagesList({ images }: Props) {
   const { modal, notification } = App.useApp();
 
+  const { filterAuthItems } = useAuth();
   const [deleteImage] = useDeleteNoteImageMutation();
+
+  const getImageActions = (image: NoteImageResponse) =>
+    filterAuthItems([
+      {
+        value: <CopyOutlined key="copy" onClick={() => handleCopyClick(image.url)} />,
+      },
+      {
+        permissions: [PermissionType.DeleteNoteImage],
+        value: <DeleteIcon key="delete" onClick={() => handleDeleteClick(image.uniqueName)} />,
+      },
+    ]);
 
   const handleCopyClick = (imageUrl: string) => {
     navigator.clipboard
@@ -41,14 +55,7 @@ export default function ImagesList({ images }: Props) {
       {images.map((image) => (
         <Col key={image.id} lg={8} md={12} sm={12} xs={24}>
           <Badge.Ribbon text={image.noteCount} color={image.noteCount > 0 ? 'red' : 'green'}>
-            <Card
-              className={styles.card}
-              cover={<Image src={image.url} />}
-              actions={[
-                <CopyOutlined key="copy" onClick={() => handleCopyClick(image.url)} />,
-                <DeleteIcon key="delete" onClick={() => handleDeleteClick(image.uniqueName)} />,
-              ]}
-            />
+            <Card className={styles.card} cover={<Image src={image.url} />} actions={getImageActions(image)} />
           </Badge.Ribbon>
         </Col>
       ))}

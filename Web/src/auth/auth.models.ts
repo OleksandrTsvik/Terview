@@ -1,9 +1,18 @@
+import { PermissionType } from './permission-type.enum';
+
 export interface AuthState {
   user: AuthUser | null;
 }
 
 export interface AuthUser {
   email: string;
+  permissions: string[];
+}
+
+export interface AuthItem<TValue> {
+  show?: boolean;
+  permissions?: PermissionType[];
+  value: TValue;
 }
 
 export interface LoginRequest {
@@ -13,6 +22,7 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   email: string;
+  permissions: string[];
   accessToken: string;
   refreshToken: string;
 }
@@ -23,6 +33,7 @@ export interface RefreshTokenRequest {
 
 export interface RefreshTokenResponse {
   email: string;
+  permissions: string[];
   accessToken: string;
   refreshToken: string;
 }

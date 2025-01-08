@@ -2,6 +2,8 @@ import { App, MenuProps } from 'antd';
 import { MenuInfo } from 'rc-menu/es/interface';
 import { useNavigate } from 'react-router';
 
+import { PermissionType } from '@/auth/permission-type.enum';
+import useAuth from '@/auth/use-auth';
 import ActionsDropdown from '@/components/actions-dropdown';
 import { DeleteIcon, EditIcon, RestoreIcon } from '@/components/icons';
 
@@ -15,6 +17,8 @@ interface Props {
 export default function NotesEditItemExtra({ note }: Props) {
   const navigate = useNavigate();
   const { modal, notification } = App.useApp();
+
+  const { filterAuthItems } = useAuth();
 
   const [restoreNote] = useRestoreNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
@@ -49,31 +53,38 @@ export default function NotesEditItemExtra({ note }: Props) {
     });
   };
 
-  const items: MenuProps['items'] = [
-    ...(note.isDeleted
-      ? [
-          {
-            key: 'restore',
-            icon: <RestoreIcon />,
-            label: 'Відновити',
-            onClick: handleRestoreClick,
-          },
-        ]
-      : [
-          {
-            key: 'edit',
-            icon: <EditIcon />,
-            label: 'Редагувати',
-            onClick: handleEditClick,
-          },
-          {
-            key: 'delete',
-            icon: <DeleteIcon />,
-            label: 'Видалити',
-            onClick: handleDeleteClick,
-          },
-        ]),
-  ];
+  const items: MenuProps['items'] = filterAuthItems([
+    {
+      show: note.isDeleted,
+      permissions: [PermissionType.RestoreNote, PermissionType.RestoreOwnNote],
+      value: {
+        key: 'restore',
+        icon: <RestoreIcon />,
+        label: 'Відновити',
+        onClick: handleRestoreClick,
+      },
+    },
+    {
+      show: !note.isDeleted,
+      permissions: [PermissionType.UpdateNote, PermissionType.UpdateOwnNote],
+      value: {
+        key: 'edit',
+        icon: <EditIcon />,
+        label: 'Редагувати',
+        onClick: handleEditClick,
+      },
+    },
+    {
+      show: !note.isDeleted,
+      permissions: [PermissionType.DeleteNote, PermissionType.DeleteOwnNote],
+      value: {
+        key: 'delete',
+        icon: <DeleteIcon />,
+        label: 'Видалити',
+        onClick: handleDeleteClick,
+      },
+    },
+  ]);
 
   const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();

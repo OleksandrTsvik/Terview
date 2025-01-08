@@ -1,6 +1,8 @@
 import { Empty, Skeleton, Spin, Typography } from 'antd';
 import { useSearchParams } from 'react-router';
 
+import { PermissionType } from '@/auth/permission-type.enum';
+import PermissionsGuard from '@/auth/permissions.guard';
 import { stringToNumber } from '@/common/type-converters.utils';
 import RefetchButton from '@/components/refetch-button';
 
@@ -47,7 +49,9 @@ export default function TagsPage() {
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Теги відсутні" />
         )}
       </Spin>
-      <UpdateTagModal />
+      <PermissionsGuard permissions={[PermissionType.UpdateNoteTag]}>
+        <UpdateTagModal />
+      </PermissionsGuard>
     </>
   );
 }

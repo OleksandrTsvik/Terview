@@ -33,7 +33,7 @@ export default function AuthMiddleware({ children }: Props) {
       .then((response) => {
         TokenProvider.setAccessToken(response.accessToken);
         TokenProvider.setRefreshToken(response.refreshToken);
-        appDispatch(setCredentials({ email: response.email }));
+        appDispatch(setCredentials({ email: response.email, permissions: response.permissions }));
       })
       .catch(() => {
         TokenProvider.deleteAccessToken();
