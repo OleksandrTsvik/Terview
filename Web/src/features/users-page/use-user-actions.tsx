@@ -1,13 +1,16 @@
-import { geekblue } from '@ant-design/colors';
-import { MailOutlined } from '@ant-design/icons';
+import { geekblue, volcano } from '@ant-design/colors';
+import { MailOutlined, SafetyOutlined } from '@ant-design/icons';
 import { App, MenuProps } from 'antd';
 
 import { DeleteIcon, RestoreIcon } from '@/components/icons';
+import { useAppDispatch } from '@/hooks/redux-hooks';
 
 import { useDeleteUserMutation, useResendVerificationEmailMutation, useRestoreUserMutation } from './users.api';
 import { UserResponse } from './users.models';
+import { selectUpdateUserPermissions } from './users.slice';
 
 export default function useUserActions() {
+  const appDispatch = useAppDispatch();
   const { modal, notification } = App.useApp();
 
   const [restoreUser] = useRestoreUserMutation();
@@ -32,6 +35,10 @@ export default function useUserActions() {
           .unwrap()
           .catch(() => notification.error({ message: 'Виникла помилка' })),
     });
+  };
+
+  const handleUpdatePermissionsClick = (user: UserResponse) => {
+    appDispatch(selectUpdateUserPermissions(user));
   };
 
   const handleDeleteClick = (user: UserResponse) => {
@@ -66,6 +73,12 @@ export default function useUserActions() {
                 },
               ]
             : []),
+          {
+            key: 'update-permissions',
+            icon: <SafetyOutlined style={{ color: volcano.primary }} />,
+            label: 'Змінити дозволи',
+            onClick: () => handleUpdatePermissionsClick(user),
+          },
           {
             key: 'delete',
             icon: <DeleteIcon />,

@@ -58,6 +58,7 @@ public class LoginEndpoint : IEndpoint
         var response = new LoginResponse
         {
             Email = user.Email,
+            Permissions = user.Permissions,
             AccessToken = accessToken,
             RefreshToken = refreshToken.Token
         };

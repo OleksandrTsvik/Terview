@@ -160,6 +160,14 @@ public static class ServiceCollectionExtensions
 
         ConventionRegistry.Register("Global Conventions", pack, _ => true);
 
+        BsonClassMap.RegisterClassMap<User>(classMap =>
+        {
+            classMap.AutoMap();
+            classMap.MapMember(user => user.Permissions)
+                .SetSerializer(new EnumerableInterfaceImplementerSerializer<List<PermissionType>>(
+                    new EnumSerializer<PermissionType>(BsonType.String)));
+        });
+
         services
             .AddMongoClient()
             .AddMongoDatabase()
