@@ -43,7 +43,17 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
       const release = await mutex.acquire();
 
       try {
-        const refreshResult = await baseQuery('/users/refresh-token', api, extraOptions);
+        const refreshResult = await baseQuery(
+          {
+            url: '/users/refresh-token',
+            method: 'POST',
+            body: {
+              refreshToken: TokenProvider.getRefreshToken(),
+            },
+          },
+          api,
+          extraOptions,
+        );
 
         if (refreshResult.data) {
           const { accessToken, refreshToken } = refreshResult.data as RefreshResponse;

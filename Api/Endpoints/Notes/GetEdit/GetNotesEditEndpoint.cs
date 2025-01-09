@@ -64,9 +64,8 @@ public class GetNotesEditEndpoint : IEndpoint
                 query => query.ThenBy(note => note.Title))
             .QueryIf(
                 sortType == NoteSortType.Date,
-                query => query
-                    .ThenByDescending(note => note.UpdatedOnUtc)
-                    .ThenByDescending(note => note.CreatedOnUtc))
+                query => query.ThenByDescending(note =>
+                    note.UpdatedOnUtc > note.CreatedOnUtc ? note.UpdatedOnUtc : note.CreatedOnUtc))
             .ToPagedListAsync(pageNumber, pageSize, cancellationToken);
 
         return TypedResults.Ok(notes);

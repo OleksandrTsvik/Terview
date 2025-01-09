@@ -44,7 +44,6 @@ import {
   PasteFromOffice,
   RemoveFormat,
   ShowBlocks,
-  SimpleUploadAdapter,
   SourceEditing,
   SpecialCharacters,
   SpecialCharactersArrows,
@@ -67,6 +66,8 @@ import {
   Underline,
 } from 'ckeditor5';
 import translations from 'ckeditor5/translations/uk.js';
+
+import ImageUploadAdapter from './ckeditor.image-upload-adapter';
 
 /**
  * Create a free account with a trial: https://portal.ckeditor.com/checkout?plan=free
@@ -120,6 +121,7 @@ export const ckeditorConfig: EditorConfig = {
     shouldNotGroupWhenFull: false,
   },
   plugins: [
+    ImageUploadAdapter,
     Alignment,
     AutoImage,
     AutoLink,
@@ -164,7 +166,7 @@ export const ckeditorConfig: EditorConfig = {
     PasteFromOffice,
     RemoveFormat,
     ShowBlocks,
-    SimpleUploadAdapter,
+    // SimpleUploadAdapter,
     SourceEditing,
     SpecialCharacters,
     SpecialCharactersArrows,
