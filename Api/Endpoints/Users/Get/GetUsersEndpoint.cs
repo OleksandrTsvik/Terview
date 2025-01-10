@@ -17,6 +17,7 @@ public class GetUsersEndpoint : IEndpoint
     }
 
     public static async Task<Ok<PagedList<UserResponse>>> Handler(
+        [FromQuery(Name = "ids")] Guid[]? ids,
         [FromQuery(Name = "e")] string? email,
         [FromQuery(Name = "pe")] PermissionType[]? permissions,
         [FromQuery(Name = "s")] string? sort,
@@ -30,6 +31,9 @@ public class GetUsersEndpoint : IEndpoint
         SortOrder sortOrder = sortDirection.GetSortOrder();
 
         PagedList<UserResponse> users = await usersCollection.AsQueryable()
+            .WhereIf(
+                ids?.Length > 0,
+                user => ids!.Contains(user.Id))
             .WhereIf(
                 !string.IsNullOrWhiteSpace(email),
                 user => user.Email.ToLower().Contains(email!.ToLower()))

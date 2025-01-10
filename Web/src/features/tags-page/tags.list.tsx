@@ -63,7 +63,8 @@ export default function TagsList({ tags }: Props) {
     <Flex gap="large" wrap="wrap">
       {tags.map((tag) => (
         <div key={tag} className={styles.tag}>
-          {tag} <ActionsDropdown items={getTagActions(tag)} />
+          <span className={styles.tag__text}>{tag}</span>
+          <ActionsDropdown items={getTagActions(tag)} />
         </div>
       ))}
     </Flex>

@@ -14,11 +14,12 @@ export default function NotesEditFetch() {
 
   const query = searchParams.get(QUERY_PARAMS.QUERY);
   const tags = searchParams.getAll(QUERY_PARAMS.TAGS);
+  const createdBy = searchParams.get(QUERY_PARAMS.CREATED_BY);
   const sort = searchParams.get(QUERY_PARAMS.SORT) ?? DEFAULT_SORT;
   const pageNumber = stringToNumber(searchParams.get(QUERY_PARAMS.PAGE_NUMBER), 1);
   const pageSize = stringToNumber(searchParams.get(QUERY_PARAMS.PAGE_SIZE), 10);
 
-  const { data, isLoading, isFetching } = useGetNotesEditQuery({ query, tags, sort, pageNumber, pageSize });
+  const { data, isLoading, isFetching } = useGetNotesEditQuery({ query, tags, createdBy, sort, pageNumber, pageSize });
 
   if (isLoading) {
     return <NotesEditSkeleton />;
