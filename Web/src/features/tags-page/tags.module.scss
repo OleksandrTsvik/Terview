@@ -13,14 +13,16 @@
 .tag {
   display: flex;
   align-items: center;
-  gap: var(--ant-padding-xs);
   font-size: var(--ant-font-size-lg);
   font-family: var(--ant-font-family);
-  padding-left: var(--ant-padding-sm);
   color: var(--ant-color-text);
   background: #1d1d1d;
   border: var(--ant-line-width) var(--ant-line-type) var(--ant-color-border);
   border-radius: var(--ant-border-radius-sm);
+
+  .tag__text {
+    padding: 0 var(--ant-padding-sm);
+  }
 }
 
 .pagination {

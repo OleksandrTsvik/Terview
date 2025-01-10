@@ -22,6 +22,7 @@ public class GetNotesEditEndpoint : IEndpoint
     public static async Task<Ok<PagedList<NoteResponse>>> Handler(
         [FromQuery(Name = "q")] string? query,
         [FromQuery(Name = "t")] string[]? tags,
+        [FromQuery(Name = "cb")] Guid? createdBy,
         [FromQuery(Name = "s")] string? sort,
         [FromQuery(Name = "p")] int? pageNumber,
         [FromQuery(Name = "ps")] int? pageSize,
@@ -45,6 +46,9 @@ public class GetNotesEditEndpoint : IEndpoint
             .WhereIf(
                 tags?.Length > 0,
                 note => tags!.All(tag => note.Tags.Contains(tag)))
+            .WhereIf(
+                createdBy.HasValue,
+                note => note.CreatedBy == createdBy)
             .Select(note => new NoteResponse
             {
                 Id = note.Id,

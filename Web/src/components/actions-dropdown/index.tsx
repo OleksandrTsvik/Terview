@@ -11,6 +11,10 @@ interface Props extends DropdownProps {
 }
 
 export default function ActionsDropdown({ items, vertical = true, onClick, ...props }: Props) {
+  if (!items?.length) {
+    return null;
+  }
+
   return (
     <Dropdown menu={{ items }} {...props}>
       <Button type="text" icon={vertical ? <MoreOutlined /> : <EllipsisOutlined />} onClick={onClick} />

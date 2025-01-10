@@ -8,12 +8,12 @@ import { PagedList } from '@/common/pagination.models';
 import { stringToBoolean } from '@/common/type-converters.utils';
 
 import { QUERY_PARAMS } from './notes-edit.constants';
+import NotesEditFilters from './notes-edit.filters';
 import NotesEditItemContent from './notes-edit.item-content';
 import NotesEditItemExtra from './notes-edit.item-extra';
 import NotesEditItemLabel from './notes-edit.item-label';
 import { NoteResponse } from './notes-edit.models';
 import NotesEditPagination from './notes-edit.pagination';
-import NotesEditSort from './notes-edit.sort';
 
 import styles from './notes-edit.module.scss';
 
@@ -57,7 +57,7 @@ export default function NotesEditList({ data }: Props) {
         <Typography.Text type="secondary" onClick={handleExpandAllToggle}>
           <CaretRightOutlined rotate={expandAll ? 90 : 0} /> {expandAll ? 'Згорнути все' : 'Розгорнути все'}
         </Typography.Text>
-        <NotesEditSort />
+        <NotesEditFilters />
       </Flex>
       <Collapse
         className={styles.notes__list}
