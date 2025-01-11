@@ -24,7 +24,8 @@ public class GetNotesImagesEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         PagedList<NoteImageResponse> noteImages = await noteImagesCollection.AsQueryable()
-            .OrderBy(noteImage => noteImage.CreatedOnUtc)
+            .OrderBy(noteImage => noteImage.NoteIds.Count)
+            .ThenBy(noteImage => noteImage.CreatedOnUtc)
             .Select(noteImage => new NoteImageResponse
             {
                 Id = noteImage.Id,
