@@ -1,13 +1,16 @@
-import { Spin } from 'antd';
+import { Flex, Spin } from 'antd';
 import { useSearchParams } from 'react-router';
 
 import { stringToNumber } from '@/common/type-converters.utils';
 
+import NotesEditUser from './filters/notes-edit.user';
 import { useGetNotesEditQuery } from './notes-edit.api';
 import { DEFAULT_SORT, QUERY_PARAMS } from './notes-edit.constants';
 import NotesEditEmpty from './notes-edit.empty';
 import NotesEditList from './notes-edit.list';
 import NotesEditSkeleton from './notes-edit.skeleton';
+
+import styles from './notes-edit.module.scss';
 
 export default function NotesEditFetch() {
   const [searchParams] = useSearchParams();
@@ -26,7 +29,14 @@ export default function NotesEditFetch() {
   }
 
   if (!data || !data.items.length) {
-    return <NotesEditEmpty />;
+    return (
+      <section className={styles.notes}>
+        <Flex className={styles.notes__total} align="center" justify="flex-end">
+          <NotesEditUser />
+        </Flex>
+        <NotesEditEmpty />
+      </section>
+    );
   }
 
   return (

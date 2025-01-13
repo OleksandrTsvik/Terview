@@ -7,8 +7,8 @@ import { classnames } from '@/common/class-names.utils';
 import { PagedList } from '@/common/pagination.models';
 import { stringToBoolean } from '@/common/type-converters.utils';
 
+import NotesEditFilters from './filters/notes-edit.filters';
 import { QUERY_PARAMS } from './notes-edit.constants';
-import NotesEditFilters from './notes-edit.filters';
 import NotesEditItemContent from './notes-edit.item-content';
 import NotesEditItemExtra from './notes-edit.item-extra';
 import NotesEditItemLabel from './notes-edit.item-label';
@@ -54,7 +54,7 @@ export default function NotesEditList({ data }: Props) {
   return (
     <section className={styles.notes}>
       <Flex className={styles.notes__total} align="center" justify="space-between" gap="small" wrap>
-        <Typography.Text type="secondary" onClick={handleExpandAllToggle}>
+        <Typography.Text className={styles.total__collapsible} type="secondary" onClick={handleExpandAllToggle}>
           <CaretRightOutlined rotate={expandAll ? 90 : 0} /> {expandAll ? 'Згорнути все' : 'Розгорнути все'}
         </Typography.Text>
         <NotesEditFilters />

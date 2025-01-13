@@ -28,7 +28,7 @@
   &__total {
     margin-bottom: var(--ant-margin-sm);
 
-    &:first-child {
+    .total__collapsible {
       cursor: pointer;
     }
   }
