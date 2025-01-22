@@ -55,7 +55,11 @@ export default function ImagesList({ images }: Props) {
       {images.map((image) => (
         <Col key={image.id} lg={8} md={12} sm={12} xs={24}>
           <Badge.Ribbon text={image.noteCount} color={image.noteCount > 0 ? 'red' : 'green'}>
-            <Card className={styles.card} cover={<Image src={image.url} />} actions={getImageActions(image)} />
+            <Card
+              className={styles.card}
+              cover={<Image wrapperClassName={styles.card__image} src={image.url} />}
+              actions={getImageActions(image)}
+            />
           </Badge.Ribbon>
         </Col>
       ))}

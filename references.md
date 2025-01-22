@@ -30,3 +30,4 @@
 - [[CKEditor 5] React rich text editor component (npm)](https://ckeditor.com/docs/ckeditor5/latest/getting-started/installation/self-hosted/react/react-default-npm.html)
 - [[CKEditor 5] Simple upload adapter](https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/simple-upload-adapter.html)
 - [[CKEditor 5] Custom image upload adapter](https://ckeditor.com/docs/ckeditor5/latest/framework/deep-dive/upload-adapter.html)
+- [[YouTube] Адаптивні зображення. Практичні прийоми верстки картинок. CSS object-fit HTML picture.](https://www.youtube.com/watch?v=nTtuiBXKp88)

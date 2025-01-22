@@ -7,8 +7,20 @@
 }
 
 .card {
-  img {
-    border-radius: var(--ant-border-radius-lg) var(--ant-border-radius-lg) 0 0;
+  &__image {
+    position: relative;
+    padding: 0 0 58% 0;
+    overflow: hidden;
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: var(--ant-border-radius-lg) var(--ant-border-radius-lg) 0 0;
+    }
   }
 
   [class*='ant-image-mask'] {
