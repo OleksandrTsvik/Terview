@@ -11,7 +11,13 @@
 }
 
 .ck-content.output {
+  pre:has(code) {
+    padding: 0;
+    background: none;
+    border-color: #5c6370;
+  }
+
   pre code {
-    color: var(--ant-color-text);
+    background: #0d1117;
   }
 }

@@ -1,0 +1,37 @@
+import { CodeBlockConfig } from 'ckeditor5';
+
+export const codeBlockConfig: CodeBlockConfig = {
+  languages: [
+    { language: 'plaintext', label: 'Простий текст' }, // The default language.
+    { language: 'bash', label: 'Bash' },
+    { language: 'cs', label: 'C#' },
+    { language: 'c', label: 'C' },
+    { language: 'cpp', label: 'C++' },
+    { language: 'css', label: 'CSS' },
+    { language: 'pascal', label: 'Delphi' },
+    { language: 'dockerfile', label: 'Dockerfile' },
+    { language: 'golang', label: 'Go' },
+    { language: 'html', label: 'HTML' },
+    { language: 'json', label: 'JSON' },
+    { language: 'java', label: 'Java' },
+    { language: 'javascript', label: 'JavaScript' },
+    { language: 'kotlin', label: 'Kotlin' },
+    { language: 'tex', label: 'LaTeX' },
+    { language: 'less', label: 'Less' },
+    { language: 'markdown', label: 'Markdown' },
+    { language: 'matlab', label: 'Matlab' },
+    { language: 'nginx', label: 'Nginx' },
+    { language: 'php', label: 'PHP' },
+    { language: 'powershell', label: 'PowerShell' },
+    { language: 'python', label: 'Python' },
+    { language: 'ruby', label: 'Ruby' },
+    { language: 'rust', label: 'Rust' },
+    { language: 'scss', label: 'SCSS' },
+    { language: 'sql', label: 'SQL' },
+    { language: 'shell', label: 'Shell' },
+    { language: 'swift', label: 'Swift' },
+    { language: 'typescript', label: 'TypeScript' },
+    { language: 'xml', label: 'XML' },
+    { language: 'yml', label: 'YAML' },
+  ],
+};

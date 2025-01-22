@@ -67,6 +67,7 @@ import {
 } from 'ckeditor5';
 import translations from 'ckeditor5/translations/uk.js';
 
+import { codeBlockConfig } from './ckeditor.code-block-config';
 import ImageUploadAdapter from './ckeditor.image-upload-adapter';
 
 /**
@@ -342,4 +343,5 @@ export const ckeditorConfig: EditorConfig = {
     contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties'],
   },
   translations: [translations],
+  codeBlock: codeBlockConfig,
 };

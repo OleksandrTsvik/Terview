@@ -9,6 +9,7 @@ import { store } from './store';
 
 import './components/ckeditor/ckeditor.scss';
 import './index.scss';
+import 'highlight.js/styles/atom-one-dark.min.css';
 
 export default function App() {
   return (
