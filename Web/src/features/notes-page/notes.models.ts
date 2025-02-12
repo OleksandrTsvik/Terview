@@ -15,3 +15,7 @@ export interface NoteResponse {
   createdOnUtc: string;
   updatedOnUtc?: string;
 }
+
+export interface GetNotesTagsRequest {
+  tags?: string[] | null;
+}

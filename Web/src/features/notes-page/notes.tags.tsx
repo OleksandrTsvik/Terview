@@ -18,7 +18,7 @@ export default function NotesTags() {
   const selectedTags = searchParams.getAll(QUERY_PARAMS.TAGS);
   const selectedTagSearchMode = searchParams.get(QUERY_PARAMS.TAG_SEARCH_MODE) ?? DEFAULT_TAG_SEARCH_MODE;
 
-  const { data } = useGetNotesTagsQuery();
+  const { data } = useGetNotesTagsQuery({ tags: selectedTagSearchMode === 'all' ? selectedTags : null });
 
   const handleTagSearchModeClick = () => {
     const value = selectedTagSearchMode === 'all' ? 'any' : 'all';
