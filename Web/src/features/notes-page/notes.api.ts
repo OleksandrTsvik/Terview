@@ -7,11 +7,12 @@ export const notesApi = api.injectEndpoints({
   overrideExisting: false,
   endpoints: (builder) => ({
     getNotes: builder.query<PagedList<NoteResponse>, GetNotesRequest>({
-      query: ({ query, tags, sort, pageNumber, pageSize }) => ({
+      query: ({ query, tags, tagSearchMode, sort, pageNumber, pageSize }) => ({
         url: '/notes',
         params: {
           q: query,
           t: tags,
+          tm: tagSearchMode,
           s: sort,
           p: pageNumber,
           ps: pageSize,
