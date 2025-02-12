@@ -4,6 +4,11 @@
   flex-wrap: wrap;
   padding-top: var(--ant-padding-sm);
 
+  &__search_mode {
+    width: 40px;
+    margin-inline-end: var(--ant-margin-xs);
+  }
+
   span {
     cursor: pointer;
   }
