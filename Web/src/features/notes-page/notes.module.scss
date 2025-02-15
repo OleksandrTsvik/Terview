@@ -5,6 +5,9 @@
   padding-top: var(--ant-padding-sm);
 
   &__search_mode {
+    font-size: var(--ant-font-size-sm);
+    line-height: calc(var(--ant-line-height-sm) * var(--ant-font-size-sm));
+    height: auto;
     width: 40px;
     margin-inline-end: var(--ant-margin-xs);
   }
