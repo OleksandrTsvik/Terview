@@ -32,8 +32,13 @@ public class GetMongoDbDashboardEndpoint : IEndpoint
             var command = new BsonDocument("collStats", collectionName);
             BsonDocument stats = await mongoDatabase.RunCommandAsync<BsonDocument>(command);
 
-            int count = stats["count"].AsInt32;
-            int storageSize = stats["storageSize"].AsInt32;
+            long count = stats["count"].IsInt64
+                ? stats["count"].AsInt64
+                : stats["count"].AsInt32;
+
+            long storageSize = stats["storageSize"].IsInt64
+                ? stats["storageSize"].AsInt64
+                : stats["storageSize"].AsInt32;
 
             var collectionInformation = new DatabaseCollectionInformation
             {

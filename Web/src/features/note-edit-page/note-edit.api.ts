@@ -3,7 +3,7 @@ import { api } from '@/api';
 import { NoteResponse, UpdateNoteRequest } from './note-edit.models';
 
 export const noteEditApi = api.injectEndpoints({
-  overrideExisting: false,
+  overrideExisting: true,
   endpoints: (builder) => ({
     getNoteEditById: builder.query<NoteResponse, { noteId?: string }>({
       query: ({ noteId }) => ({

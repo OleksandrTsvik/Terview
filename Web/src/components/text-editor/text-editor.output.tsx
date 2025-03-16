@@ -9,7 +9,13 @@ export default function TextEditorOutput({ text }: Props) {
   const highlightCode = () => {
     const nodes = document.querySelectorAll('pre code');
 
-    nodes.forEach((node) => hljs.highlightElement(node as HTMLElement));
+    nodes.forEach((node) => {
+      if (node.hasAttribute('data-highlighted')) {
+        return;
+      }
+
+      hljs.highlightElement(node as HTMLElement);
+    });
   };
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { PagedList } from '@/common/pagination.models';
 import { GetNotesRequest, GetNotesTagsRequest, NoteResponse } from './notes.models';
 
 export const notesApi = api.injectEndpoints({
-  overrideExisting: false,
+  overrideExisting: true,
   endpoints: (builder) => ({
     getNotes: builder.query<PagedList<NoteResponse>, GetNotesRequest>({
       query: ({ query, tags, tagSearchMode, sort, pageNumber, pageSize }) => ({

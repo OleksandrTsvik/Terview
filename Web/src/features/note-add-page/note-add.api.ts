@@ -3,7 +3,7 @@ import { api } from '@/api';
 import { CreateNoteRequest } from './note-add.models';
 
 export const noteAddApi = api.injectEndpoints({
-  overrideExisting: false,
+  overrideExisting: true,
   endpoints: (builder) => ({
     getNotesTags: builder.query<string[], void>({
       query: () => ({
