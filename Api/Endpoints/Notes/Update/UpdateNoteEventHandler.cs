@@ -58,7 +58,7 @@ public class UpdateNoteEventHandler : IEventHandler<UpdateNoteEvent>
 
         var imageUrls = htmlDoc.DocumentNode
             .SelectNodes("//img")?
-            .Select(img => img.GetAttributeValue("src", null))
+            .Select(img => img.GetAttributeValue("src", string.Empty))
             .Where(src => !string.IsNullOrWhiteSpace(src))
             .ToList();
 
