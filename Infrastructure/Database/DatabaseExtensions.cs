@@ -20,7 +20,8 @@ public static class DatabaseExtensions
     public static IServiceCollection AddDatabase(this IServiceCollection services)
     {
         services.AddMongoDb();
-        services.AddSingleton<DatabaseInitializer>();
+
+        services.AddScoped<DatabaseInitializer>();
 
         return services;
     }

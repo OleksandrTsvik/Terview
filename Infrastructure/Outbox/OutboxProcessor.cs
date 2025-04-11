@@ -89,7 +89,9 @@ public class OutboxProcessor
     {
         return MessageTypeCache.GetOrAdd(
             messageType,
-            typename => AssemblyReference.Assembly.GetType(typename));
+            typename => AssemblyReference.Assemblies
+                .Select(assembly => assembly.GetType(typename))
+                .FirstOrDefault(type => type is not null));
     }
 
     private static OutboxUpdate CreateOutboxUpdate(OutboxMessage message, string? error = null)

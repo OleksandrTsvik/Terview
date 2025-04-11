@@ -86,7 +86,7 @@ public static class DependencyInjection
     private static IServiceCollection AddEvents(this IServiceCollection services)
     {
         services.AddScoped<IEventBus, EventBus>();
-        services.AddScoped<IEventPublisher, EventPublisher>();
+        services.AddSingleton<IEventPublisher, EventPublisher>();
 
         return services;
     }
