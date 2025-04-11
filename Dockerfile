@@ -6,6 +6,7 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 COPY ["Api/Api.csproj", "Api/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
+COPY ["Infrastructure/Infrastructure.csproj", "Domain/"]
 COPY ["SharedKernel/SharedKernel.csproj", "SharedKernel/"]
 RUN dotnet restore "Api/Api.csproj"
 COPY . .

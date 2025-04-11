@@ -1,4 +1,7 @@
+using Api.Endpoints;
 using Api.Extensions;
+using Api.Options;
+using Infrastructure;
 using Serilog;
 using SharedKernel;
 
@@ -13,21 +16,18 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .AddExceptionHandler()
     .AddOptionsWithValidation()
-    .AddAuth()
     .AddApiCors(builder.Configuration)
     .AddEndpoints()
     .AddInfrastructure(builder.Configuration)
     .AddEvents()
-    .AddJobs()
-    .AddFluentValidation()
-    .AddMongoDb();
+    .AddFluentValidation();
 
 WebApplication app = builder.Build();
 
 await app.ConfigureDatabaseAsync();
 
 app.UseApiCors();
-app.MapEndpoints();
+app.MapEndpoints(app.MapGroup("api"));
 
 if (EnvironmentHelper.IsLocal)
 {

@@ -1,5 +1,6 @@
 using Domain.Users;
 using FluentValidation;
+using Infrastructure.Options;
 
 namespace Api.Options.Validators;
 

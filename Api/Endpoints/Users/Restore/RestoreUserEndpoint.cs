@@ -1,4 +1,3 @@
-using Api.Extensions;
 using Domain.Users;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;

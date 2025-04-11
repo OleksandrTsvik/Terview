@@ -1,6 +1,6 @@
-using Api.Events;
 using Domain.Notes;
 using HtmlAgilityPack;
+using Infrastructure.Events;
 using MongoDB.Driver;
 
 namespace Api.Endpoints.Notes.Create;

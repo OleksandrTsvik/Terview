@@ -1,5 +1,5 @@
-using Api.Extensions;
 using Domain.Users;
+using Infrastructure.Database;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;

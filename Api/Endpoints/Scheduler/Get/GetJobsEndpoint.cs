@@ -1,6 +1,6 @@
-using Api.Extensions;
-using Api.Scheduler;
 using Domain.Users;
+using Infrastructure.Database;
+using Infrastructure.Scheduler;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;

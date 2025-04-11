@@ -1,6 +1,6 @@
-using Api.Extensions;
-using Api.Outbox;
 using Domain.Users;
+using Infrastructure.Database;
+using Infrastructure.Outbox;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;

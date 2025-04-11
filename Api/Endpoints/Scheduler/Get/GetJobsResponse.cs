@@ -1,4 +1,4 @@
-using Api.Scheduler;
+using Infrastructure.Scheduler;
 using SharedKernel;
 
 namespace Api.Endpoints.Scheduler.Get;

@@ -1,6 +1,5 @@
-using Api.Extensions;
-using Api.Infrastructure;
 using Domain.Users;
+using Infrastructure.Email;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Driver;
 

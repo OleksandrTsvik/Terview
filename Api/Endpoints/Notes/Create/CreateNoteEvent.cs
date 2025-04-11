@@ -1,4 +1,4 @@
-using Api.Events;
+using Infrastructure.Events;
 
 namespace Api.Endpoints.Notes.Create;
 

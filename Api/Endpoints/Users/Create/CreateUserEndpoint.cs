@@ -1,6 +1,5 @@
-using Api.Events;
-using Api.Extensions;
 using Domain.Users;
+using Infrastructure.Events;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Driver;
 

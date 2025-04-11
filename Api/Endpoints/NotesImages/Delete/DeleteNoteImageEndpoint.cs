@@ -1,7 +1,6 @@
-using Api.Extensions;
-using Api.Infrastructure;
 using Domain.Notes;
 using Domain.Users;
+using Infrastructure.Storage;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Driver;
 

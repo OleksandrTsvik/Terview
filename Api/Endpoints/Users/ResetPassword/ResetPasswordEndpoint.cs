@@ -1,6 +1,5 @@
-using Api.Authentication;
-using Api.Extensions;
 using Domain.Users;
+using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Driver;
 
