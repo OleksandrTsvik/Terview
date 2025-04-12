@@ -7,6 +7,7 @@ using Infrastructure.Events;
 using Infrastructure.Jobs;
 using Infrastructure.Options;
 using Infrastructure.Outbox;
+using Infrastructure.Parsers;
 using Infrastructure.Scheduler;
 using Infrastructure.Storage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,6 +31,7 @@ public static class DependencyInjection
             .AddEvents()
             .AddJobs()
             .AddOutbox()
+            .AddParsers()
             .AddScheduler()
             .AddStorage();
 
@@ -112,6 +114,13 @@ public static class DependencyInjection
     {
         services.AddScoped<OutboxProcessor>();
         services.AddHostedService<OutboxBackgroundService>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddParsers(this IServiceCollection services)
+    {
+        services.AddSingleton<IHtmlParser, HtmlParser>();
 
         return services;
     }

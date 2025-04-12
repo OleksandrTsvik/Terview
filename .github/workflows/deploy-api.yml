@@ -6,6 +6,7 @@ on:
     paths:
       - 'Api/**'
       - 'Domain/**'
+      - 'Infrastructure/**'
       - 'SharedKernel/**'
       - 'Terview.sln'
 
