@@ -23,12 +23,11 @@ public class UpdateNoteEndpoint : IEndpoint
         [FromRoute] Guid id,
         UpdateNoteRequest request,
         UserContext userContext,
-        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         IEventBus eventBus,
         CancellationToken cancellationToken)
     {
-        Note? note = await GetNoteAsync(id, userContext, permissionProvider, notesCollection, cancellationToken);
+        Note? note = await GetNoteAsync(id, userContext, notesCollection, cancellationToken);
 
         if (note is null)
         {
@@ -50,11 +49,10 @@ public class UpdateNoteEndpoint : IEndpoint
     private static async Task<Note?> GetNoteAsync(
         Guid id,
         UserContext userContext,
-        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
-        List<PermissionType> userPermissions = await permissionProvider.GetPermissionsAsync(userContext.UserId);
+        List<PermissionType> userPermissions = await userContext.GetUserPermissionsAsync();
 
         FilterDefinitionBuilder<Note> filterBuilder = Builders<Note>.Filter;
         List<FilterDefinition<Note>> filters =

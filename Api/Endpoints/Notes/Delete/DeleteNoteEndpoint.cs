@@ -20,11 +20,10 @@ public class DeleteNoteEndpoint : IEndpoint
     public static async Task<Results<NoContent, NotFound>> Handler(
         [FromRoute] Guid id,
         UserContext userContext,
-        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
-        List<PermissionType> userPermissions = await permissionProvider.GetPermissionsAsync(userContext.UserId);
+        List<PermissionType> userPermissions = await userContext.GetUserPermissionsAsync();
         List<FilterDefinition<Note>> filters = [Builders<Note>.Filter.Eq(note => note.Id, id)];
 
         if (!userPermissions.ContainsPermission(PermissionType.DeleteNote))

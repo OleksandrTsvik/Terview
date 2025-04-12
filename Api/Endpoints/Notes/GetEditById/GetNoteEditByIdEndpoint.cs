@@ -22,11 +22,10 @@ public class GetNoteEditByIdEndpoint : IEndpoint
     public static async Task<Results<Ok<NoteResponse>, NotFound>> Handler(
         [FromRoute] Guid id,
         UserContext userContext,
-        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
-        List<PermissionType> userPermissions = await permissionProvider.GetPermissionsAsync(userContext.UserId);
+        List<PermissionType> userPermissions = await userContext.GetUserPermissionsAsync();
 
         NoteResponse? note = await notesCollection.AsQueryable()
             .Where(note => note.Id == id)

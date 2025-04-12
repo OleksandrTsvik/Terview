@@ -28,12 +28,11 @@ public class GetNotesEditEndpoint : IEndpoint
         [FromQuery(Name = "p")] int? pageNumber,
         [FromQuery(Name = "ps")] int? pageSize,
         UserContext userContext,
-        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
         NoteSortType sortType = sort.GetNoteSortType();
-        List<PermissionType> userPermissions = await permissionProvider.GetPermissionsAsync(userContext.UserId);
+        List<PermissionType> userPermissions = await userContext.GetUserPermissionsAsync();
 
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
             .WhereIf(
