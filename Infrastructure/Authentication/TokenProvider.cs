@@ -18,10 +18,7 @@ public class TokenProvider
         _jwtOptions = jwtOptions.Value;
     }
 
-    public double AccessTokenExpirationInMinutes => _jwtOptions.AccessTokenExpirationInMinutes;
-    public double RefreshTokenExpirationInDays => _jwtOptions.RefreshTokenExpirationInDays;
-
-    public string GenerateAccessToken(User user)
+    public TokenInfo GenerateAccessToken(User user)
     {
         var claims = new Claim[]
         {
@@ -32,7 +29,7 @@ public class TokenProvider
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey));
         var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-        DateTime expires = DateTime.UtcNow.AddMinutes(AccessTokenExpirationInMinutes);
+        DateTime expires = DateTime.UtcNow.AddMinutes(_jwtOptions.AccessTokenExpirationInMinutes);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -47,13 +44,15 @@ public class TokenProvider
 
         string token = handler.CreateToken(tokenDescriptor);
 
-        return token;
+        return new TokenInfo(token, expires);
     }
 
-    public string GenerateRefreshToken()
+    public TokenInfo GenerateRefreshToken()
     {
+        DateTime expires = DateTime.UtcNow.AddDays(_jwtOptions.RefreshTokenExpirationInDays);
+
         string token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
 
-        return token;
+        return new TokenInfo(token, expires);
     }
 }

@@ -43,13 +43,14 @@ public class LoginEndpoint : IEndpoint
             return TypedResults.BadRequest();
         }
 
-        string accessToken = tokenProvider.GenerateAccessToken(user);
+        TokenInfo accessTokenInfo = tokenProvider.GenerateAccessToken(user);
+        TokenInfo refreshTokenInfo = tokenProvider.GenerateRefreshToken();
 
         var refreshToken = new RefreshToken
         {
             UserId = user.Id,
-            Token = tokenProvider.GenerateRefreshToken(),
-            ExpiresOnUtc = DateTime.UtcNow.AddDays(tokenProvider.RefreshTokenExpirationInDays)
+            Token = refreshTokenInfo.Token,
+            ExpiresOnUtc = refreshTokenInfo.ExpiresOnUtc,
         };
 
         await refreshTokensCollection.InsertOneAsync(refreshToken, null, cancellationToken);
@@ -58,7 +59,7 @@ public class LoginEndpoint : IEndpoint
         {
             Email = user.Email,
             Permissions = user.Permissions,
-            AccessToken = accessToken,
+            AccessToken = accessTokenInfo.Token,
             RefreshToken = refreshToken.Token
         };
 
