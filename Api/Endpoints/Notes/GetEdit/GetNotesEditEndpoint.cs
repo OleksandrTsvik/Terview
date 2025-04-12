@@ -53,6 +53,7 @@ public class GetNotesEditEndpoint : IEndpoint
             .Select(note => new NoteResponse
             {
                 Id = note.Id,
+                Slug = note.Slug,
                 Title = note.Title,
                 Content = note.Content,
                 Tags = note.Tags.OrderBy(tag => tag).ToList(),
