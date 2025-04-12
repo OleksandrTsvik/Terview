@@ -1,10 +1,10 @@
 import { GithubOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icons';
-import { Avatar, Flex, Layout } from 'antd';
+import { Flex, Layout } from 'antd';
 import { Link } from 'react-router';
 
-import styles from './footer.module.scss';
+import Logo from '@/components/logo';
 
-import logo from '@/assets/logo.svg';
+import styles from './footer.module.scss';
 
 export default function Footer() {
   const email = 'oleksandr.zwick@gmail.com';
@@ -13,7 +13,7 @@ export default function Footer() {
     <Layout.Footer className={styles.footer}>
       <Flex align="center" gap="large" wrap="wrap">
         <Link to="/">
-          <Avatar src={logo} size={30} />
+          <Logo />
         </Link>
         <Link to="/dashboard">Dashboard</Link>
       </Flex>
