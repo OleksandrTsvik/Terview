@@ -60,7 +60,7 @@
   }
 }
 
-@media (max-width: $screen-sm) {
+@media (max-width: calc($screen-sm - 1px)) {
   .layout {
     margin-inline-start: 0;
   }
