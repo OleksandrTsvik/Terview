@@ -1,5 +1,6 @@
 export interface NoteResponse {
   id: string;
+  slug: string;
   title: string;
   content: string;
   tags: string[];
@@ -13,6 +14,7 @@ export interface NoteResponse {
 
 export interface UpdateNoteRequest {
   noteId?: string;
+  slug: string;
   title: string;
   content: string;
   tags?: string[];
