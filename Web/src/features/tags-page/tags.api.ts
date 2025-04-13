@@ -4,7 +4,7 @@ import { PagedList } from '@/common/pagination.models';
 import { GetNotesTagsEditRequest, UpdateNotesTagRequest } from './tags.models';
 
 export const tagsApi = api.injectEndpoints({
-  overrideExisting: true,
+  overrideExisting: false,
   endpoints: (builder) => ({
     getNotesTagsEdit: builder.query<PagedList<string>, GetNotesTagsEditRequest>({
       query: ({ query, pageNumber, pageSize }) => ({
