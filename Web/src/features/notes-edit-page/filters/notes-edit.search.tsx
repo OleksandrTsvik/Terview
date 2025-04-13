@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 import { useSearchParams } from 'react-router';
 
-import { QUERY_PARAMS } from './notes-edit.constants';
+import { QUERY_PARAMS } from '../notes-edit.constants';
 
 export default function NotesEditSearch() {
   const [searchParams, setSearchParams] = useSearchParams();

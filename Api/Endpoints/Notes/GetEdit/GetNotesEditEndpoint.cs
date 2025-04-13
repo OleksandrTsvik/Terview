@@ -23,6 +23,7 @@ public class GetNotesEditEndpoint : IEndpoint
     public static async Task<Ok<PagedList<NoteResponse>>> Handler(
         [FromQuery(Name = "q")] string? query,
         [FromQuery(Name = "t")] string[]? tags,
+        [FromQuery(Name = "tm")] string? tagSearchMode,
         [FromQuery(Name = "cb")] Guid? createdBy,
         [FromQuery(Name = "s")] string? sort,
         [FromQuery(Name = "p")] int? pageNumber,
@@ -32,6 +33,7 @@ public class GetNotesEditEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         NoteSortType sortType = sort.GetNoteSortType();
+        NoteTagSearchType tagSearchType = tagSearchMode.GetNoteTagSearchType();
         List<PermissionType> userPermissions = await userContext.GetUserPermissionsAsync();
 
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
@@ -44,8 +46,11 @@ public class GetNotesEditEndpoint : IEndpoint
                     note.Title.ToLower().Contains(query!.ToLower()) ||
                     note.Content.ToLower().Contains(query!.ToLower()))
             .WhereIf(
-                tags?.Length > 0,
+                tags?.Length > 0 && tagSearchType == NoteTagSearchType.All,
                 note => tags!.All(tag => note.Tags.Contains(tag)))
+            .WhereIf(
+                tags?.Length > 0 && tagSearchType == NoteTagSearchType.Any,
+                note => tags!.Any(tag => note.Tags.Contains(tag)))
             .WhereIf(
                 createdBy.HasValue,
                 note => note.CreatedBy == createdBy)
