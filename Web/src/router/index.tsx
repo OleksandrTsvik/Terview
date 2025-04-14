@@ -18,6 +18,7 @@ const LoginPage = lazy(() => import('@/features/login-page/login.page'));
 const LogsPage = lazy(() => import('@/features/logs-page/logs.page'));
 const NoteAddPage = lazy(() => import('@/features/note-add-page/note-add.page'));
 const NoteEditPage = lazy(() => import('@/features/note-edit-page/note-edit.page'));
+const NotePage = lazy(() => import('@/features/note-page/note.page'));
 const NotesEditPage = lazy(() => import('@/features/notes-edit-page/notes-edit.page'));
 const NotesPage = lazy(() => import('@/features/notes-page/notes.page'));
 const OutboxPage = lazy(() => import('@/features/outbox-page/outbox.page'));
@@ -58,6 +59,7 @@ const routes: RouteObject[] = [
     element: <LayoutPage />,
     children: [
       { index: true, element: <NotesPage /> },
+      { path: 'notes/:noteSlug', element: <NotePage /> },
       {
         element: <AnonymousOutlet />,
         children: [

@@ -43,6 +43,10 @@
       border: none !important;
       border-radius: var(--ant-border-radius-lg) !important;
 
+      .item__title {
+        color: var(--ant-color-text-heading);
+      }
+
       .item__title + div {
         margin-top: var(--ant-margin-xxs);
       }

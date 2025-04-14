@@ -1,4 +1,5 @@
 import { Flex, Tag } from 'antd';
+import { Link } from 'react-router';
 
 import { NoteResponse } from './notes.models';
 
@@ -12,7 +13,9 @@ interface Props {
 export default function NotesItemLabel({ note, selectedTags }: Props) {
   return (
     <>
-      <div className={styles.item__title}>{note.title}</div>
+      <Link to={`/notes/${note.slug}`} className={styles.item__title}>
+        {note.title}
+      </Link>
       {!!note.tags.length && (
         <Flex wrap>
           {note.tags.map((tag) => (

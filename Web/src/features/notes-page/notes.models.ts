@@ -9,6 +9,7 @@ export interface GetNotesRequest extends PagingParams {
 
 export interface NoteResponse {
   id: string;
+  slug: string;
   title: string;
   content: string;
   tags: string[];
