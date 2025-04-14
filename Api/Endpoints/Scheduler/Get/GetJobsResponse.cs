@@ -23,7 +23,7 @@ public class JobResponse
 {
     public string Id { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
-    public long PeriodInSeconds { get; set; }
+    public string CronExpression { get; set; } = string.Empty;
     public JobRunStatus LastRunStatus { get; set; }
     public DateTime? LastRunTimeInUtc { get; set; }
     public DateTime NextRunTimeInUtc { get; set; }

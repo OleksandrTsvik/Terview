@@ -2,11 +2,11 @@ import { Table, TableColumnsType } from 'antd';
 import dayjs from 'dayjs';
 
 import { classnames } from '@/common/class-names.utils';
-import { formatDuration } from '@/common/time.utils';
 import ActionsDropdown from '@/components/actions-dropdown';
 import TableContainer from '@/components/table-container';
 
 import { JobResponse } from './scheduler.models';
+import { getCronDescription } from './scheduler.utils';
 import useJobActions from './use-job-actions';
 
 import styles from './scheduler.module.scss';
@@ -22,8 +22,8 @@ export default function SchedulerList({ jobs }: Props) {
     { dataIndex: 'name', title: 'Назва' },
     {
       key: 'period',
-      title: 'Період',
-      render: (_, job) => formatDuration(job.periodInSeconds),
+      title: 'Період (UTC)',
+      render: (_, job) => getCronDescription(job.cronExpression) || job.cronExpression,
     },
     {
       key: 'last-run-status',
@@ -42,7 +42,8 @@ export default function SchedulerList({ jobs }: Props) {
     {
       key: 'last-run-time',
       title: 'Час останнього запуску',
-      render: (_, job) => dayjs(job.lastRunTimeInUtc).format('DD.MM.YYYY HH:mm:ss'),
+      render: (_, job) =>
+        job.lastRunTimeInUtc ? dayjs(job.lastRunTimeInUtc).format('DD.MM.YYYY HH:mm:ss') : 'Відсутній',
     },
     {
       key: 'next-run-time',

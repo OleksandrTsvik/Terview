@@ -1,3 +1,3 @@
 namespace Api.Endpoints.Scheduler.UpdatePeriod;
 
-public record UpdateJobPeriodRequest(long PeriodInSeconds);
+public record UpdateJobPeriodRequest(string CronExpression);

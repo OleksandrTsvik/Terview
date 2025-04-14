@@ -1,4 +1,6 @@
 import { Empty, Skeleton, Spin, Typography } from 'antd';
+import cronstrue from 'cronstrue';
+import 'cronstrue/locales/uk';
 import { useSearchParams } from 'react-router';
 
 import { stringToNumber } from '@/common/type-converters.utils';
@@ -12,6 +14,8 @@ import SchedulerRunStatuses from './scheduler.run-statuses';
 import UpdatePeriodModal from './update-period.modal';
 
 import styles from './scheduler.module.scss';
+
+cronstrue.defaultLocale = 'uk';
 
 export default function SchedulerPage() {
   const [searchParams] = useSearchParams();

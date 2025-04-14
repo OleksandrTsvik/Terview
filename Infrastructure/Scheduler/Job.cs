@@ -9,7 +9,7 @@ public class Job
     public ObjectId Id { get; set; }
     public string Type { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
-    public long PeriodInSeconds { get; set; }
+    public string CronExpression { get; set; } = string.Empty;
     public JobRunStatus LastRunStatus { get; set; }
     public DateTime? LastRunTimeInUtc { get; set; }
     public DateTime NextRunTimeInUtc { get; set; }
@@ -18,7 +18,7 @@ public class Job
     public Job()
     {
         LastRunStatus = JobRunStatus.New;
-        NextRunTimeInUtc = DateTime.UtcNow.AddSeconds(PeriodInSeconds);
+        NextRunTimeInUtc = DateTime.UtcNow.AddMinutes(5);
     }
 }
 

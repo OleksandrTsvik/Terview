@@ -47,7 +47,7 @@ public class GetJobsEndpoint : IEndpoint
             {
                 Id = job.Id.ToString(),
                 Name = job.Name,
-                PeriodInSeconds = job.PeriodInSeconds,
+                CronExpression = job.CronExpression,
                 LastRunStatus = job.LastRunStatus,
                 LastRunTimeInUtc = job.LastRunTimeInUtc,
                 NextRunTimeInUtc = job.NextRunTimeInUtc,

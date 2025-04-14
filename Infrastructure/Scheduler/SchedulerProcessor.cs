@@ -94,7 +94,7 @@ public class SchedulerProcessor
             Id = job.Id,
             LastRunStatus = status,
             LastRunTimeInUtc = DateTime.UtcNow,
-            NextRunTimeInUtc = DateTime.UtcNow.AddSeconds(job.PeriodInSeconds),
+            NextRunTimeInUtc = CronExpressionHelper.GetNextOccurrence(job.CronExpression, DateTime.UtcNow.AddDays(1)),
             Error = error
         };
     }

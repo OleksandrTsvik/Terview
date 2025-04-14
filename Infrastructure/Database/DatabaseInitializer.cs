@@ -111,7 +111,7 @@ public class DatabaseInitializer
                 Builders<Job>.Update
                     .SetOnInsert(job => job.Type, insert.Type)
                     .SetOnInsert(job => job.Name, insert.Name)
-                    .SetOnInsert(job => job.PeriodInSeconds, insert.PeriodInSeconds)
+                    .SetOnInsert(job => job.CronExpression, insert.CronExpression)
                     .SetOnInsert(job => job.LastRunStatus, insert.LastRunStatus)
                     .SetOnInsert(job => job.NextRunTimeInUtc, insert.NextRunTimeInUtc))
             { IsUpsert = true })

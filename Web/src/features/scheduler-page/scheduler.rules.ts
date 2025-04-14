@@ -1,50 +1,19 @@
 import { Rule } from 'antd/es/form';
 
+import { getCronDescription } from './scheduler.utils';
+
 interface Rules {
-  days: Rule[];
-  hours: Rule[];
-  minutes: Rule[];
-  seconds: Rule[];
+  cronExpression: Rule[];
 }
 
 export const SCHEDULER_RULES: Rules = {
-  days: [
+  cronExpression: [
     {
       required: true,
     },
     {
-      type: 'integer',
-      min: 0,
-    },
-  ],
-  hours: [
-    {
-      required: true,
-    },
-    {
-      type: 'integer',
-      min: 0,
-      max: 23,
-    },
-  ],
-  minutes: [
-    {
-      required: true,
-    },
-    {
-      type: 'integer',
-      min: 0,
-      max: 59,
-    },
-  ],
-  seconds: [
-    {
-      required: true,
-    },
-    {
-      type: 'integer',
-      min: 0,
-      max: 59,
+      validator: (_, value) =>
+        getCronDescription(value) ? Promise.resolve() : Promise.reject(new Error('Невірний формат cron expression')),
     },
   ],
 };
