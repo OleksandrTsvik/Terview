@@ -1,6 +1,5 @@
-using Api.Extensions;
-using Api.Scheduler;
 using Domain.Users;
+using Infrastructure.Scheduler;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -29,7 +28,7 @@ public class UpdateJobPeriodEndpoint : IEndpoint
         }
 
         UpdateDefinition<Job> update = Builders<Job>.Update
-            .Set(job => job.PeriodInSeconds, request.PeriodInSeconds);
+            .Set(job => job.CronExpression, request.CronExpression);
 
         UpdateResult updateResult = await jobsCollection.UpdateOneAsync(
             job => job.Id == objectId,

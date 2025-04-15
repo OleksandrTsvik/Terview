@@ -1,3 +1,5 @@
+using Infrastructure.Database;
+
 namespace Api.Extensions;
 
 public static class WebApplicationExtensions

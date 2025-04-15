@@ -1,11 +1,9 @@
-using Api.Extensions;
-using Api.Infrastructure;
 using Domain.Notes;
 using Domain.Users;
+using Infrastructure.Storage;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
-using SharedKernel;
 
 namespace Api.Endpoints.NotesImages.Upload;
 

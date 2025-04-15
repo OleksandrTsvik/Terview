@@ -1,8 +1,8 @@
-using Api.Authentication;
-using Api.Authorization;
-using Api.Extensions;
 using Domain.Notes;
 using Domain.Users;
+using Infrastructure.Authentication;
+using Infrastructure.Authorization;
+using Infrastructure.Database;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -22,11 +22,10 @@ public class GetNoteEditByIdEndpoint : IEndpoint
     public static async Task<Results<Ok<NoteResponse>, NotFound>> Handler(
         [FromRoute] Guid id,
         UserContext userContext,
-        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
-        List<PermissionType> userPermissions = await permissionProvider.GetPermissionsAsync(userContext.UserId);
+        List<PermissionType> userPermissions = await userContext.GetUserPermissionsAsync();
 
         NoteResponse? note = await notesCollection.AsQueryable()
             .Where(note => note.Id == id)
@@ -36,6 +35,7 @@ public class GetNoteEditByIdEndpoint : IEndpoint
             .Select(note => new NoteResponse
             {
                 Id = note.Id,
+                Slug = note.Slug,
                 Title = note.Title,
                 Content = note.Content,
                 Tags = note.Tags.OrderBy(tag => tag).ToList(),

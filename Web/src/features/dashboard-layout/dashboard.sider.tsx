@@ -1,13 +1,12 @@
-import { Avatar, Drawer, Layout } from 'antd';
+import { Drawer, Layout } from 'antd';
 import { Link } from 'react-router';
 
+import Logo from '@/components/logo';
 import useBreakpointValue from '@/hooks/use-breakpoint-value';
 
 import DashboardSiderMenu from './dashboard.sider-menu';
 
 import styles from './dashboard.module.scss';
-
-import logo from '@/assets/logo.svg';
 
 interface Props {
   collapsed: boolean;
@@ -19,7 +18,7 @@ export default function DashboardSider({ collapsed, onCollapse }: Props) {
     sm: (
       <Layout.Sider className={styles.sider} collapsible collapsed={collapsed} trigger={null}>
         <Link to="/" className={styles.logo}>
-          <Avatar src={logo} size={40} />
+          <Logo size={40} />
         </Link>
         <DashboardSiderMenu />
       </Layout.Sider>
@@ -31,7 +30,7 @@ export default function DashboardSider({ collapsed, onCollapse }: Props) {
         open={!collapsed}
         extra={
           <Link to="/">
-            <Avatar src={logo} />
+            <Logo />
           </Link>
         }
         styles={{ body: { padding: 0 } }}

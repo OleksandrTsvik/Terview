@@ -1,11 +1,14 @@
 import hljs from 'highlight.js';
 import { useEffect } from 'react';
 
+import { classnames } from '@/common/class-names.utils';
+
 interface Props {
   text: string;
+  className?: string;
 }
 
-export default function TextEditorOutput({ text }: Props) {
+export default function TextEditorOutput({ text, className }: Props) {
   const highlightCode = () => {
     const nodes = document.querySelectorAll('pre code');
 
@@ -22,5 +25,7 @@ export default function TextEditorOutput({ text }: Props) {
     highlightCode();
   });
 
-  return <div className="ck-content output" dangerouslySetInnerHTML={{ __html: text }} />;
+  return (
+    <div className={classnames(['ck-content', 'output', className ?? ''])} dangerouslySetInnerHTML={{ __html: text }} />
+  );
 }

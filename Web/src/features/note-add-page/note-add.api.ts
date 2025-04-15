@@ -3,9 +3,9 @@ import { api } from '@/api';
 import { CreateNoteRequest } from './note-add.models';
 
 export const noteAddApi = api.injectEndpoints({
-  overrideExisting: true,
+  overrideExisting: false,
   endpoints: (builder) => ({
-    getNotesTags: builder.query<string[], void>({
+    getNotesTagsFromNoteAddApi: builder.query<string[], void>({
       query: () => ({
         url: '/notes/tags',
       }),
@@ -22,4 +22,4 @@ export const noteAddApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetNotesTagsQuery, useCreateNoteMutation } = noteAddApi;
+export const { useGetNotesTagsFromNoteAddApiQuery: useGetNotesTagsQuery, useCreateNoteMutation } = noteAddApi;

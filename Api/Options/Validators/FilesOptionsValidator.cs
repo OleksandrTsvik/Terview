@@ -1,3 +1,4 @@
+using Api.Options.Models;
 using FluentValidation;
 
 namespace Api.Options.Validators;

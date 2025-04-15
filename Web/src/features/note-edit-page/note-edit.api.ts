@@ -3,7 +3,7 @@ import { api } from '@/api';
 import { NoteResponse, UpdateNoteRequest } from './note-edit.models';
 
 export const noteEditApi = api.injectEndpoints({
-  overrideExisting: true,
+  overrideExisting: false,
   endpoints: (builder) => ({
     getNoteEditById: builder.query<NoteResponse, { noteId?: string }>({
       query: ({ noteId }) => ({
@@ -11,7 +11,7 @@ export const noteEditApi = api.injectEndpoints({
       }),
       providesTags: ['UserSession', 'Notes'],
     }),
-    getNotesTags: builder.query<string[], void>({
+    getNotesTagsFromNoteEditApi: builder.query<string[], void>({
       query: () => ({
         url: '/notes/tags',
       }),
@@ -28,4 +28,8 @@ export const noteEditApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetNoteEditByIdQuery, useGetNotesTagsQuery, useUpdateNoteMutation } = noteEditApi;
+export const {
+  useGetNoteEditByIdQuery,
+  useGetNotesTagsFromNoteEditApiQuery: useGetNotesTagsQuery,
+  useUpdateNoteMutation,
+} = noteEditApi;

@@ -1,6 +1,6 @@
+import NotesEditSearch from './filters/notes-edit.search';
+import NotesEditTags from './filters/notes-edit.tags';
 import NotesEditFetch from './notes-edit.fetch';
-import NotesEditSearch from './notes-edit.search';
-import NotesEditTags from './notes-edit.tags';
 import NotesEditTitle from './notes-edit.title';
 
 export default function NotesEditPage() {

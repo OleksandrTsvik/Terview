@@ -4,6 +4,7 @@ public enum PermissionType
 {
     FullAccess,
 
+    HealthChecks,
     ReadLog,
 
     CreateNote,

@@ -1,5 +1,6 @@
 using Api.Extensions;
 using Domain.Notes;
+using Infrastructure.Database;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -29,12 +30,8 @@ public class GetNotesEndpoint : IEndpoint
         NoteTagSearchType tagSearchType = tagSearchMode.GetNoteTagSearchType();
 
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
+            .WhereText(query)
             .Where(note => note.DeletedOnUtc == null && note.DeletedBy == null)
-            .WhereIf(
-                !string.IsNullOrWhiteSpace(query),
-                note =>
-                    note.Title.ToLower().Contains(query!.ToLower()) ||
-                    note.Content.ToLower().Contains(query!.ToLower()))
             .WhereIf(
                 tags?.Length > 0 && tagSearchType == NoteTagSearchType.All,
                 note => tags!.All(tag => note.Tags.Contains(tag)))
@@ -44,6 +41,7 @@ public class GetNotesEndpoint : IEndpoint
             .Select(note => new NoteResponse
             {
                 Id = note.Id,
+                Slug = note.Slug,
                 Title = note.Title,
                 Content = note.Content,
                 Tags = note.Tags.OrderBy(tag => tag).ToList(),

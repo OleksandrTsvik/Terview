@@ -1,6 +1,6 @@
-using Api.Extensions;
-using Api.Scheduler;
 using Domain.Users;
+using Infrastructure.Database;
+using Infrastructure.Scheduler;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -47,7 +47,7 @@ public class GetJobsEndpoint : IEndpoint
             {
                 Id = job.Id.ToString(),
                 Name = job.Name,
-                PeriodInSeconds = job.PeriodInSeconds,
+                CronExpression = job.CronExpression,
                 LastRunStatus = job.LastRunStatus,
                 LastRunTimeInUtc = job.LastRunTimeInUtc,
                 NextRunTimeInUtc = job.NextRunTimeInUtc,

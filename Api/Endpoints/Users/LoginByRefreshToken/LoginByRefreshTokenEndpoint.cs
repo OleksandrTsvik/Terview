@@ -1,6 +1,5 @@
-using Api.Authentication;
-using Api.Extensions;
 using Domain.Users;
+using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MongoDB.Driver;
 
@@ -44,10 +43,11 @@ public class LoginByRefreshTokenEndpoint : IEndpoint
             return TypedResults.BadRequest();
         }
 
-        string accessToken = tokenProvider.GenerateAccessToken(user);
+        TokenInfo accessTokenInfo = tokenProvider.GenerateAccessToken(user);
+        TokenInfo refreshTokenInfo = tokenProvider.GenerateRefreshToken();
 
-        refreshToken.Token = tokenProvider.GenerateRefreshToken();
-        refreshToken.ExpiresOnUtc = DateTime.UtcNow.AddDays(tokenProvider.RefreshTokenExpirationInDays);
+        refreshToken.Token = refreshTokenInfo.Token;
+        refreshToken.ExpiresOnUtc = refreshTokenInfo.ExpiresOnUtc;
 
         await refreshTokensCollection.ReplaceOneAsync(
             x => x.Id == refreshToken.Id,
@@ -59,7 +59,7 @@ public class LoginByRefreshTokenEndpoint : IEndpoint
         {
             Email = user.Email,
             Permissions = user.Permissions,
-            AccessToken = accessToken,
+            AccessToken = accessTokenInfo.Token,
             RefreshToken = refreshToken.Token
         };
 

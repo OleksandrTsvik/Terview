@@ -1,17 +1,24 @@
 import { api } from '@/api';
 import { PagedList } from '@/common/pagination.models';
 
-import { GetNotesEditRequest, GetUsersRequest, NoteResponse, UserResponse } from './notes-edit.models';
+import {
+  GetNotesEditRequest,
+  GetNotesTagsRequest,
+  GetUsersRequest,
+  NoteResponse,
+  UserResponse,
+} from './notes-edit.models';
 
 export const notesEditApi = api.injectEndpoints({
-  overrideExisting: true,
+  overrideExisting: false,
   endpoints: (builder) => ({
     getNotesEdit: builder.query<PagedList<NoteResponse>, GetNotesEditRequest>({
-      query: ({ query, tags, createdBy, sort, pageNumber, pageSize }) => ({
+      query: ({ query, tags, tagSearchMode, createdBy, sort, pageNumber, pageSize }) => ({
         url: '/notes/edit',
         params: {
           q: query,
           t: tags,
+          tm: tagSearchMode,
           cb: createdBy,
           s: sort,
           p: pageNumber,
@@ -27,13 +34,16 @@ export const notesEditApi = api.injectEndpoints({
         })),
       }),
     }),
-    getNotesTags: builder.query<string[], void>({
-      query: () => ({
+    getNotesTagsFromNotesEditApi: builder.query<string[], GetNotesTagsRequest>({
+      query: ({ tags }) => ({
         url: '/notes/tags',
+        params: {
+          t: tags,
+        },
       }),
       providesTags: ['UserSession', 'Notes'],
     }),
-    getUsers: builder.query<PagedList<UserResponse>, GetUsersRequest>({
+    getUsersFromNotesEditApi: builder.query<PagedList<UserResponse>, GetUsersRequest>({
       query: ({ userIds, email }) => ({
         url: '/users',
         params: {
@@ -62,8 +72,8 @@ export const notesEditApi = api.injectEndpoints({
 
 export const {
   useGetNotesEditQuery,
-  useGetNotesTagsQuery,
-  useLazyGetUsersQuery,
+  useGetNotesTagsFromNotesEditApiQuery: useGetNotesTagsQuery,
+  useLazyGetUsersFromNotesEditApiQuery: useLazyGetUsersQuery,
   useDeleteNoteMutation,
   useRestoreNoteMutation,
 } = notesEditApi;

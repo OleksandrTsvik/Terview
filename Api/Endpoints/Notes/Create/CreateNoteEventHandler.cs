@@ -1,6 +1,6 @@
-using Api.Events;
 using Domain.Notes;
-using HtmlAgilityPack;
+using Infrastructure.Events;
+using Infrastructure.Parsers;
 using MongoDB.Driver;
 
 namespace Api.Endpoints.Notes.Create;
@@ -9,13 +9,16 @@ public class CreateNoteEventHandler : IEventHandler<CreateNoteEvent>
 {
     private readonly IMongoCollection<Note> _notesCollection;
     private readonly IMongoCollection<NoteImage> _noteImagesCollection;
+    private readonly IHtmlParser _htmlParser;
 
     public CreateNoteEventHandler(
         IMongoCollection<Note> notesCollection,
-        IMongoCollection<NoteImage> noteImagesCollection)
+        IMongoCollection<NoteImage> noteImagesCollection,
+        IHtmlParser htmlParser)
     {
         _notesCollection = notesCollection;
         _noteImagesCollection = noteImagesCollection;
+        _htmlParser = htmlParser;
     }
 
     public async Task Handle(CreateNoteEvent message, CancellationToken cancellationToken = default)
@@ -29,7 +32,7 @@ public class CreateNoteEventHandler : IEventHandler<CreateNoteEvent>
             return;
         }
 
-        List<string> imageUrls = GetImageUrls(note.Content);
+        HashSet<string> imageUrls = _htmlParser.GetImageUrls(note.Content);
 
         if (imageUrls.Count == 0)
         {
@@ -43,19 +46,5 @@ public class CreateNoteEventHandler : IEventHandler<CreateNoteEvent>
             .ToList();
 
         await _noteImagesCollection.BulkWriteAsync(requests, null, cancellationToken);
-    }
-
-    private static List<string> GetImageUrls(string html)
-    {
-        var htmlDoc = new HtmlDocument();
-        htmlDoc.LoadHtml(html);
-
-        var imageUrls = htmlDoc.DocumentNode
-            .SelectNodes("//img")?
-            .Select(img => img.GetAttributeValue("src", null))
-            .Where(src => !string.IsNullOrWhiteSpace(src))
-            .ToList();
-
-        return imageUrls ?? [];
     }
 }

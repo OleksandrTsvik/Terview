@@ -11,7 +11,7 @@ export interface GetJobsResponse extends PagedList<JobResponse> {
 export interface JobResponse {
   id: string;
   name: string;
-  periodInSeconds: number;
+  cronExpression: string;
   lastRunStatus: string;
   lastRunTimeInUtc?: string;
   nextRunTimeInUtc: string;
@@ -24,5 +24,5 @@ export interface GetJobsRequest extends PagingParams {
 
 export interface UpdateJobPeriodRequest {
   id: string;
-  periodInSeconds: number;
+  cronExpression: string;
 }

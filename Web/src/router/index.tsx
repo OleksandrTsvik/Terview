@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { lazy } from 'react';
 import { RouteObject, createBrowserRouter } from 'react-router';
 
@@ -12,6 +11,7 @@ const DashboardNotFoundPage = lazy(() => import('@/features/dashboard-layout/das
 const DashboardPage = lazy(() => import('@/features/dashboard-page/dashboard.page'));
 const EmailVerificationPage = lazy(() => import('@/features/email-verification-page/email-verification.page'));
 const ForgotPasswordPage = lazy(() => import('@/features/forgot-password-page/forgot-password.page'));
+const HealthPage = lazy(() => import('@/features/health-page/health.page'));
 const ImagesPage = lazy(() => import('@/features/images-page/images.page'));
 const LayoutPage = lazy(() => import('@/features/layout/layout.page'));
 const NotFoundPage = lazy(() => import('@/features/layout/not-found.page'));
@@ -19,6 +19,7 @@ const LoginPage = lazy(() => import('@/features/login-page/login.page'));
 const LogsPage = lazy(() => import('@/features/logs-page/logs.page'));
 const NoteAddPage = lazy(() => import('@/features/note-add-page/note-add.page'));
 const NoteEditPage = lazy(() => import('@/features/note-edit-page/note-edit.page'));
+const NotePage = lazy(() => import('@/features/note-page/note.page'));
 const NotesEditPage = lazy(() => import('@/features/notes-edit-page/notes-edit.page'));
 const NotesPage = lazy(() => import('@/features/notes-page/notes.page'));
 const OutboxPage = lazy(() => import('@/features/outbox-page/outbox.page'));
@@ -49,6 +50,7 @@ const routes: RouteObject[] = [
           { path: 'outbox', element: <OutboxPage /> },
           { path: 'scheduler', element: <SchedulerPage /> },
           { path: 'logs', element: <LogsPage /> },
+          { path: 'health', element: <HealthPage /> },
           { path: '*', element: <DashboardNotFoundPage /> },
         ],
       },
@@ -59,6 +61,7 @@ const routes: RouteObject[] = [
     element: <LayoutPage />,
     children: [
       { index: true, element: <NotesPage /> },
+      { path: 'notes/:noteSlug', element: <NotePage /> },
       {
         element: <AnonymousOutlet />,
         children: [

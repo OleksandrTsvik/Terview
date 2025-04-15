@@ -27,10 +27,10 @@ public static class FileHelper
         byte[] firstEightBytes = new byte[8];
 
         stream.Position = 0;
-        stream.Read(firstTwoBytes, 0, 2);
+        stream.ReadExactly(firstTwoBytes, 0, 2);
 
         stream.Position = 0;
-        stream.Read(firstEightBytes, 0, 8);
+        stream.ReadExactly(firstEightBytes, 0, 8);
 
         byte[] exe = [0x4D, 0x5A]; // .exe, .com, .dll
         byte[] msi = [0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1]; // .msi, .doc, .xls, .ppt, .msg

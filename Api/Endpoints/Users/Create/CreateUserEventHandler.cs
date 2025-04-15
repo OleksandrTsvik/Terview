@@ -1,6 +1,6 @@
-using Api.Events;
-using Api.Infrastructure;
 using Domain.Users;
+using Infrastructure.Email;
+using Infrastructure.Events;
 using MongoDB.Driver;
 
 namespace Api.Endpoints.Users.Create;

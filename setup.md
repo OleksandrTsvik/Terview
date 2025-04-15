@@ -7,7 +7,27 @@
 ```json
 {
   "terminal.integrated.persistentSessionReviveProcess": "never",
-  "terminal.integrated.enablePersistentSessions": false
+  "terminal.integrated.enablePersistentSessions": false,
+
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.activeIconPack": "nest",
+  "material-icon-theme.files.associations": {
+    "store/index.ts": "redux-store",
+    "*.api.ts": "redux-action",
+    "*.slice.ts": "redux-reducer",
+    "router/index.tsx": "routing",
+    "*.constants.ts": "mocha"
+  },
+  "material-icon-theme.folders.associations": {
+    "Endpoints": "controller",
+    "Features": "tasks",
+    "Properties": "private",
+    "store": "redux-store",
+    "Domain": "dump",
+    "Infrastructure": "tools",
+    "SharedKernel": "shared",
+    "dashboard-layout": "layout"
+  }
 }
 ```
 
@@ -51,6 +71,43 @@
       "icon": "file-directory",
       "color": "terminal.ansiBlue",
       "shellPath": "C:\\Program Files\\Git\\bin\\bash.exe"
+    }
+  ]
+}
+```
+
+### launch.json
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C#: Api",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/Api/bin/Debug/net9.0/Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Api",
+      "stopAtEntry": false,
+      "console": "internalConsole",
+      "launchSettingsProfile": "Local"
+    }
+  ]
+}
+```
+
+### tasks.json
+
+```json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "dotnet",
+      "task": "build",
+      "label": "build"
     }
   ]
 }

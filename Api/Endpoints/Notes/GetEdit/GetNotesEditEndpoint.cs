@@ -1,8 +1,9 @@
-using Api.Authentication;
-using Api.Authorization;
 using Api.Extensions;
 using Domain.Notes;
 using Domain.Users;
+using Infrastructure.Authentication;
+using Infrastructure.Authorization;
+using Infrastructure.Database;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -22,36 +23,37 @@ public class GetNotesEditEndpoint : IEndpoint
     public static async Task<Ok<PagedList<NoteResponse>>> Handler(
         [FromQuery(Name = "q")] string? query,
         [FromQuery(Name = "t")] string[]? tags,
+        [FromQuery(Name = "tm")] string? tagSearchMode,
         [FromQuery(Name = "cb")] Guid? createdBy,
         [FromQuery(Name = "s")] string? sort,
         [FromQuery(Name = "p")] int? pageNumber,
         [FromQuery(Name = "ps")] int? pageSize,
         UserContext userContext,
-        PermissionProvider permissionProvider,
         IMongoCollection<Note> notesCollection,
         CancellationToken cancellationToken)
     {
         NoteSortType sortType = sort.GetNoteSortType();
-        List<PermissionType> userPermissions = await permissionProvider.GetPermissionsAsync(userContext.UserId);
+        NoteTagSearchType tagSearchType = tagSearchMode.GetNoteTagSearchType();
+        List<PermissionType> userPermissions = await userContext.GetUserPermissionsAsync();
 
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
+            .WhereText(query)
             .WhereIf(
                 !userPermissions.ContainsPermission(PermissionType.ReadNote),
                 note => note.CreatedBy == userContext.UserId)
             .WhereIf(
-                !string.IsNullOrWhiteSpace(query),
-                note =>
-                    note.Title.ToLower().Contains(query!.ToLower()) ||
-                    note.Content.ToLower().Contains(query!.ToLower()))
-            .WhereIf(
-                tags?.Length > 0,
+                tags?.Length > 0 && tagSearchType == NoteTagSearchType.All,
                 note => tags!.All(tag => note.Tags.Contains(tag)))
+            .WhereIf(
+                tags?.Length > 0 && tagSearchType == NoteTagSearchType.Any,
+                note => tags!.Any(tag => note.Tags.Contains(tag)))
             .WhereIf(
                 createdBy.HasValue,
                 note => note.CreatedBy == createdBy)
             .Select(note => new NoteResponse
             {
                 Id = note.Id,
+                Slug = note.Slug,
                 Title = note.Title,
                 Content = note.Content,
                 Tags = note.Tags.OrderBy(tag => tag).ToList(),

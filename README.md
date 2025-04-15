@@ -1,6 +1,6 @@
 # Terview
 
-## Infrastructure Services
+## 🛠️ Infrastructure Services
 
 1. [GitHub Pages](https://vite.dev/guide/static-deploy#github-pages) for deploying `web` application.
 2. [Render](https://render.com/) for deploying `api` application.
@@ -8,7 +8,7 @@
 4. [Cloudinary](https://cloudinary.com/) for storing images.
 5. **smtp.gmail.com** for sending emails.
 
-## Running Locally
+## 🚀 Running Locally
 
 ### Api
 
@@ -45,3 +45,22 @@ npm run dev
 ```
 
 Then open [http://localhost:3000/](http://localhost:3000/) to see web app.
+
+## 🐳 Docker
+
+### Docker build
+
+```sh
+docker build . -t terview:latest
+```
+
+### Docker run
+
+```sh
+docker run \
+  --name terview \
+  --memory 1024m \
+  -it \
+  --rm \
+  terview:latest
+```

@@ -3,6 +3,7 @@ import {
   ContainerOutlined,
   DashboardOutlined,
   DropboxOutlined,
+  HeartOutlined,
   HistoryOutlined,
   PictureOutlined,
   TagsOutlined,
@@ -78,6 +79,14 @@ export default function useSiderItems(): MenuProps['items'] {
         key: '/dashboard/logs',
         icon: <ContainerOutlined />,
         label: 'Logs',
+      },
+    },
+    {
+      permissions: [PermissionType.HealthChecks],
+      value: {
+        key: '/dashboard/health',
+        icon: <HeartOutlined />,
+        label: 'Health',
       },
     },
   ]);

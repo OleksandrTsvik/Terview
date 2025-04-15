@@ -1,5 +1,5 @@
 using Api.Extensions;
-using Api.Options;
+using Api.Options.Models;
 using FluentValidation;
 using Microsoft.Extensions.Options;
 
