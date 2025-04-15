@@ -1,9 +1,11 @@
-.total {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--ant-padding-xs);
+.refetch {
   margin: 0 0 var(--ant-margin-md);
+
+  .total {
+    display: flex;
+    align-items: center;
+    gap: var(--ant-padding-xs);
+  }
 }
 
 .levels {
