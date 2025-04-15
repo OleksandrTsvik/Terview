@@ -2,6 +2,7 @@ using Api.Endpoints;
 using Api.Extensions;
 using Api.Options;
 using Infrastructure;
+using Infrastructure.Health;
 using Serilog;
 using SharedKernel;
 
@@ -11,7 +12,10 @@ builder.Host.UseSerilog((context, loggerConfig) =>
     loggerConfig.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(type => type.FullName);
+});
 
 builder.Services
     .AddExceptionHandler()
@@ -27,7 +31,11 @@ WebApplication app = builder.Build();
 await app.ConfigureDatabaseAsync();
 
 app.UseApiCors();
-app.MapEndpoints(app.MapGroup("api"));
+
+RouteGroupBuilder routeGroupBuilder = app.MapGroup("api");
+
+app.MapEndpoints(routeGroupBuilder);
+app.MapHealthChecks("_health", routeGroupBuilder);
 
 if (EnvironmentHelper.IsLocal)
 {

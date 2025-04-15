@@ -4,6 +4,7 @@ using Infrastructure.Authorization;
 using Infrastructure.Database;
 using Infrastructure.Email;
 using Infrastructure.Events;
+using Infrastructure.Health;
 using Infrastructure.Jobs;
 using Infrastructure.Options;
 using Infrastructure.Outbox;
@@ -29,6 +30,7 @@ public static class DependencyInjection
             .AddDatabase()
             .AddEmail(configuration)
             .AddEvents()
+            .AddHealth(configuration)
             .AddJobs()
             .AddOutbox()
             .AddParsers()

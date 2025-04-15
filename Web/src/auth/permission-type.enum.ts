@@ -1,6 +1,7 @@
 export enum PermissionType {
   FullAccess = 'FullAccess',
 
+  HealthChecks = 'HealthChecks',
   ReadLog = 'ReadLog',
 
   CreateNote = 'CreateNote',

@@ -11,6 +11,7 @@ const DashboardNotFoundPage = lazy(() => import('@/features/dashboard-layout/das
 const DashboardPage = lazy(() => import('@/features/dashboard-page/dashboard.page'));
 const EmailVerificationPage = lazy(() => import('@/features/email-verification-page/email-verification.page'));
 const ForgotPasswordPage = lazy(() => import('@/features/forgot-password-page/forgot-password.page'));
+const HealthPage = lazy(() => import('@/features/health-page/health.page'));
 const ImagesPage = lazy(() => import('@/features/images-page/images.page'));
 const LayoutPage = lazy(() => import('@/features/layout/layout.page'));
 const NotFoundPage = lazy(() => import('@/features/layout/not-found.page'));
@@ -49,6 +50,7 @@ const routes: RouteObject[] = [
           { path: 'outbox', element: <OutboxPage /> },
           { path: 'scheduler', element: <SchedulerPage /> },
           { path: 'logs', element: <LogsPage /> },
+          { path: 'health', element: <HealthPage /> },
           { path: '*', element: <DashboardNotFoundPage /> },
         ],
       },
