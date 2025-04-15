@@ -30,12 +30,8 @@ public class GetNotesEndpoint : IEndpoint
         NoteTagSearchType tagSearchType = tagSearchMode.GetNoteTagSearchType();
 
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
+            .WhereText(query)
             .Where(note => note.DeletedOnUtc == null && note.DeletedBy == null)
-            .WhereIf(
-                !string.IsNullOrWhiteSpace(query),
-                note =>
-                    note.Title.ToLower().Contains(query!.ToLower()) ||
-                    note.Content.ToLower().Contains(query!.ToLower()))
             .WhereIf(
                 tags?.Length > 0 && tagSearchType == NoteTagSearchType.All,
                 note => tags!.All(tag => note.Tags.Contains(tag)))

@@ -20,7 +20,7 @@ public class GetNoteBySlugEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         NoteResponse? note = await notesCollection.AsQueryable()
-            .Where(note => note.Slug.ToLower() == slug.ToLower())
+            .Where(note => note.Slug == slug.ToLower())
             .Select(note => new NoteResponse
             {
                 Id = note.Id,

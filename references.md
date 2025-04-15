@@ -14,6 +14,7 @@
 - [[Microsoft] Background tasks with hosted services in ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-8.0&tabs=visual-studio)
 - [[Microsoft] Naming of environment variables](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0#naming-of-environment-variables)
 - [[Microsoft] Routing in ASP.NET Core. Route constraints](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-8.0#route-constraints)
+- [[Stack Overflow] MongoDB .NET driver and text search](https://stackoverflow.com/questions/40915209/mongodb-net-driver-and-text-search)
 - [[YouTube] Request Validation in .NET / C# Minimal APIs](https://www.youtube.com/watch?v=1qJTVcR1VN8)
 - [[YouTube] Transactional Outbox Pattern | Clean Architecture, .NET 6](https://www.youtube.com/watch?v=XALvnX7MPeo)
 - [[YouTube] ASP.NET Core MediatR Notifications Alternative](https://www.youtube.com/watch?v=G8lnnaGhmFI)

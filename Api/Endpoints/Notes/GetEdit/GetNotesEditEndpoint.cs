@@ -37,14 +37,10 @@ public class GetNotesEditEndpoint : IEndpoint
         List<PermissionType> userPermissions = await userContext.GetUserPermissionsAsync();
 
         PagedList<NoteResponse> notes = await notesCollection.AsQueryable()
+            .WhereText(query)
             .WhereIf(
                 !userPermissions.ContainsPermission(PermissionType.ReadNote),
                 note => note.CreatedBy == userContext.UserId)
-            .WhereIf(
-                !string.IsNullOrWhiteSpace(query),
-                note =>
-                    note.Title.ToLower().Contains(query!.ToLower()) ||
-                    note.Content.ToLower().Contains(query!.ToLower()))
             .WhereIf(
                 tags?.Length > 0 && tagSearchType == NoteTagSearchType.All,
                 note => tags!.All(tag => note.Tags.Contains(tag)))

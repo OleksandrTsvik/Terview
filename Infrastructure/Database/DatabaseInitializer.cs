@@ -66,8 +66,13 @@ public class DatabaseInitializer
                 Builders<Note>.IndexKeys.Ascending(note => note.Slug),
                 new CreateIndexOptions { Name = "Slug_Asc", Unique = true }),
             new(
-                Builders<Note>.IndexKeys.Ascending(note => note.Title),
-                new CreateIndexOptions { Name = "Title_Asc" }),
+                Builders<Note>.IndexKeys
+                    .Text(note => note.Title)
+                    .Text(note => note.Content),
+                new CreateIndexOptions { Name = "Title_Text_Content_Text", }),
+            new(
+                Builders<Note>.IndexKeys.Ascending(note => note.Tags),
+                new CreateIndexOptions { Name = "Tags_Asc" }),
         };
 
         await CreateIndexesAsync(_notesCollection, indexModels, cancellationToken);

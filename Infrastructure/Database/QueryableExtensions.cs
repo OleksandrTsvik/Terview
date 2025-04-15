@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using SharedKernel;
 
@@ -28,6 +29,18 @@ public static class QueryableExtensions
         Expression<Func<T, bool>> predicate)
     {
         return condition ? query.Where(predicate) : query;
+    }
+
+    public static IQueryable<T> WhereText<T>(this IQueryable<T> query, string? search)
+    {
+        if (string.IsNullOrWhiteSpace(search))
+        {
+            return query;
+        }
+
+        FilterDefinition<T> filter = Builders<T>.Filter.Text(search);
+
+        return query.Where(_ => filter.Inject());
     }
 
     public static Task<PagedList<T>> ToPagedListAsync<T>(
