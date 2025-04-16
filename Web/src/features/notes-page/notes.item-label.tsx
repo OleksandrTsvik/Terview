@@ -11,9 +11,13 @@ interface Props {
 }
 
 export default function NotesItemLabel({ note, selectedTags }: Props) {
+  const handleNoteLinkClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    event.stopPropagation();
+  };
+
   return (
     <>
-      <Link to={`/notes/${note.slug}`} className={styles.item__title}>
+      <Link to={`/notes/${note.slug}`} className={styles.item__title} onClick={handleNoteLinkClick}>
         {note.title}
       </Link>
       {!!note.tags.length && (

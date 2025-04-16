@@ -52,7 +52,7 @@ export default function NotesList({ data }: Props) {
   return (
     <section className={styles.notes}>
       <Flex className={styles.notes__total} align="center" justify="space-between" gap="small" wrap>
-        <Typography.Text type="secondary" onClick={handleExpandAllToggle}>
+        <Typography.Text className={styles.expander} type="secondary" onClick={handleExpandAllToggle}>
           <CaretRightOutlined rotate={expandAll ? 90 : 0} /> {expandAll ? 'Згорнути все' : 'Розгорнути все'}
         </Typography.Text>
         <NotesSort />
