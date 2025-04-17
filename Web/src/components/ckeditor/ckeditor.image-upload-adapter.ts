@@ -115,7 +115,9 @@ class Adapter implements UploadAdapter {
 
   _sendRequest(file: File) {
     this.xhr.withCredentials = this.options.withCredentials ?? false;
-    const headers = this.options.headers || {};
+
+    const headers = this._getOptionsHeaders(file);
+    headers['Authorization'] = `Bearer ${TokenProvider.getAccessToken()}`;
 
     for (const headerName of Object.keys(headers)) {
       this.xhr.setRequestHeader(headerName, headers[headerName]);
@@ -140,8 +142,9 @@ class Adapter implements UploadAdapter {
 
     TokenProvider.setAccessToken(data.accessToken);
     TokenProvider.setRefreshToken(data.refreshToken);
+  }
 
-    this.options.headers ??= {};
-    this.options.headers['Authorization'] = `Bearer ${TokenProvider.getAccessToken()}`;
+  _getOptionsHeaders(file: File): Record<string, string> {
+    return typeof this.options.headers === 'function' ? this.options.headers(file) : this.options.headers || {};
   }
 }

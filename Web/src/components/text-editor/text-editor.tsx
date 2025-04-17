@@ -1,7 +1,5 @@
 import { EditorConfig } from 'ckeditor5';
 
-import { TokenProvider } from '@/auth/token.provider';
-
 import Ckeditor from '../ckeditor';
 
 interface Props {
@@ -17,9 +15,6 @@ export default function TextEditor({ value, imageUploadUrl, onChange, ...props }
     config.simpleUpload = {
       uploadUrl: imageUploadUrl,
       withCredentials: false,
-      headers: {
-        Authorization: `Bearer ${TokenProvider.getAccessToken()}`,
-      },
     };
   }
 
