@@ -61,5 +61,9 @@
   &__pagination {
     justify-content: center;
     margin-top: var(--ant-margin-md);
+
+    [class*='ant-pagination-total-text'] {
+      height: auto !important;
+    }
   }
 }

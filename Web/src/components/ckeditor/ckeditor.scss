@@ -20,4 +20,15 @@
   pre code {
     background: #0d1117;
   }
+
+  figure.table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  a {
+    word-wrap: break-word;
+    word-break: break-word;
+  }
 }
