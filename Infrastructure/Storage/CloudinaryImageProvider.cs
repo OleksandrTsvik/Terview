@@ -41,7 +41,7 @@ public class CloudinaryImageProvider : IImageProvider
 
         return new ImageUploadResult
         {
-            Url = uploadResult.Url.ToString(),
+            Url = uploadResult.SecureUrl.ToString(),
             OriginalName = image.FileName,
             UniqueName = uploadResult.PublicId
         };
